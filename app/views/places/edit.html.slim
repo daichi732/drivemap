@@ -1,0 +1,6 @@
+h1 場所の編集
+
+.nav.justify-content-end
+    =link_to '一覧', places_path, class: 'nav-link'
+    
+= render partial: 'form', locals: { place: @place}

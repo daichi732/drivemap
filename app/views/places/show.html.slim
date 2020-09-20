@@ -1,0 +1,28 @@
+h1 場所の詳細
+
+.nav.justify-content-end
+  =link_to '一覧', places_path, class: 'nav-link'
+table.table.table-hover
+  tbody
+    tr
+      th=Place.human_attribute_name(:id)
+      td=@place.id
+      
+    tr  
+      th=Place.human_attribute_name(:name)
+      td=@place.name
+      
+    tr  
+      th=Place.human_attribute_name(:description)
+      td= simple_format(h(@place.description), {}, sanitize: false, wrapper_tag: "div")
+      
+    tr  
+      th=Place.human_attribute_name(:created_at)
+      td=@place.created_at
+      
+    tr  
+      th=Place.human_attribute_name(:updated_at)
+      td=@place.updated_at
+
+= link_to '編集', edit_place_path(@place), class: 'btn btn-primary mr-3'
+= link_to '削除', @place, method: :delete, data: { confirm: "タスク「#{@place.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger mr-3'

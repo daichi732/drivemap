@@ -1,0 +1,16 @@
+- if place.errors.present?
+  ul#error_explanation
+    - place.errors.full_messages.each do |message|
+      li= message
+    
+
+=form_with model: place, local: true do |f|
+    .form-group
+        =f.label :name
+        =f.text_field :name, class: 'form-control', id: 'place_name'
+        
+    .form-group
+        =f.label :description
+        =f.text_area :description, class: 'form-control', id: 'place_description'
+        
+    =f.submit nil, class: 'btn btn-primary'

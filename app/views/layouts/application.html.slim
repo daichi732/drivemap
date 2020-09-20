@@ -11,4 +11,7 @@ html
     .app-title.navbar.navbar-expand-md.navbar-light.bg-light
       .navbar-brand Drivemap
     .container
-      = yield
+      - if flash.notice.present?
+        .alert.alert-success= flash.notice
+      .mt-5
+        = yield
