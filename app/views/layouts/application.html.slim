@@ -10,6 +10,11 @@ html
   body
     .app-title.navbar.navbar-expand-md.navbar-light.bg-light
       .navbar-brand Drivemap
+
+      ul.navbar-nav.ml-auto
+        li.nav-item= link_to 'ユーザー登録', new_user_path, class: 'nav-link'
+        li.nav-item= link_to 'ユーザー一覧', users_path, class: 'nav-link'
+        li.nav-item= link_to '場所一覧', places_path, class: 'nav-link'
     .container
       - if flash.notice.present?
         .alert.alert-success= flash.notice

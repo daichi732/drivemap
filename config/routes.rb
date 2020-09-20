@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root to: 'places#index'
+  resources :users
   resources :places
+  root to: 'staticpages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
