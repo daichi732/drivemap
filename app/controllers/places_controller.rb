@@ -2,7 +2,7 @@ class PlacesController < ApplicationController
   before_action :set_place, only: [:show, :edit, :update, :destroy]
 
   def index
-    @places = Place.all
+    @places = Place.all.recent
   end
 
   def show
@@ -13,7 +13,7 @@ class PlacesController < ApplicationController
   end
 
   def create
-    @place = Place.new(place_params)
+    @place = current_user.places.build(place_params)
     if @place.save
       redirect_to @place, notice: "場所「#{@place.name}」を登録しました。"
     else

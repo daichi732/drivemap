@@ -1,11 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  skip_before_action :login_required, only: [:new, :create]
+  before_action :require_admin, only: [:index, :destroy]
 
   def index
     @users = User.all
   end
 
   def show
+    @places = @user.places.recent
   end
 
   def new
@@ -16,7 +19,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to @user, notice: "ユーザ「#{@user.name}」を登録しました。"
+      session[:user_id] = @user.id
+      redirect_to places_url, notice: "ユーザ「#{@user.name}」を登録しました。"
     else
       flash.now[:notice] = "ユーザが登録できませんでした。"
       render 'new'
@@ -48,5 +52,9 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def require_admin
+    redirect_to places_url unless current_user.admin?
   end
 end

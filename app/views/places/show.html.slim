@@ -15,7 +15,11 @@ table.table.table-hover
     tr  
       th=Place.human_attribute_name(:description)
       td= simple_format(h(@place.description), {}, sanitize: false, wrapper_tag: "div")
-      
+
+    tr  
+      th= "ユーザ名"
+      td= link_to @place.user.name, @place.user
+
     tr  
       th=Place.human_attribute_name(:created_at)
       td=@place.created_at
@@ -24,5 +28,6 @@ table.table.table-hover
       th=Place.human_attribute_name(:updated_at)
       td=@place.updated_at
 
-= link_to '編集', edit_place_path(@place), class: 'btn btn-primary mr-3'
-= link_to '削除', @place, method: :delete, data: { confirm: "タスク「#{@place.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger mr-3'
+- if @place.user == current_user
+  = link_to '編集', edit_place_path(@place), class: 'btn btn-primary mr-3'
+  = link_to '削除', @place, method: :delete, data: { confirm: "場所「#{@place.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger mr-3'

@@ -25,3 +25,27 @@ table.table.table-hover
       td= @user.updated_at
 
 = link_to '編集', edit_user_path, class: 'btn btn-primary mr-3'
+= link_to '削除', user_path(@user), method: :delete, data: { confirm: "ユーザ「#{@user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+
+.mt-5
+  h1 あなたが登録した場所一覧
+
+.mb-3
+table.table.table-hover
+  thead.thead-default
+    tr
+      th= Place.human_attribute_name(:name)
+      th= Place.human_attribute_name(:created_at)
+      th
+  tbody
+    - @places.each do |place|
+      tr
+        td= link_to place.name, place
+        td= place.created_at
+        td
+          - if place.user == current_user
+            = link_to '編集', edit_place_path(place), class: 'btn btn-primary mr-3'
+            = link_to '削除', place, method: :delete, data: { confirm: "場所「#{place.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+          
+
+=link_to '場所を登録', new_place_path, class: 'btn btn-primary'
