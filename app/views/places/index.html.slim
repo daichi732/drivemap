@@ -1,5 +1,14 @@
 h1 場所一覧
 
+= search_form_for @q, class: 'mb-5' do |f|
+  .form-group.row
+    .col-sm-3
+      = f.search_field :name_cont, placeholder: "場所を入力しよう！", class: 'form-control'
+    .col-sm-2
+      = f.submit class: 'btn btn-outline-primary'
+    
+= link_to '場所を登録', new_place_path, class: 'btn btn-primary'
+
 .mb-3
 table.table.table-hover
   thead.thead-default
@@ -18,4 +27,3 @@ table.table.table-hover
             = link_to '削除', place, method: :delete, data: { confirm: "場所「#{place.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
           
 
-=link_to '場所を登録', new_place_path, class: 'btn btn-primary'
