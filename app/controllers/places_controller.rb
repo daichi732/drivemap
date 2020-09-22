@@ -3,7 +3,7 @@ class PlacesController < ApplicationController
 
   def index
     @q = Place.ransack(params[:q])
-    @places = @q.result(distinct: true).recent
+    @places = @q.result(distinct: true).page(params[:page]).recent
   end
 
   def show

@@ -7,14 +7,18 @@ h1 場所一覧
     .col-sm-2
       = f.submit class: 'btn btn-outline-primary'
     
-= link_to '場所を登録', new_place_path, class: 'btn btn-primary'
+= link_to '場所を登録', new_place_path, class: 'btn btn-primary mb-5'
 
-.card-deck
+.mb-3
+  = paginate @places
+  = page_entries_info @places
+  
+.card-columns
   - @places.each do |place|
     .card
-      = link_to place.user.name, place.user, class: "card-title"
+      h1 = link_to place.user.name, place.user, class: "card-title"
       card-img-top
-        = image_tag place.image.variant(resize:'300x300').processed if place.image.attached?
+        = image_tag place.image.variant(resize:'400x400').processed if place.image.attached?
         .card-body
           = link_to place.name, place, class: "card-subtitle"
           .card-text
