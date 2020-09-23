@@ -31,16 +31,6 @@ table.table.table-hover
 .mb-3
   
 .card-columns
-  - @places.each do |place|
-    .card
-      h1 = link_to place.user.name, place.user, class: "card-title"
-      card-img-top
-        = image_tag place.image.variant(resize:'400x400').processed if place.image.attached?
-        .card-body
-          = link_to place.name, place, class: "card-subtitle"
-          .card-text
-            - if place.user == current_user
-              = link_to '編集', edit_place_path(place), class: 'btn btn-primary mr-3'
-              = link_to '削除', place, method: :delete, data: { confirm: "場所「#{place.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'         
+  = render partial: "places/place", collection: @places   
 
 =link_to '場所を登録', new_place_path, class: 'btn btn-primary'
