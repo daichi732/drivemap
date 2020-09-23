@@ -1,6 +1,6 @@
 = form_with(model: [place, comment], url: place_comments_path(@place), method: :post) do |f|
+  = f.datetime_select :date
+  br
   = f.text_area :content, class: "input-mysize", placeholder: "メモを残そう！！"
   br
-  / = f.datetime_field :date
-  br
-  = f.submit "メモを追加", class: "btn btn-outline-dark comment-submit mb-3"
+  = f.submit "メモを追加", class: "btn btn-outline-success comment-submit mt-3"

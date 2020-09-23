@@ -1,4 +1,7 @@
 - comments.order(created_at: :desc).each do |comment|
-  = comment.content
-  / = comment.date
-  = link_to "コメント消す", place_comments_path(comment.place_id, comment.id), method: :delete, remote: true
+  - if comment.user == current_user
+    = comment.date
+    = comment.content
+    = link_to comment_path(comment.id), method: :delete, remote: true do
+      i.fas.fa-trash
+      br

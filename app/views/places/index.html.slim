@@ -27,5 +27,11 @@ h1 場所一覧
               = link_to '削除', place, method: :delete, data: { confirm: "場所「#{place.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
             div id = 'like_#{ place.id }'
               =render 'like', place: place
+
+            - place.comments.each do |comment|
+             - if comment.user == current_user
+              = comment.date
+              = comment.content
+              br
           
 
