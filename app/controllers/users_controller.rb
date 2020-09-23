@@ -8,7 +8,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @places = @user.places.recent
+    @places = @user.places.recent #ユーザが登録した場所一覧表示
+    @likes = Like.where(user_id: @user.id) #いいね一覧表示
   end
 
   def new

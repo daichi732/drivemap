@@ -28,9 +28,16 @@ table.table.table-hover
   = link_to '編集', edit_user_path, class: 'btn btn-primary mr-3'
   = link_to '削除', user_path(@user), method: :delete, data: { confirm: "ユーザ「#{@user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
 
-.mb-3
-  
+//ユーザが登録した場所の一覧表示
 .card-columns
   = render partial: "places/place", collection: @places   
 
-=link_to '場所を登録', new_place_path, class: 'btn btn-primary'
+= link_to '場所を登録', new_place_path, class: 'btn btn-primary'
+
+//ユーザがいいねした場所の一覧表示
+.card-columns
+  - @likes.each do |like|
+    - if place = Place.find_by(id: like.place_id)
+      = render partial: "places/place", locals: {place: place}   
+
+
