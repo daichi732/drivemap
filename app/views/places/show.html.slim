@@ -38,3 +38,9 @@ table.table.table-hover
 
 div id = 'like_#{ @place.id }'
   =render 'like', place: @place
+
+p コメント一覧
+div id = 'comments_area'
+    = render partial: 'comments/index', locals: { comments: @comments }
+    
+= render partial: 'comments/form', locals: { comment: @comment, place: @place }
