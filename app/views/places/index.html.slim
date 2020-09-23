@@ -1,21 +1,20 @@
 h1 場所一覧
 
+= search_form_for @q, class: 'mb-5' do |f|
+  .form-group.row
+    .col-sm-3
+      = f.search_field :name_cont, placeholder: "場所を入力しよう！", class: 'form-control'
+    .col-sm-2
+      = f.submit class: 'btn btn-outline-primary'
+    
+= link_to '場所を登録', new_place_path, class: 'btn btn-primary mb-5'
+
 .mb-3
-table.table.table-hover
-  thead.thead-default
-    tr
-      th= Place.human_attribute_name(:name)
-      th= "ユーザ名"
-      th
-  tbody
-    - @places.each do |place|
-      tr
-        td= link_to place.name, place
-        td= link_to place.user.name, place.user
-        td
-          - if place.user == current_user
-            = link_to '編集', edit_place_path(place), class: 'btn btn-primary mr-3'
-            = link_to '削除', place, method: :delete, data: { confirm: "場所「#{place.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+  = paginate @places
+  = page_entries_info @places
+  
+.card-columns
+  = render partial: "place", collection: @places
+    
           
 
-=link_to '場所を登録', new_place_path, class: 'btn btn-primary'

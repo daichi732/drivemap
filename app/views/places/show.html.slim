@@ -5,6 +5,10 @@ h1 場所の詳細
 table.table.table-hover
   tbody
     tr
+      th=Place.human_attribute_name(:image)
+      td=image_tag @place.image.variant(resize:'300x300').processed if @place.image.attached?
+
+    tr
       th=Place.human_attribute_name(:id)
       td=@place.id
       

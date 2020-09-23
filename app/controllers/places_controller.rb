@@ -2,7 +2,8 @@ class PlacesController < ApplicationController
   before_action :set_place, only: [:show, :edit, :update, :destroy]
 
   def index
-    @places = Place.recent
+    @q = Place.ransack(params[:q])
+    @places = @q.result(distinct: true).page(params[:page]).recent
   end
 
   def show
@@ -41,7 +42,7 @@ class PlacesController < ApplicationController
 
   private
     def place_params
-      params.require(:place).permit(:name, :description)
+      params.require(:place).permit(:name, :description, :image)
     end
 
     def set_place
