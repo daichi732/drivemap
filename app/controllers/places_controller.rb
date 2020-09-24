@@ -4,9 +4,11 @@ class PlacesController < ApplicationController
   def index
     @q = Place.ransack(params[:q])
     @places = @q.result(distinct: true).page(params[:page]).recent
+    gon.places = Place.all
   end
 
   def show
+    gon.place = @place
   end
 
   def new
@@ -42,7 +44,7 @@ class PlacesController < ApplicationController
 
   private
     def place_params
-      params.require(:place).permit(:name, :description, :image)
+      params.require(:place).permit(:name, :description, :image, :address)
     end
 
     def set_place

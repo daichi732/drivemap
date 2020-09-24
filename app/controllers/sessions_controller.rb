@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  skip_before_action :login_required
   def new
   end
 
@@ -17,6 +16,14 @@ class SessionsController < ApplicationController
   def destroy
     reset_session
     redirect_to root_path, notice: 'ログアウトしました。'
+  end
+
+  def guest_login
+    user = User.find_or_create_by(name: 'ゲストユーザー', email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64 
+    end
+    session[:user_id] = user.id
+    redirect_to places_url, notice:  "ゲストユーザーとしてログインしました" 
   end
 
   private

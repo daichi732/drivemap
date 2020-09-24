@@ -1,43 +1,40 @@
 h1 ユーザの詳細
 
-.nav.justify-content-end
-  =link_to '一覧', users_path, class: 'nav-link'
-
+//ユーザ情報
 table.table.table-hover
   tbody
-    tr
-      th= User.human_attribute_name(:id)
-      td= @user.id
     tr
       th= User.human_attribute_name(:name)
       td= @user.name
     tr
-      th= User.human_attribute_name(:email)
-      td= @user.email
-    tr
-      th= User.human_attribute_name(:admin)
-      td= @user.admin? ? 'あり' : 'なし'
-    tr
       th= User.human_attribute_name(:created_at)
       td= @user.created_at
-    tr
-      th= User.human_attribute_name(:updated_at)
-      td= @user.updated_at
       
 - if @user == current_user
   = link_to '編集', edit_user_path, class: 'btn btn-primary mr-3'
   = link_to '削除', user_path(@user), method: :delete, data: { confirm: "ユーザ「#{@user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+  = link_to '場所を登録', new_place_path, class: 'btn btn-primary'
 
-//ユーザが登録した場所の一覧表示
-.card-columns
-  = render partial: "places/place", collection: @places   
 
-= link_to '場所を登録', new_place_path, class: 'btn btn-primary'
+//タブ切り替え
+ul.nav.nav-tabs
+  li.nav-item
+    a href="#user_good_tab" class= "nav-link active" data-toggle= "tab" いいね一覧
+  li.nav-item
+    a href="#user_tab" class= "nav-link" data-toggle= "tab" 自分が登録した場所一覧
+    
+.tab-content
+  //ユーザがいいねした場所の一覧表示
+  div[id = "user_good_tab" class= "tab-pane active"] 
+    .row
+      - @likes.each do |like|
+        - if place = Place.find_by(id: like.place_id)
+          = render partial: "places/place", locals: {place: place}   
 
-//ユーザがいいねした場所の一覧表示
-.card-columns
-  - @likes.each do |like|
-    - if place = Place.find_by(id: like.place_id)
-      = render partial: "places/place", locals: {place: place}   
+  //ユーザが登録した場所の一覧表示
+  div[id = "user_tab" class= "tab-pane"] 
+    .row
+      = render partial: "places/place", collection: @places   
+
 
 
