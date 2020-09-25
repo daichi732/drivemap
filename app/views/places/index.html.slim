@@ -28,10 +28,7 @@ h1 場所一覧
             div id = 'like_#{ place.id }'
               =render 'like', place: place
 
-            - place.comments.each do |comment|
-             - if comment.user == current_user
-              = comment.date
-              = comment.content
-              br
+            = render partial: 'comment', collection: place.comments.order(created_at: :desc)
+
           
 

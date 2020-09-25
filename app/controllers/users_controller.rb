@@ -23,7 +23,6 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to places_url, notice: "ユーザ「#{@user.name}」を登録しました。"
     else
-      flash.now[:notice] = "ユーザが登録できませんでした。"
       render 'new'
     end
   end
@@ -35,7 +34,6 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to @user, notice: "ユーザ「#{@user.name}」を更新しました。"
     else
-      flash.now[:notice] = "ユーザが更新できませんでした。"
       render 'edit'
     end
   end

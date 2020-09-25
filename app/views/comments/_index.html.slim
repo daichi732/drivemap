@@ -1,5 +1,5 @@
 - comments.order(created_at: :desc).each do |comment|
-  - if comment.user == current_user
+  - if current_user.own?(comment)
     = comment.date
     = comment.content
     = link_to comment_path(comment.id), method: :delete, remote: true do
