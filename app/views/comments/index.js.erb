@@ -1,0 +1,4 @@
+$("#comments_area").html("<%= j(render 'index', { comments: @comment.place.comments }) %>")
+
+$("textarea").val('')
+$("datetime_select").val('')

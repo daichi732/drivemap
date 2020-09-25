@@ -1,0 +1,7 @@
+- comments.order(created_at: :desc).each do |comment|
+  - if current_user.own?(comment)
+    = comment.date
+    = comment.content
+    = link_to comment_path(comment.id), method: :delete, remote: true do
+      i.fas.fa-trash
+      br

@@ -7,6 +7,8 @@ class PlacesController < ApplicationController
   end
 
   def show
+    @comment = Comment.new #render: 'form'で渡す
+    @comments = @place.comments.order(created_at: :desc) #render: 'index'で渡す
   end
 
   def new
