@@ -41,3 +41,19 @@ table.table.table-hover
       = render partial: "places/place", locals: {place: place}   
 
 
+.mb-3
+table.table.table-hover
+  thead.thead-default
+    tr
+      th= Place.human_attribute_name(:name)
+      th= Place.human_attribute_name(:created_at)
+      th
+  tbody
+    - @places.each do |place|
+      tr
+        td= link_to place.name, place
+        td= place.created_at
+        td
+          - if current_user.own?(place)
+            = link_to '編集', edit_place_path(place), class: 'btn btn-primary mr-3'
+            = link_to '削除', place, method: :delete, data: { confirm: "場所「#{place.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
