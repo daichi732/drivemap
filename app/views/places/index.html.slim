@@ -2,10 +2,20 @@ h1 場所一覧
 
 = search_form_for @q, class: 'mb-5' do |f|
   .form-group.row
-    .col-sm-3
-      = f.search_field :name_cont, placeholder: "場所を入力しよう！", class: 'form-control'
-    .col-sm-2
-      = f.submit class: 'btn btn-outline-primary'
+    = f.label :name_cont, '名称', class: 'col-sm-2 col-form-label'
+    .col-sm-10
+      = f.search_field :name_cont, class: 'form-control'
+  .form-group.row
+    = f.label :genre, '種類', class: 'col-sm-2 col-form-label'
+    .col-sm-10
+      = f.radio_button :genre_eq, 0
+      = f.label :food
+      = f.radio_button :genre_eq, 1
+      = f.label :view
+      = f.radio_button :genre_eq, 2
+      = f.label :amusement
+
+  = f.submit class: 'btn btn-outline-primary'
     
 = link_to '場所を登録', new_place_path, class: 'btn btn-primary mb-5'
 
@@ -39,16 +49,23 @@ javascript:
         lng: markerData[i]['longitude']
       });
       
-      if(markerData[i]['address'] == "渋谷駅"){
+      if(markerData[i]['genre'] == "food"){
         marker[i] = new google.maps.Marker({
         position: markerLatLng,
         map: map,
         icon: 'http://maps.google.com/mapfiles/kml/pal2/icon32.png'
       });
+      }else if(markerData[i]['genre'] == "view"){
+        marker[i] = new google.maps.Marker({
+        position: markerLatLng,
+        map: map,
+        icon: 'http://maps.google.com/mapfiles/kml/pal3/icon29.png'
+      });
       }else{
         marker[i] = new google.maps.Marker({
         position: markerLatLng,
-        map: map
+        map: map,
+        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon49.png'
       });
       }
 
@@ -79,4 +96,3 @@ javascript:
     
 
           
-

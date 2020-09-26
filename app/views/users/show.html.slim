@@ -30,16 +30,23 @@ javascript:
         lng: markerData[i]['longitude']
       });
       
-      if(markerData[i]['address'] == "渋谷駅"){
+      if(markerData[i]['genre'] == "food"){
         marker[i] = new google.maps.Marker({
         position: markerLatLng,
         map: map,
         icon: 'http://maps.google.com/mapfiles/kml/pal2/icon32.png'
       });
+      }else if(markerData[i]['genre'] == "view"){
+        marker[i] = new google.maps.Marker({
+        position: markerLatLng,
+        map: map,
+        icon: 'http://maps.google.com/mapfiles/kml/pal3/icon29.png'
+      });
       }else{
         marker[i] = new google.maps.Marker({
         position: markerLatLng,
-        map: map
+        map: map,
+        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon49.png'
       });
       }
 

@@ -4,7 +4,9 @@
     card-img-top
       = image_tag place.image.variant(resize:'300x300').processed if place.image.attached?
       .card-body
-        = link_to place.name, place, class: "card-subtitle"
+        p = link_to place.name, place, class: "card-subtitle"
+        span 種類:
+        span = place.genre
         .card-text
           - if place.user == current_user
             = link_to '編集', edit_place_path(place), class: 'btn btn-primary mr-3'

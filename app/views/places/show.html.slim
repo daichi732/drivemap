@@ -14,12 +14,16 @@ h1 場所の詳細
         table.table.table-hover
           tbody
             tr  
-              th=Place.human_attribute_name(:description)
+              th= Place.human_attribute_name(:description)
               td= simple_format(h(@place.description), {}, sanitize: false, wrapper_tag: "div")
             
             tr  
               th= "ユーザ名"
               td= link_to @place.user.name, @place.user
+
+            tr  
+              th= Place.human_attribute_name(:genre)
+              td= @place.genre
 
         - if @place.user == current_user
           = link_to '編集', edit_place_path(@place), class: 'btn btn-primary mr-3'
@@ -61,5 +65,3 @@ h1 場所の詳細
                 map: map
               });
             }
-
-
