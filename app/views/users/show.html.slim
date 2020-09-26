@@ -1,59 +1,103 @@
 h1 ユーザの詳細
 
-.nav.justify-content-end
-  =link_to '一覧', users_path, class: 'nav-link'
+#map style='height: 400px; width: 1100px;'
 
+- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
+script{ async src=google_api }
+
+javascript:
+
+  let map;
+  let marker = []; // マーカーを複数表示させたいので、配列化
+  let infoWindow = []; // 吹き出しを複数表示させたいので、配列化
+  let markerData = gon.places; // コントローラーで定義したインスタンス変数を変数に代入
+
+  function initMap() {
+    geocoder = new google.maps.Geocoder()
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: { lat: 35.6585, lng: 139.7486 }, // 東京タワーを中心
+      zoom: 9,
+    });
+
+    // 繰り返し処理でマーカーと吹き出しを複数表示させる
+    for (var i = 0; i < markerData.length; i++) {
+      let id = markerData[i]['id']
+
+      // 各地点の緯度経度を算出
+      markerLatLng = new google.maps.LatLng({
+        lat: markerData[i]['latitude'],
+        lng: markerData[i]['longitude']
+      });
+      
+      if(markerData[i]['genre'] == "food"){
+        marker[i] = new google.maps.Marker({
+        position: markerLatLng,
+        map: map,
+        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon32.png'
+      });
+      }else if(markerData[i]['genre'] == "view"){
+        marker[i] = new google.maps.Marker({
+        position: markerLatLng,
+        map: map,
+        icon: 'http://maps.google.com/mapfiles/kml/pal3/icon29.png'
+      });
+      }else{
+        marker[i] = new google.maps.Marker({
+        position: markerLatLng,
+        map: map,
+        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon49.png'
+      });
+      }
+
+      
+      // 各地点の吹き出しを作成、jsではカラムが配列になるイメージ
+      infoWindow[i] = new google.maps.InfoWindow({
+      content: `<a href='/places/${ id }'>${ markerData[i]['address'] }</a>`
+      });
+
+      // マーカーにクリックイベントを追加,初めはopen状態にする
+      markerEvent(i);
+    }
+  }
+
+  // マーカーをクリックしたら吹き出しを表示
+  function markerEvent(i) {
+    marker[i].addListener('click', function () {
+      infoWindow[i].open(map, marker[i]);
+    });
+  }
+//ユーザ情報
 table.table.table-hover
   tbody
-    tr
-      th= User.human_attribute_name(:id)
-      td= @user.id
     tr
       th= User.human_attribute_name(:name)
       td= @user.name
     tr
-      th= User.human_attribute_name(:email)
-      td= @user.email
-    tr
-      th= User.human_attribute_name(:admin)
-      td= @user.admin? ? 'あり' : 'なし'
-    tr
       th= User.human_attribute_name(:created_at)
       td= @user.created_at
-    tr
-      th= User.human_attribute_name(:updated_at)
-      td= @user.updated_at
       
 - if @user == current_user
   = link_to '編集', edit_user_path, class: 'btn btn-primary mr-3'
   = link_to '削除', user_path(@user), method: :delete, data: { confirm: "ユーザ「#{@user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+  = link_to '場所を登録', new_place_path, class: 'btn btn-primary'
 
-//ユーザが登録した場所の一覧表示
-.card-columns
-  = render partial: "places/place", collection: @places   
-
-= link_to '場所を登録', new_place_path, class: 'btn btn-primary'
-
-//ユーザがいいねした場所の一覧表示
-.card-columns
-  - @likes.each do |like|
-    - if place = Place.find_by(id: like.place_id)
-      = render partial: "places/place", locals: {place: place}   
-
-
-.mb-3
-table.table.table-hover
-  thead.thead-default
-    tr
-      th= Place.human_attribute_name(:name)
-      th= Place.human_attribute_name(:created_at)
-      th
-  tbody
-    - @places.each do |place|
-      tr
-        td= link_to place.name, place
-        td= place.created_at
-        td
-          - if current_user.own?(place)
-            = link_to '編集', edit_place_path(place), class: 'btn btn-primary mr-3'
-            = link_to '削除', place, method: :delete, data: { confirm: "場所「#{place.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+//タブ切り替え
+ul.nav.nav-tabs
+  li.nav-item
+    a href="#user_good_tab" class= "nav-link active" data-toggle= "tab" いいね一覧
+  li.nav-item
+    a href="#user_tab" class= "nav-link" data-toggle= "tab" 自分が登録した場所一覧
+    
+.tab-content
+  //ユーザがいいねした場所の一覧表示
+  div[id = "user_good_tab" class= "tab-pane active"] 
+    .row
+      - @likes.each do |like|
+        - if place = Place.find_by(id: like.place_id)
+          = render partial: 'places/place', locals: {place: place}
+          
+  //ユーザが登録した場所の一覧表示
+  div[id = "user_tab" class= "tab-pane"] 
+    .row
+      = render partial: 'places/place', collection: @places

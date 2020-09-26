@@ -1,20 +1,42 @@
-- if place.errors.present?
-  ul#error_explanation
-    - place.errors.full_messages.each do |message|
-      li= message
-    
 
-=form_with model: place, local: true do |f|
-    .form-group
-        =f.label :name
-        =f.text_field :name, class: 'form-control', id: 'place_name'
-        
-    .form-group
-        =f.label :description
-        =f.text_area :description, class: 'form-control', id: 'place_description'
-        
-    .form-group
-        =f.label :image
-        =f.file_field :image, class: 'form-control'
+.col-5.mr-auto.ml-auto
+	- if place.errors.present?
+		ul#error_explanation
+			- place.errors.full_messages.each do |message|
+				li= message
+			
 
-    =f.submit nil, class: 'btn btn-primary'
+	=form_with model: place, local: true do |f|
+			.form-group
+				=f.label :name, class: 'text-primary'
+				span.badge.badge-danger.ml-2 ※必須
+				=f.text_field :name, class: 'form-control', id: 'place_name'
+					
+			.form-group
+				=f.label :description, class: 'text-primary'
+				span.badge.badge-success.ml-2 任意
+				=f.text_area :description, class: 'form-control', id: 'place_description'
+					
+			.form-group
+				=f.label :image, class: 'text-primary'
+				span.badge.badge-danger.ml-2 ※必須
+				br
+				=f.file_field :image
+
+			.form-group
+				=f.label :genre, class: 'text-primary'
+				span.badge.badge-danger.ml-2 ※必須
+				br
+				=f.radio_button :genre, :food
+				=f.label :food
+				=f.radio_button :genre, :view
+				=f.label :view
+				=f.radio_button :genre, :amusement
+				=f.label :amusement
+
+			.form-group
+					=f.label :address, class: 'text-primary'
+					span.badge.badge-danger.ml-2 ※必須
+					=f.text_field :address, class: 'form-control'
+
+			=f.submit nil, class: 'btn btn-primary'

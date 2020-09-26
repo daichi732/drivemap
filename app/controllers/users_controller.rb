@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :login_required, only: [:new, :create]
+  before_action :login_required, only: [:index, :show, :edit, :update, :destroy]
   before_action :require_admin, only: [:index, :destroy]
 
   def index
@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   def show
     @places = @user.places.recent #ユーザが登録した場所一覧表示
     @likes = Like.where(user_id: @user.id) #いいね一覧表示
+    place_ids = @likes.pluck(:place_id) # いいねしたLikeデータのplace_idカラムの集合
+    gon.places = Place.where(id: place_ids)
   end
 
   def new

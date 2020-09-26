@@ -15,6 +15,8 @@ ja:
         name: 名称
         description: 感想
         image: 画像
+        genre: 種類
+        address: 住所
         created_at: 登録日時
         updated_at: 更新日時
       user:

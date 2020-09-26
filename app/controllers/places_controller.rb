@@ -4,11 +4,13 @@ class PlacesController < ApplicationController
   def index
     @q = Place.ransack(params[:q])
     @places = @q.result(distinct: true).page(params[:page]).recent
+    gon.places = Place.all
   end
 
   def show
     @comment = Comment.new #render: 'form'で渡す
     @comments = @place.comments.order(created_at: :desc) #render: 'index'で渡す
+    gon.place = @place
   end
 
   def new
@@ -44,7 +46,7 @@ class PlacesController < ApplicationController
 
   private
     def place_params
-      params.require(:place).permit(:name, :description, :image)
+      params.require(:place).permit(:name, :description, :image, :address, :genre)
     end
 
     def set_place

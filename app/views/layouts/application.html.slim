@@ -2,14 +2,15 @@ doctype html
 html
   head
     title
-      | Drivemap
+      | DriveMap
     = csrf_meta_tags
     = csp_meta_tag
+    = include_gon
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
   body
     .app-title.navbar.navbar-expand-md.navbar-light.bg-light
-      .navbar-brand Drivemap
+      .navbar-brand DriveMap
 
       ul.navbar-nav.ml-auto
         - if current_user
@@ -27,3 +28,6 @@ html
         .alert.alert-success= flash.notice
       .mt-5
         = yield
+
+    .footer.mt-5
+      p.text-muted.text-center COPYRIGHT © DrivaMap. ALL RIGHTS RESERVED.

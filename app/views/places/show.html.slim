@@ -2,46 +2,72 @@ h1 場所の詳細
 
 .nav.justify-content-end
   =link_to '一覧', places_path, class: 'nav-link'
-table.table.table-hover
-  tbody
-    tr
-      th=Place.human_attribute_name(:image)
-      td=image_tag @place.image.variant(resize:'300x300').processed if @place.image.attached?
 
-    tr
-      th=Place.human_attribute_name(:id)
-      td=@place.id
-      
-    tr  
-      th=Place.human_attribute_name(:name)
-      td=@place.name
-      
-    tr  
-      th=Place.human_attribute_name(:description)
-      td= simple_format(h(@place.description), {}, sanitize: false, wrapper_tag: "div")
+.card
+  .card-body
+    .row
+      .col-6.text-center
+        h1.card-title
+          = @place.name
+        card-img-top
+          = image_tag @place.image.variant(resize:'300x300').processed if @place.image.attached?
+        table.table.table-hover
+          tbody
+            tr  
+              th= Place.human_attribute_name(:description)
+              td= simple_format(h(@place.description), {}, sanitize: false, wrapper_tag: "div")
+            
+            tr  
+              th= "ユーザ名"
+              td= link_to @place.user.name, @place.user
 
-    tr  
-      th= "ユーザ名"
-      td= link_to @place.user.name, @place.user
+            tr  
+              th= Place.human_attribute_name(:genre)
+              td= @place.genre
 
-    tr  
-      th=Place.human_attribute_name(:created_at)
-      td=@place.created_at
-      
-    tr  
-      th=Place.human_attribute_name(:updated_at)
-      td=@place.updated_at
+        - if current_user.own?(@place)
+          = link_to '編集', edit_place_path(@place), class: 'btn btn-primary mr-3'
+          = link_to '削除', @place, method: :delete, data: { confirm: "場所「#{@place.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger mr-3'
+        
+        div id = 'like_#{ @place.id }'
+          =render 'like', place: @place
 
-- if current_user.own?(@place)
-  = link_to '編集', edit_place_path(@place), class: 'btn btn-primary mr-3'
-  = link_to '削除', @place, method: :delete, data: { confirm: "場所「#{@place.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger mr-3'
-
-div id = 'like_#{ @place.id }'
-  =render 'like', place: @place
-
-
-p コメント一覧
-div id = 'comments_area'
-    = render partial: 'comments/index', locals: { comments: @comments }
+        p コメント一覧
+        div id = 'comments_area'
+          = render partial: 'comments/index', locals: { comments: @comments }
     
-= render partial: 'comments/form', locals: { comment: @comment, place: @place }
+        = render partial: 'comments/form', locals: { comment: @comment, place: @place }
+
+      .col-6
+        - if @place.address.present?
+
+          #map style='height: 400px; width: 400px;'
+
+          - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
+          script{ async src=google_api }
+
+          javascript:
+
+            let map;
+
+            function initMap() {
+              geocoder = new google.maps.Geocoder()
+
+              map = new google.maps.Map(document.getElementById('map'), {
+                // コントローラーで定義した変数から緯度経度を呼び出し、マップの中心に表示
+                center: {
+                  lat: gon.place.latitude,
+                  lng: gon.place.longitude
+                },
+                zoom: 12,
+              });
+
+              marker = new google.maps.Marker({
+                // コントローラーで定義した変数から緯度経度を呼び出し、マーカーを立てる
+                position: {
+                  lat: gon.place.latitude,
+                  lng: gon.place.longitude
+                },
+                map: map
+              });
+            }
