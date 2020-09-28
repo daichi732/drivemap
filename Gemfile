@@ -79,3 +79,6 @@ gem 'jquery-rails'
 gem 'dotenv-rails'
 gem 'gon'
 gem 'geocoder'
+
+gem 'chartkick'
+gem 'groupdate'

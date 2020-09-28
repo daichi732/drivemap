@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: session_params[:email])
 
     if user&.authenticate(session_params[:password])
-      session[:user_id] = user.id
+      log_in(user)
       redirect_to places_path, notice: 'ログインしました。'
     else
       render 'new'
@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
     user = User.find_or_create_by(name: 'ゲストユーザー', email: 'guest@example.com') do |user|
       user.password = SecureRandom.urlsafe_base64 
     end
-    session[:user_id] = user.id
+    log_in(user)
     redirect_to places_url, notice:  "ゲストユーザーとしてログインしました" 
   end
 

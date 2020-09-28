@@ -1,5 +1,8 @@
 class Place < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }
+  validate :image_presence
+  validates :genre, presence: true
+  validates :address, presence: true
   belongs_to :user
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -11,5 +14,15 @@ class Place < ApplicationRecord
 
   def liked_by?(user)
     likes.where(user_id: user.id).exists?
+  end
+
+  def image_presence
+    if image.attached?
+      if !image.content_type.in?(%('image/jpeg image/png'))
+        errors.add(:image, 'にはjpegまたはpngファイルを添付してください')
+      end
+    else
+      errors.add(:image, 'ファイルを添付してください')
+    end
   end
 end

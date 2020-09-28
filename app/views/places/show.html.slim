@@ -16,14 +16,18 @@ h1 場所の詳細
             tr  
               th= Place.human_attribute_name(:description)
               td= simple_format(h(@place.description), {}, sanitize: false, wrapper_tag: "div")
-            
             tr  
               th= "ユーザ名"
               td= link_to @place.user.name, @place.user
-
             tr  
               th= Place.human_attribute_name(:genre)
               td= @place.genre
+            tr  
+              th= Place.human_attribute_name(:created_at)
+              td= l @place.created_at, format: :long
+            tr  
+              th= Place.human_attribute_name(:updated_at)
+              td= l @place.updated_at, format: :long
 
         - if current_user.own?(@place)
           = link_to '編集', edit_place_path(@place), class: 'btn btn-primary mr-3'
@@ -32,7 +36,7 @@ h1 場所の詳細
         div id = 'like_#{ @place.id }'
           =render 'like', place: @place
 
-        p コメント一覧
+        p ここに行く日時をメモしよう！
         div id = 'comments_area'
           = render partial: 'comments/index', locals: { comments: @comments }
     
@@ -40,34 +44,4 @@ h1 場所の詳細
 
       .col-6
         - if @place.address.present?
-
-          #map style='height: 400px; width: 400px;'
-
-          - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
-          script{ async src=google_api }
-
-          javascript:
-
-            let map;
-
-            function initMap() {
-              geocoder = new google.maps.Geocoder()
-
-              map = new google.maps.Map(document.getElementById('map'), {
-                // コントローラーで定義した変数から緯度経度を呼び出し、マップの中心に表示
-                center: {
-                  lat: gon.place.latitude,
-                  lng: gon.place.longitude
-                },
-                zoom: 12,
-              });
-
-              marker = new google.maps.Marker({
-                // コントローラーで定義した変数から緯度経度を呼び出し、マーカーを立てる
-                position: {
-                  lat: gon.place.latitude,
-                  lng: gon.place.longitude
-                },
-                map: map
-              });
-            }
+          = render 'places/map_show'

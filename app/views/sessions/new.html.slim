@@ -1,10 +1,12 @@
-h1 ログイン
-
-= form_with scope: :session, local: true do |f|
-    .form-group
-        =f.label :email
-        =f.text_field :email, class: 'form-control', id: 'session_email'
-    .form-group
-        =f.label :passoword
-        =f.password_field :password, class: 'form-control', id: 'session_password'
-    =f.submit 'ログインする', class: 'btn btn-primary'
+h1.text-center ログイン
+.col-5.mr-auto.ml-auto
+	= form_with scope: :session, local: true do |f|
+			.form-group
+					=f.label :email, class: 'text-primary'
+					span.badge.badge-danger.ml-2 ※必須
+					=f.text_field :email, class: 'form-control', id: 'session_email'
+			.form-group
+					=f.label :passoword, class: 'text-primary'
+					span.badge.badge-danger.ml-2 ※必須
+					=f.password_field :password, class: 'form-control', id: 'session_password'
+			=f.submit 'ログインする', class: 'btn btn-primary'

@@ -1,10 +1,10 @@
 .col-xs-12.col-md-6.col-lg-4
   .card.mt-1.mb-1.ml-1.mr-1.bg-light
-    h1 = link_to place.user.name, place.user, class: "card-title"
+    h1 = link_to place.name, place, class: "card-title"
     card-img-top
       = image_tag place.image.variant(resize:'300x300').processed if place.image.attached?
       .card-body
-        p = link_to place.name, place, class: "card-subtitle"
+        p = link_to place.user.name, place.user, class: "card-subtitle"
         span 種類:
         span = place.genre
         .card-text
@@ -13,6 +13,6 @@
             = link_to '削除', place, method: :delete, data: { confirm: "場所「#{place.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
 
           div id = 'like_#{ place.id }'
-            = render 'like', place: place
+            = render partial: 'places/like', locals: { place: place }
 
-          = render 'comment', collection: place.comments.order(created_at: :desc)
+          = render partial: 'places/comment', collection: place.comments.order(created_at: :desc)

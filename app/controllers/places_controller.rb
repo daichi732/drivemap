@@ -1,10 +1,11 @@
 class PlacesController < ApplicationController
   before_action :set_place, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update]
 
   def index
     @q = Place.ransack(params[:q])
     @places = @q.result(distinct: true).page(params[:page]).recent
-    gon.places = Place.all
+    gon.places = @q.result(distinct: true) #検索結果の全ページマップ表示用、検索なければ全表示で検索あればそれが出る
   end
 
   def show
@@ -22,7 +23,6 @@ class PlacesController < ApplicationController
     if @place.save
       redirect_to @place, notice: "場所「#{@place.name}」を登録しました。"
     else
-      flash.now[:notice] = "場所が登録できませんでした。"
       render 'new'
     end
   end
@@ -34,7 +34,6 @@ class PlacesController < ApplicationController
     if @place.update(place_params)
       redirect_to @place, notice: "場所「#{@place.name}」を更新しました。"
     else
-      flash.now[:notice] = "場所が更新できませんでした。"
       render 'edit'
     end
   end
@@ -51,5 +50,9 @@ class PlacesController < ApplicationController
 
     def set_place
       @place = Place.find(params[:id])
+    end
+
+    def correct_user
+      redirect_to places_url unless @place.user == current_user
     end
 end

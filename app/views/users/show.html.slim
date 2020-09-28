@@ -1,72 +1,6 @@
-h1 ユーザの詳細
+p 行きたい場所に いいね！ を押して自分だけのドライブマップを作ろう！予定時間を入力してスケジュールを確認しよう！
 
-#map style='height: 400px; width: 1100px;'
-
-- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
-script{ async src=google_api }
-
-javascript:
-
-  let map;
-  let marker = []; // マーカーを複数表示させたいので、配列化
-  let infoWindow = []; // 吹き出しを複数表示させたいので、配列化
-  let markerData = gon.places; // コントローラーで定義したインスタンス変数を変数に代入
-
-  function initMap() {
-    geocoder = new google.maps.Geocoder()
-
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: { lat: 35.6585, lng: 139.7486 }, // 東京タワーを中心
-      zoom: 9,
-    });
-
-    // 繰り返し処理でマーカーと吹き出しを複数表示させる
-    for (var i = 0; i < markerData.length; i++) {
-      let id = markerData[i]['id']
-
-      // 各地点の緯度経度を算出
-      markerLatLng = new google.maps.LatLng({
-        lat: markerData[i]['latitude'],
-        lng: markerData[i]['longitude']
-      });
-      
-      if(markerData[i]['genre'] == "food"){
-        marker[i] = new google.maps.Marker({
-        position: markerLatLng,
-        map: map,
-        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon32.png'
-      });
-      }else if(markerData[i]['genre'] == "view"){
-        marker[i] = new google.maps.Marker({
-        position: markerLatLng,
-        map: map,
-        icon: 'http://maps.google.com/mapfiles/kml/pal3/icon29.png'
-      });
-      }else{
-        marker[i] = new google.maps.Marker({
-        position: markerLatLng,
-        map: map,
-        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon49.png'
-      });
-      }
-
-      
-      // 各地点の吹き出しを作成、jsではカラムが配列になるイメージ
-      infoWindow[i] = new google.maps.InfoWindow({
-      content: `<a href='/places/${ id }'>${ markerData[i]['address'] }</a>`
-      });
-
-      // マーカーにクリックイベントを追加,初めはopen状態にする
-      markerEvent(i);
-    }
-  }
-
-  // マーカーをクリックしたら吹き出しを表示
-  function markerEvent(i) {
-    marker[i].addListener('click', function () {
-      infoWindow[i].open(map, marker[i]);
-    });
-  }
+= render 'users/map_likes'
 //ユーザ情報
 table.table.table-hover
   tbody
@@ -75,29 +9,68 @@ table.table.table-hover
       td= @user.name
     tr
       th= User.human_attribute_name(:created_at)
-      td= @user.created_at
+      td= l @user.created_at, format: :long
       
 - if @user == current_user
   = link_to '編集', edit_user_path, class: 'btn btn-primary mr-3'
   = link_to '削除', user_path(@user), method: :delete, data: { confirm: "ユーザ「#{@user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
-  = link_to '場所を登録', new_place_path, class: 'btn btn-primary'
+  br
+  = link_to '場所を登録', new_place_path, class: 'btn btn-primary mt-3'
 
-//タブ切り替え
-ul.nav.nav-tabs
+//タブ切り替えリスト
+ul.nav.nav-tabs.nav-fill id= "myTab" role="tablist"
   li.nav-item
-    a href="#user_good_tab" class= "nav-link active" data-toggle= "tab" いいね一覧
+    a class="nav-link active" id="like_place-tab" data-toggle="tab" href="#like_place" role="tab" aria-controls="like_place" aria-selected="true" いいね一覧
   li.nav-item
-    a href="#user_tab" class= "nav-link" data-toggle= "tab" 自分が登録した場所一覧
-    
-.tab-content
-  //ユーザがいいねした場所の一覧表示
-  div[id = "user_good_tab" class= "tab-pane active"] 
+    a class="nav-link" id="user_place-tab" data-toggle="tab" href="#user_place" role="tab" aria-controls="user_place" aria-selected="false"過去の登録一覧
+  li.nav-item
+    a class="nav-link" id="graph_info-tab" data-toggle="tab" href="#graph_info" role="tab" aria-controls="graph_info" aria-selected="false" データ
+
+.tab-content id= "myTabContent"
+  //いいね一覧表示のタブ
+  div class="tab-pane fade show active" id="like_place" role="tabpanel" aria-labelledby="like_place-tab"
     .row
       - @likes.each do |like|
         - if place = Place.find_by(id: like.place_id)
-          = render partial: 'places/place', locals: {place: place}
-          
-  //ユーザが登録した場所の一覧表示
-  div[id = "user_tab" class= "tab-pane"] 
+          = render partial: 'places/place', locals: { place: place }
+
+  //過去の登録一覧表示のタブ
+  div class="tab-pane fade" id="user_place" role="tabpanel" aria-labelledby="user_place-tab"
     .row
       = render partial: 'places/place', collection: @places
+
+  //データ情報のタブ
+  div class="tab-pane fade" id="graph_info" role="tabpanel" aria-labelledby="graph_info-tab"
+    .card.card-body.my-3
+      h2 いいねした場所の種類
+      .container
+        .row
+          .col-5
+            = column_chart @like_places.group(:genre).count, xtitle: "種類", ytitle: "個数", label: "個数"
+          table.table.table-hover.col-5
+            thead.thead-default.bg-info
+              tr
+                th= Place.human_attribute_name(:genre)
+                th 個数
+            tbody
+              tr
+                th food
+                td= @like_places.where(genre: 0).count
+              tr
+                th view
+                td= @like_places.where(genre: 1).count
+              tr
+                th amusement
+                td= @like_places.where(genre: 2).count
+
+    .card.card-body.my-3
+      h2 メモで残した今月の予定の数
+      .container
+        .row
+          = column_chart @comments.group_by_day_of_month(:date).count, xtitle: "日付", ytitle: "個数", label: "個数"
+
+    .card.card-body.my-3
+      h2 メモで残した今年の予定の数
+      .container
+        .row
+          = column_chart @comments.group_by_month_of_year(:date).count, xtitle: "月", ytitle: "個数", label: "個数"

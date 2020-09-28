@@ -1,5 +1,5 @@
 = form_with( model: [place, comment], url: place_comments_path(@place), method: :post ) do |f|
-  = f.datetime_select :date
+  = f.datetime_field :date
   br
   = f.text_area :content, class: "input-mysize", placeholder: "メモを残そう！！"
   br

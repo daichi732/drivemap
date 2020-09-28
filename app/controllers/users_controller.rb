@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :login_required, only: [:index, :show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update]
   before_action :require_admin, only: [:index, :destroy]
 
   def index
@@ -11,7 +12,9 @@ class UsersController < ApplicationController
     @places = @user.places.recent #ユーザが登録した場所一覧表示
     @likes = Like.where(user_id: @user.id) #いいね一覧表示
     place_ids = @likes.pluck(:place_id) # いいねしたLikeデータのplace_idカラムの集合
-    gon.places = Place.where(id: place_ids)
+    @like_places = Place.where(id: place_ids)
+    gon.places = @like_places
+    @comments = Comment.where(user_id: @user.id)
   end
 
   def new
@@ -22,7 +25,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      session[:user_id] = @user.id
+      log_in(@user)
       redirect_to places_url, notice: "ユーザ「#{@user.name}」を登録しました。"
     else
       render 'new'
@@ -53,6 +56,10 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def correct_user
+    redirect_to places_url unless @user == current_user
   end
 
   def require_admin
