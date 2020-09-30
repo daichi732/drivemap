@@ -7,7 +7,11 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
 
-  def own?(object)
-    self == object.user
+  def own?(place)
+    self == place.user
+  end
+
+  def own?(comment)
+    self == comment.user
   end
 end

@@ -53,6 +53,6 @@ class PlacesController < ApplicationController
     end
 
     def correct_user
-      redirect_to places_url unless @place.user == current_user
+      redirect_to places_url unless current_user.own?(@place)
     end
 end
