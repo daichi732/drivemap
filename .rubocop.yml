@@ -1,0 +1,39 @@
+inherit_from: .rubocop_todo.yml
+
+# 日本語でのコメントを許可
+AsciiComments:
+  Enabled: false
+
+AllCops:
+  # 除外するディレクトリを設定。例えばschemaやmigrationファイルなどは書き直すことが少ないため、検知対象外に
+  Exclude:
+    - bin/*
+    - lib/*
+    - db/schema.rb
+    - node_modules/**/*
+    - db/migrate/*
+    - vendor/**/*
+    - test/**
+  # Rails向けのチェックを行う
+  Rails:
+    enabled: true
+
+# "Missing top-level class documentation comment."を無効
+Style/Documentation:
+  Enabled: false
+
+# "Prefer single-quoted strings when you don't need string interpolation or special symbols."を無効
+Style/StringLiterals:
+  Enabled: false
+
+# "Line is too long"を無効
+Metrics/LineLength:
+  Enabled: false
+
+#'frozen_string_literal: true'を無効
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+#def own?(place),def own?(comment)のため無効
+Lint/DuplicateMethods:
+  Enabled: false

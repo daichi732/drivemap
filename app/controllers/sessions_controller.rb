@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
-  def new
-  end
+  def new; end
 
   def create
     user = User.find_by(email: session_params[:email])
@@ -19,11 +18,11 @@ class SessionsController < ApplicationController
   end
 
   def guest_login
-    user = User.find_or_create_by(name: 'ゲストユーザー', email: 'guest@example.com') do |user|
-      user.password = SecureRandom.urlsafe_base64 
+    user = User.find_or_create_by(name: 'ゲストユーザー', email: 'guest@example.com') do |guest_user|
+      guest_user.password = SecureRandom.urlsafe_base64
     end
     log_in(user)
-    redirect_to places_url, notice:  "ゲストユーザーとしてログインしました" 
+    redirect_to places_url, notice: "ゲストユーザーとしてログインしました"
   end
 
   private

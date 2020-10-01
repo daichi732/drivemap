@@ -4,12 +4,12 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   root to: 'tops#home'
   post '/guest', to: 'sessions#guest_login'
-  
+
   resources :users do
-    resource :likes, only: [:create, :destroy]
+    resource :likes, only: %i[create destroy]
   end
   resources :places do
-    resource :likes, only: [:create, :destroy]
-    resources :comments, only: [:create, :destroy], shallow: true
+    resource :likes, only: %i[create destroy]
+    resources :comments, only: %i[create destroy], shallow: true
   end
 end

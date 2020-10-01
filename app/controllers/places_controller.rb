@@ -1,16 +1,16 @@
 class PlacesController < ApplicationController
-  before_action :set_place, only: [:show, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :set_place, only: %i[show edit update destroy]
+  before_action :correct_user, only: %i[edit update]
 
   def index
     @q = Place.ransack(params[:q])
     @places = @q.result(distinct: true).page(params[:page]).recent
-    gon.places = @q.result(distinct: true) #検索結果の全ページマップ表示用、検索なければ全表示で検索あればそれが出る
+    gon.places = @q.result(distinct: true) # 検索結果の全ページマップ表示用、検索なければ全表示で検索あればそれが出る
   end
 
   def show
-    @comment = Comment.new #render: 'form'で渡す
-    @comments = @place.comments.order(created_at: :desc) #render: 'index'で渡す
+    @comment = Comment.new # render: 'form'で渡す
+    @comments = @place.comments.order(created_at: :desc) # render: 'index'で渡す
     gon.place = @place
   end
 
@@ -27,8 +27,7 @@ class PlacesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @place.update(place_params)
@@ -44,15 +43,16 @@ class PlacesController < ApplicationController
   end
 
   private
-    def place_params
-      params.require(:place).permit(:name, :description, :image, :address, :genre)
-    end
 
-    def set_place
-      @place = Place.find(params[:id])
-    end
+  def place_params
+    params.require(:place).permit(:name, :description, :image, :address, :genre)
+  end
 
-    def correct_user
-      redirect_to places_url unless current_user.own?(@place)
-    end
+  def set_place
+    @place = Place.find(params[:id])
+  end
+
+  def correct_user
+    redirect_to places_url unless current_user.own?(@place)
+  end
 end

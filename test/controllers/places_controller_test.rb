@@ -20,5 +20,4 @@ class PlacesControllerTest < ActionDispatch::IntegrationTest
     get places_edit_url
     assert_response :success
   end
-
 end

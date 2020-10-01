@@ -1,16 +1,16 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :login_required, only: [:index, :show, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update]
-  before_action :require_admin, only: [:index, :destroy]
+  before_action :set_user, only: %i[show edit update destroy]
+  before_action :login_required, only: %i[index show edit update destroy]
+  before_action :correct_user, only: %i[edit update]
+  before_action :require_admin, only: %i[index destroy]
 
   def index
     @users = User.all
   end
 
   def show
-    @places = @user.places.recent #ユーザが登録した場所一覧表示
-    @likes = Like.where(user_id: @user.id) #いいね一覧表示
+    @places = @user.places.recent # ユーザが登録した場所一覧表示
+    @likes = Like.where(user_id: @user.id) # いいね一覧表示
     place_ids = @likes.pluck(:place_id) # いいねしたLikeデータのplace_idカラムの集合
     @like_places = Place.where(id: place_ids)
     gon.places = @like_places
@@ -32,8 +32,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @user.update(user_params)
