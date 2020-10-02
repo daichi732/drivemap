@@ -1,18 +1,26 @@
 .col-xs-12.col-md-6.col-lg-4
   .card.mt-1.mb-1.ml-1.mr-1.bg-light
-    h1 = link_to place.name, place, class: "card-title"
+    h2 = link_to place.name, place, class: "card-title"
     card-img-top
-      = image_tag place.image.variant(resize:'300x300').processed if place.image.attached?
+      = image_tag place.image.variant(combine_options:{gravity: :center, resize:"300x300^",crop:"300x300+0+0"}).processed if place.image.attached?
       .card-body
-        p = link_to place.user.name, place.user, class: "card-subtitle"
-        span 種類:
-        span = place.genre
-        .card-text
-          - if current_user.own?(place)
-            = link_to '編集', edit_place_path(place), class: 'btn btn-primary mr-3'
-            = link_to '削除', place, method: :delete, data: { confirm: "場所「#{place.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+        .row
+          .col-4
+            - if place.user.avatar.attached?
+              a= image_tag place.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"50x50+0+0"}).processed
+            - else
+              a= image_tag 'default_user.png'
+            p = link_to place.user.name, place.user, class: "card-subtitle"
 
-          div id = 'like_#{ place.id }'
-            = render partial: 'places/like', locals: { place: place }
+          .col-8
+            span 種類:
+            span = place.genre
+            .card-text
+              - if current_user.own?(place)
+                = link_to '編集', edit_place_path(place), class: 'btn btn-primary mr-3'
+                = link_to '削除', place, method: :delete, data: { confirm: "場所「#{place.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
 
-          = render partial: 'places/comment', collection: place.comments.order(created_at: :desc)
+              div id = 'like_#{ place.id }'
+                = render partial: 'places/like', locals: { place: place }
+
+              = render partial: 'places/comment', collection: place.comments.order(created_at: :desc)

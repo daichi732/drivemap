@@ -1,7 +1,9 @@
 class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }
   validates :email, presence: true
+  validate :avatar_format
   has_secure_password
+  has_one_attached :avatar
 
   has_many :places, dependent: :destroy
   has_many :likes, dependent: :destroy
@@ -13,5 +15,9 @@ class User < ApplicationRecord
 
   def own?(comment)
     self == comment.user
+  end
+
+  def avatar_format
+    errors.add(:avatar, 'にはjpegまたはgifまたはpngファイルを添付してください') unless avatar.content_type.in?(%('image/jpeg image/gif image/png'))
   end
 end

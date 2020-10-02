@@ -17,4 +17,10 @@
       = f.label :password_confirmation, 'パスワード(確認)', class: 'text-primary'
       span.badge.badge-danger.ml-2 ※必須
       = f.password_field :password_confirmation, class: 'form-control'
+    .form-group
+      = f.label :avatar, 'プロフィール写真', class: 'text-primary'
+      span.badge.badge-success.ml-2 ※任意
+      br
+      = f.file_field :avatar, accept: 'image/jpeg,image/gif,image/png'
+
     = f.submit '登録する', class: 'btn btn-primary'
