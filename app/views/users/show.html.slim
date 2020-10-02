@@ -1,6 +1,9 @@
 p 行きたい場所に いいね！ を押して自分だけのドライブマップを作ろう！予定時間を入力してスケジュールを確認しよう！
 
-= render 'users/map_likes'
+#map_likes style='height: 400px; width: 1100px;'
+- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
+script{ async src=google_api }
+
 //ユーザ情報
 table.table.table-hover
   tbody

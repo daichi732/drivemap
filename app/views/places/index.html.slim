@@ -13,7 +13,9 @@ h1 場所一覧
     .col-2
     = f.submit class: 'btn btn-outline-primary'
 
-= render 'places/map_index'
+#map_index style='height: 400px; width: 1100px;'
+- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
+script{ async src=google_api }
 
 .container
   .row.m-3.justify-content

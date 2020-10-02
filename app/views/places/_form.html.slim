@@ -34,7 +34,7 @@
 			=f.text_field :address, id: "address", class: 'form-control'
 			input.btn.btn-secondary.mb-1 onclick='codeAddress()' type= 'button' value= '場所を検索'
 			
-			#map style='height: 400px; width: 400px;'
+			#map_form style='height: 400px; width: 400px;'
 			- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
 			script{ async src=google_api }
 
