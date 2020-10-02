@@ -7,8 +7,9 @@
     - else
       h2 = link_to place.name, place, class: "card-title marker-yellow"
 
-    card-img-top
-      = image_tag place.image.variant(combine_options:{gravity: :center, resize:"300x300^",crop:"300x300+0+0"}).processed if place.image.attached?
+    .card-img-top
+      a href='/places/#{place.id}'
+        = image_tag place.image.variant(combine_options:{gravity: :center, resize:"300x300^",crop:"300x300+0+0"}).processed if place.image.attached?
       .card-body
         .row
           .col-4
