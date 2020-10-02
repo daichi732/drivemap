@@ -1,6 +1,12 @@
 .col-xs-12.col-md-6.col-lg-4
   .card.mt-1.mb-1.ml-1.mr-1.bg-light
-    h2 = link_to place.name, place, class: "card-title"
+    - if(place.genre == "food")
+      h2 = link_to place.name, place, class: "card-title marker-blue"
+    - elsif(place.genre == "view")
+      h2 = link_to place.name, place, class: "card-title marker-green"
+    - else
+      h2 = link_to place.name, place, class: "card-title marker-yellow"
+
     card-img-top
       = image_tag place.image.variant(combine_options:{gravity: :center, resize:"300x300^",crop:"300x300+0+0"}).processed if place.image.attached?
       .card-body
