@@ -19,7 +19,8 @@ class PlacesController < ApplicationController
   end
 
   def create
-    @place = current_user.places.build(place_params)
+    @place = current_user.places.new(place_params)
+    @place.image.attach(params[:place][:image])
     if @place.save
       redirect_to @place, notice: "場所「#{@place.name}」を登録しました。"
     else

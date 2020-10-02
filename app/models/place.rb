@@ -1,6 +1,7 @@
 class Place < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }
   validate :image_presence
+
   validates :genre, presence: true
   validates :address, presence: true
   belongs_to :user
@@ -18,8 +19,9 @@ class Place < ApplicationRecord
 
   def image_presence
     if image.attached?
-      return errors.add(:image, 'にはjpegまたはpngファイルを添付してください') unless image.content_type.in?(%('image/jpeg image/png'))
+      errors.add(:image, 'にはjpegまたはgifまたはpngファイルを添付してください') unless image.content_type.in?(%('image/jpeg image/gif image/png'))
+    else
+      errors.add(:image, 'ファイルを添付してください')
     end
-    errors.add(:image, 'ファイルを添付してください')
   end
 end

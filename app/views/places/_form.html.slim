@@ -15,7 +15,7 @@
 			= f.label :image, class: 'text-primary'
 			span.badge.badge-danger.ml-2 ※必須
 			br
-			= f.file_field :image
+			= f.file_field :image, accept: 'image/jpeg,image/gif,image/png'
 
 		.form-group
 			= f.label :genre, class: 'text-primary'
