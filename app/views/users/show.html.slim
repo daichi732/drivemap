@@ -1,8 +1,16 @@
 p 行きたい場所に いいね！ を押して自分だけのドライブマップを作ろう！予定時間を入力してスケジュールを確認しよう！
 
-#map_likes style='height: 400px; width: 1100px;'
-- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
-script{ async src=google_api }
+
+.map-container
+  #map_likes style='height: 400px; width: 1100px;'
+  - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
+  script{ async src=google_api }
+
+  .map-route
+    ul id="route-list" class="list-group"
+  .map-search
+    = button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()"
+
 
 //ユーザ情報
 table.table.table-hover
