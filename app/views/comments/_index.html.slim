@@ -1,7 +1,19 @@
 - comments.order(created_at: :desc).each do |comment|
-  - if current_user.own?(comment)
-    = l comment.date
-    = comment.content
-    = link_to comment_path(comment.id), method: :delete, remote: true do
-      i.fas.fa-trash
-      br
+  table.table.table-hover.text-left
+    tbody
+      tr  
+        th
+          a href='/users/#{comment.user.id}'
+            - if comment.user.avatar.attached?
+              a= image_tag comment.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"50x50+0+0"}).processed
+            - else
+              a= image_tag 'default_user.png'
+        td
+          = link_to comment.user.name, comment.place.user
+          br
+          = comment.content
+          - if current_user.own?(comment)
+            = link_to comment_path(comment.id), method: :delete, remote: true do
+              i.fas.fa-trash
+  
+  

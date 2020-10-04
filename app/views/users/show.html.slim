@@ -74,14 +74,3 @@ ul.nav.nav-tabs.nav-fill id= "myTab" role="tablist"
                 th amusement
                 td= @like_places.where(genre: 2).count
 
-    .card.card-body.my-3
-      h2 メモで残した今月の予定の数
-      .container
-        .row
-          = column_chart @comments.group_by_day_of_month(:date).count, xtitle: "日付", ytitle: "個数", label: "個数"
-
-    .card.card-body.my-3
-      h2 メモで残した今年の予定の数
-      .container
-        .row
-          = column_chart @comments.group_by_month_of_year(:date).count, xtitle: "月", ytitle: "個数", label: "個数"

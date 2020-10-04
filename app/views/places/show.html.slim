@@ -36,7 +36,10 @@ h1 場所の詳細
         div id = 'like_#{ @place.id }'
           =render 'like', place: @place
 
-        p ここに行く日時をメモしよう！
+        i.far.fa-comment-dots
+        = @place.comments.count
+
+        p.marker-blue コメント一覧
         div id = 'comments_area'
           = render partial: 'comments/index', locals: { comments: @comments }
     
