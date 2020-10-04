@@ -18,6 +18,8 @@ class User < ApplicationRecord
   end
 
   def avatar_format
-    errors.add(:avatar, 'にはjpegまたはgifまたはpngファイルを添付してください') unless avatar.content_type.in?(%('image/jpeg image/gif image/png'))
+    if avatar.attached?
+      errors.add(:avatar, 'にはjpegまたはgifまたはpngファイルを添付してください') unless avatar.content_type.in?(%('image/jpeg image/gif image/png'))
+    end
   end
 end

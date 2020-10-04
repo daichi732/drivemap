@@ -1,6 +1,6 @@
 class Place < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }
-  validate :image_presence
+  validate :image_presence_or_format
 
   validates :genre, presence: true
   validates :address, presence: true
@@ -17,11 +17,8 @@ class Place < ApplicationRecord
     likes.where(user_id: user.id).exists?
   end
 
-  def image_presence
-    if image.attached?
-      errors.add(:image, 'にはjpegまたはgifまたはpngファイルを添付してください') unless image.content_type.in?(%('image/jpeg image/gif image/png'))
-    else
-      errors.add(:image, 'ファイルを添付してください')
-    end
+  def image_presence_or_format
+    return errors.add(:image, 'ファイルを添付してください') if !image.attached?
+    errors.add(:image, 'にはjpegまたはgifまたはpngファイルを添付してください') unless image.content_type.in?(%('image/jpeg image/gif image/png'))
   end
 end
