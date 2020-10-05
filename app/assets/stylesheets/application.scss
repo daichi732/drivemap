@@ -26,5 +26,74 @@
   background:linear-gradient(transparent 70%, #00ffdd 0%);
 }
 .marker-yellow{
-  background:linear-gradient(transparent 70%, #f8f40c 0%);
+  background:linear-gradient(transparent 70%, yellow 0%);
+}
+.double-border {
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  border: double 5px #4ec4d3;
+}
+.top-border {
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  color: #ff7d6e;
+  background: #ffebe9;
+  border-top: solid 10px #ff7d6e;
+}
+.shadow {
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  color: #00BCD4;
+  background: #e4fcff;/*背景色*/
+  border-top: solid 6px #1dc1d6;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.32);/*影*/
+}
+.infobox {
+  position: relative;
+  padding: 0.5em 0.7em;
+  margin: 2em 0;
+  background: #e6f4ff;
+  color: #5c98d4;
+  font-weight: bold;
+}
+.infobox:after {
+  position: absolute;
+  content: '';
+  top: 100%;
+  left: 30px;
+  border: 15px solid transparent;
+  border-top: 15px solid #e6f4ff;
+  width: 0;
+  height: 0;
+}
+.think {
+  position: relative;
+  padding: 20px;
+  background-color: #f0a15b;
+  border-radius: 15px;
+  margin-left: 70px;
+}
+  
+.think::before {
+  content: '';
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background-color: #f0a15b;
+  left: -35px;
+  bottom: 15px;
+  width: 30px;
+  height: 30px;
+}
+
+.think::after {
+  content: '';
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background-color: #f0a15b;
+  left: -55px;
+  bottom: 10px;
+  width: 15px;
+  height: 15px;
 }

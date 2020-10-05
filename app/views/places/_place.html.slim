@@ -1,5 +1,5 @@
 .col-xs-12.col-md-6.col-lg-4
-  .card.mt-1.mb-1.ml-1.mr-1.bg-light
+  .card.mx-1.my-3.p-3.bg-light.top-border.shadow
     - if(place.genre == "food")
       h2 = link_to place.name, place, class: "card-title marker-blue"
     - elsif(place.genre == "view")
@@ -12,14 +12,16 @@
         = image_tag place.image.variant(combine_options:{gravity: :center, resize:"300x300^",crop:"300x300+0+0"}).processed if place.image.attached?
       .card-body
         .row
-          .col-4
+          .col-2
             - if place.user.avatar.attached?
               a= image_tag place.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"50x50+0+0"}).processed
             - else
               a= image_tag 'default_user.png'
-            p = link_to place.user.name, place.user, class: "card-subtitle"
 
-          .col-8
+          .col-4
+            = link_to place.user.name, place.user, class: "card-subtitle"
+
+          .col-6
             span
               | 種類:
             = place.genre

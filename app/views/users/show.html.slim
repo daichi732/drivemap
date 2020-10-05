@@ -1,32 +1,36 @@
-p 行きたい場所に いいね！ を押して自分だけのドライブマップを作ろう！予定時間を入力してスケジュールを確認しよう！
+p.infobox 行きたい場所に いいね！ を押して自分だけのドライブマップを作ろう！予定時間を入力してスケジュールを確認しよう！
+
+.row
+  .col-3.double-border
+    table.table.table-hover.text-center
+      tbody
+        tr
+          - if @user.avatar.attached?
+            a= image_tag @user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"50x50+0+0"}).processed
+          - else
+            a= image_tag 'default_user.png'
+          p= @user.name
+        tr
+          th= User.human_attribute_name(:created_at)
+          td= l @user.created_at
+          
+    - if @user == current_user
+      = link_to '編集', edit_user_path, class: 'btn btn-primary mr-3'
+      = link_to '削除', user_path(@user), method: :delete, data: { confirm: "ユーザ「#{@user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+
+  .col-9
+    .map-container
+      #map_likes style='height: 400px; width: 800px;'
+      - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
+      script{ async src=google_api }
+
+      .map-route
+        ul id="route-list" class="list-group"
+      .map-search
+        = button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()"
 
 
-.map-container
-  #map_likes style='height: 400px; width: 1100px;'
-  - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
-  script{ async src=google_api }
 
-  .map-route
-    ul id="route-list" class="list-group"
-  .map-search
-    = button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()"
-
-
-//ユーザ情報
-table.table.table-hover
-  tbody
-    tr
-      th= User.human_attribute_name(:name)
-      td= @user.name
-    tr
-      th= User.human_attribute_name(:created_at)
-      td= l @user.created_at, format: :long
-      
-- if @user == current_user
-  = link_to '編集', edit_user_path, class: 'btn btn-primary mr-3'
-  = link_to '削除', user_path(@user), method: :delete, data: { confirm: "ユーザ「#{@user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
-  br
-  = link_to '場所を登録', new_place_path, class: 'btn btn-primary mt-3'
 
 //タブ切り替えリスト
 ul.nav.nav-tabs.nav-fill id= "myTab" role="tablist"

@@ -5,11 +5,11 @@ h1 場所一覧
     .col-3
       = f.search_field :name_cont, class: 'form-control', placeholder: "名称"
       = f.check_box :genre_eq_any, {multiple: true},checked_value = 0,unchecked_value = nil
-      = f.label :food, for: "q_genre_eq_any_0"
+      = f.label :food, for: "q_genre_eq_any_0", class: 'marker-blue'
       = f.check_box :genre_eq_any, {multiple: true},checked_value = 1,unchecked_value = nil
-      = f.label :view, for: "q_genre_eq_any_1"
+      = f.label :view, for: "q_genre_eq_any_1", class: 'marker-green'
       = f.check_box :genre_eq_any, {multiple: true},checked_value = 2,unchecked_value = nil
-      = f.label :amusement, for: "q_genre_eq_any_2"
+      = f.label :amusement, for: "q_genre_eq_any_2", class: 'marker-yellow'
     .col-2
     = f.submit class: 'btn btn-outline-primary'
 
