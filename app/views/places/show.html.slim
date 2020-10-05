@@ -46,6 +46,13 @@
           - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
           script{ async src=google_api }
 
+        p.infobox.mt-5 訪れる予定日時を入力してマイページでスケジュールを管理しよう！
+        p 予定日時
+        div id = 'schedules_area'
+          = render partial: 'schedules/index', locals: { schedules: @schedules }
+    
+        = render partial: 'schedules/form', locals: { schedule: @schedule, place: @place }
+
         p.think.mt-5 コメント一覧
         div id = 'comments_area'
           = render partial: 'comments/index', locals: { comments: @comments }

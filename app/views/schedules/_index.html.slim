@@ -1,0 +1,8 @@
+- schedules.order(created_at: :desc).each do |schedule|
+  - if current_user.own?(schedule)
+    = schedule.date
+    = link_to schedule_path(schedule.id), method: :delete, remote: true do
+      i.fas.fa-trash
+    br
+  
+  

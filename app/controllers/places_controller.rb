@@ -12,6 +12,8 @@ class PlacesController < ApplicationController
     @comment = Comment.new # render: 'form'で渡す
     @comments = @place.comments.order(created_at: :desc) # render: 'index'で渡す
     gon.place = @place
+    @schedule = Schedule.new
+    @schedules = @place.schedules.order(created_at: :desc) 
   end
 
   def new

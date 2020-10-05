@@ -1,0 +1,3 @@
+= form_with( model: [place, schedule], url: place_schedules_path(@place), method: :post ) do |f|
+  = f.datetime_field :date
+  = f.submit "登録する", class: "btn btn-outline-success schedule-submit"

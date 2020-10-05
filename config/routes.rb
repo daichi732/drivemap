@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   resources :places do
     resource :likes, only: %i[create destroy]
     resources :comments, only: %i[create destroy], shallow: true
+    resources :schedules, only: %i[create destroy], shallow: true
   end
 end

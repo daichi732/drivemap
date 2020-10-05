@@ -7,6 +7,7 @@ class Place < ApplicationRecord
   belongs_to :user
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :schedules, dependent: :destroy
   has_one_attached :image
   scope :recent, -> { order(created_at: :desc) }
   geocoded_by :address
