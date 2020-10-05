@@ -36,5 +36,5 @@
 
             = link_to place do
               i.far.fa-calendar
-              = place.comments.where(user_id: current_user.id).count
+              = place.schedules.where(user_id: current_user.id).count
 
