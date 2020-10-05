@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     place_ids = @likes.pluck(:place_id) # いいねしたLikeデータのplace_idカラムの集合
     @like_places = Place.where(id: place_ids)
     gon.places = @like_places
+    @schedules = @user.schedules
   end
 
   def new

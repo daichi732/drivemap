@@ -85,3 +85,5 @@ gem 'gon'
 
 gem 'chartkick'
 gem 'groupdate'
+
+gem "simple_calendar", "~> 2.0"
