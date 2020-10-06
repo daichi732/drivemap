@@ -15,6 +15,8 @@ class UsersController < ApplicationController
     @like_places = Place.where(id: place_ids)
     gon.places = @like_places
     @schedules = @user.schedules
+    @following_users = @user.following
+    @followed_users = @user.followers
   end
 
   def new

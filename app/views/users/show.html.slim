@@ -10,9 +10,31 @@ p.infobox 行きたい場所に いいね！ を押して自分だけのドラ�
           - else
             a= image_tag 'default_user.png'
           p= @user.name
+
         tr
           th= User.human_attribute_name(:created_at)
           td= l @user.created_at
+
+    = render 'follow_form'
+    //タブ切り替えリスト
+    ul.nav.nav-tabs.nav-fill id= "relationTab" role="tablist"
+      li.nav-item
+        a class="nav-link active" id="follow-tab" data-toggle="tab" href="#follow" role="tab" aria-controls="follow" aria-selected="true" フォロー中
+      li.nav-item
+        a class="nav-link" id="follower-tab" data-toggle="tab" href="#follower" role="tab" aria-controls="follower" aria-selected="false" フォロワー
+
+    .tab-content id= "relationTabContent"
+      //フォロー一覧タブ
+      div class="tab-pane fade show active" id="follow" role="tabpanel" aria-labelledby="follow-tab"
+        p= @following_users.count
+        - @following_users.each do |following_user|
+          li= following_user.name
+
+      //フォロワー一覧タブ
+      div class="tab-pane fade" id="follower" role="tabpanel" aria-labelledby="follower-tab"
+        p= @followed_users.count
+        - @followed_users.each do |followed_user|
+          li= followed_user.name
           
     - if @user == current_user
       = link_to '編集', edit_user_path, class: 'btn btn-primary mr-3'
@@ -66,17 +88,6 @@ ul.nav.nav-tabs.nav-fill id= "myTab" role="tablist"
               td
                 = link_to schedule.place.name, schedule.place
 
-    
-          
-    .card.card-body.my-3
-      h2 今月訪れた(訪れる予定)場所の数
-      .row
-        = column_chart @schedules.group_by_day_of_month(:date).count, xtitle: "日付", ytitle: "個数", label: "個数"
-    .card.card-body.my-3
-      h2 今年訪れた(訪れる予定)場所の数
-      .row
-        = column_chart @schedules.group_by_month_of_year(:date).count, xtitle: "月", ytitle: "個数", label: "個数"
-
   //いいね一覧表示のタブ
   div class="tab-pane fade" id="like_place" role="tabpanel" aria-labelledby="like_place-tab"
     .row
@@ -112,4 +123,13 @@ ul.nav.nav-tabs.nav-fill id= "myTab" role="tablist"
               tr
                 th amusement
                 td= @like_places.where(genre: 2).count
+
+    .card.card-body.my-3
+      h2 今月訪れた(訪れる予定)場所の数
+      .row
+        = column_chart @schedules.group_by_day_of_month(:date).count, xtitle: "日付", ytitle: "個数", label: "個数"
+    .card.card-body.my-3
+      h2 今年訪れた(訪れる予定)場所の数
+      .row
+        = column_chart @schedules.group_by_month_of_year(:date).count, xtitle: "月", ytitle: "個数", label: "個数"
 

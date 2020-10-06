@@ -1,5 +1,6 @@
 class LikesController < ApplicationController
   before_action :set_like
+  before_action :login_required
 
   def create
     like = current_user.likes.build(place_id: params[:place_id])
