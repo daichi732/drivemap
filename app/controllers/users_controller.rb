@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update destroy]
-  before_action :login_required, only: %i[index show edit update destroy]
+  before_action :set_user, only: %i[show edit update destroy following followers]
+  before_action :login_required, only: %i[index show edit update destroy following followers]
   before_action :correct_user, only: %i[edit update]
   before_action :require_admin, only: %i[index destroy]
 
@@ -15,8 +15,6 @@ class UsersController < ApplicationController
     @like_places = Place.where(id: place_ids)
     gon.places = @like_places
     @schedules = @user.schedules
-    @following_users = @user.following
-    @followed_users = @user.followers
   end
 
   def new
@@ -47,6 +45,14 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     redirect_to users_url, notice: "ユーザ「#{@user.name}」を削除しました。"
+  end
+
+  def following
+    @following_users = @user.following
+  end
+
+  def followers
+    @followers_users = @user.followers
   end
 
   private
