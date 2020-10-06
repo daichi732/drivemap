@@ -1,23 +1,37 @@
+h1.left-border.text-center #{@user.name}さんのフォロワー
 .container
   .row
-    .col-3.text-center
-      - @followers_users.each do |user|
+    - @followers_users.each do |user|
+      .col-3.text-center
         table.table.mx-auto
           tbody
             tr
-              td
+              td colspan="2"
                 - if user.avatar.attached?
                   a= image_tag user.avatar.variant(combine_options:{gravity: :center, resize:"100x100^",crop:"100x100+0+0"}).processed, class: 'profile_avatar'
                 - else
                   a= image_tag 'default_user.png'
             tr
-              td
+              td colspan="2"
                 a href='/users/#{user.id}'
                   span==> user.name
                   i.fas.fa-book
                   span #{user.places.count}件
             tr
-              td フォロー:#{user.following.count}
-              td フォロワー:#{user.followers.count}
-
-        = render 'follow_form'
+              td
+                a href='/users/#{user.id}/following'
+                  p フォロー:#{user.following.count}
+              td
+                a href='/users/#{user.id}/followers'
+                  p フォロワー:#{user.followers.count}
+            tr
+              td colspan="2"
+                - unless user == current_user
+                  div id="follow_form"
+                    - if current_user.following?(user)
+                      = form_with(model: current_user.active_relationships.find_by(followed_id: user.id), html: { method: :delete }, remote: true) do |f|
+                        = f.submit "フォロー中", class: "btn btn-success"
+                    - else
+                      = form_with(model: current_user.active_relationships.build,  remote: true) do |f|
+                        = hidden_field_tag :followed_id, user.id
+                        = f.submit "フォローする", class: "btn btn-primary"

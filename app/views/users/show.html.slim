@@ -2,17 +2,18 @@ p.infobox 行きたい場所に いいね！ を押して自分だけのドラ�
 
 .container
   .row
-    .col-3.text-center
-      table.table.mx-auto
+    .col-3.text-center 
+      / =render partial: 'user_profile', locals: { user: @user }
+      table.table
         tbody
           tr
-            td
+            td colspan="2"
               - if @user.avatar.attached?
                 a= image_tag @user.avatar.variant(combine_options:{gravity: :center, resize:"100x100^",crop:"100x100+0+0"}).processed, class: 'profile_avatar'
               - else
                 a= image_tag 'default_user.png'
           tr
-            td
+            td colspan="2"
               a href='/users/#{@user.id}'
                 span==> @user.name
                 i.fas.fa-book
@@ -24,15 +25,12 @@ p.infobox 行きたい場所に いいね！ を押して自分だけのドラ�
             td
               a href='/users/#{@user.id}/followers'
                 p フォロワー:#{@user.followers.count}
+          tr
+            td colspan="2"
+              = render 'follow_form'
 
-            
-
-      = render 'follow_form'
-
-            
       - if @user == current_user
         = link_to '編集', edit_user_path, class: 'btn btn-primary mr-3'
-        = link_to '削除', user_path(@user), method: :delete, data: { confirm: "ユーザ「#{@user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
 
     .col-9
       .map-container

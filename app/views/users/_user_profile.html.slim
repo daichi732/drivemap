@@ -1,0 +1,24 @@
+/ table.table.mx-auto
+/   tbody
+/     tr
+/       td
+/         - if @user.avatar.attached?
+/           a= image_tag @user.avatar.variant(combine_options:{gravity: :center, resize:"100x100^",crop:"100x100+0+0"}).processed, class: 'profile_avatar'
+/         - else
+/           a= image_tag 'default_@user.png'
+/     tr
+/       td
+/         a href='/@users/#{@user.id}'
+/           span==> @user.name
+/           i.fas.fa-book
+/           span #{@user.places.count}件
+/     tr
+/       td
+/         a href='/@users/#{@user.id}/following'
+/           p フォロー:#{@user.following.count}
+/       td
+/         a href='/@users/#{@user.id}/followers'
+/           p フォロワー:#{@user.followers.count}
+/     tr
+/       td
+/         = render partial: 'follow_form', locals: { @user: @user}

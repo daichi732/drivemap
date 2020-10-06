@@ -65,6 +65,21 @@
   background: #ffebe9;
   border-top: solid 10px #ff7d6e;
 }
+.y-border{
+  padding: 8px 19px;
+  margin: 2em 0;
+  color: #2c2c2f;
+  background: #cde4ff;
+  border-top: solid 5px #5989cf;
+  border-bottom: solid 5px #5989cf;
+}
+.left-border {
+  padding: 0.5em 0;
+  margin: 2em 0;
+  color: #232323;
+  background: #fff8e8;
+  border-left: solid 10px #ffc06e;
+}
 .shadow {
   padding: 0.5em 1em;
   margin: 2em 0;
@@ -122,6 +137,7 @@
   width: 15px;
   height: 15px;
 }
+
 .profile_avatar{
   border-radius: 50%;
 }
