@@ -1,7 +1,7 @@
 - schedules.order(created_at: :desc).each do |schedule|
   - if current_user.own?(schedule)
     .date.text-center
-      h2= l schedule.date, format: :long
+       h2= l schedule.date, format: :long
     p.text-right= link_to "削除", schedule_path(schedule.id), method: :delete, remote: true
   
   

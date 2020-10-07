@@ -1,40 +1,36 @@
-.col-xs-12.col-md-6.col-lg-4
-  .card.mx-1.my-3.p-3.bg-light.top-border.shadow
+.col-xs-12.col-md-6.col-lg-3
+  .card.p-3.bg-light.top-border.shadow
     - if(place.genre == "food")
-      h2 = link_to place.name, place, class: "card-title marker-blue"
+      h5 = link_to place.name, place, class: "card-title marker-red"
     - elsif(place.genre == "view")
-      h2 = link_to place.name, place, class: "card-title marker-green"
+      h5 = link_to place.name, place, class: "card-title marker-blue"
     - else
-      h2 = link_to place.name, place, class: "card-title marker-yellow"
+      h5 = link_to place.name, place, class: "card-title marker-yellow"
 
     .card-img-top
       a href='/places/#{place.id}'
-        = image_tag place.image.variant(combine_options:{gravity: :center, resize:"300x300^",crop:"300x300+0+0"}).processed if place.image.attached?
+        = image_tag place.image.variant(combine_options:{gravity: :center, resize:"200x200^",crop:"200x200+0+0"}).processed if place.image.attached?
       .card-body
         .row
-          .col-2
+          .col-4
             - if place.user.avatar.attached?
               a= image_tag place.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"40x40+0+0"}).processed, class: 'profile_avatar'
             - else
               a= image_tag 'default_user.png', class: 'profile_avatar'
 
-          .col-4
+          .col-8
             = link_to place.user.name, place.user, class: "card-subtitle"
+        / .row
+        /   span.left-border.mx-auto=place.genre
+        .row.ml-auto
+          span id = 'like_#{ place.id }'
+            = render partial: 'places/like', locals: { place: place }
 
-          .col-6
-            span
-              | 種類:
-            = place.genre
-            br
+          = link_to place do
+            i.far.fa-comment-dots
+            = place.comments.count
 
-            span id = 'like_#{ place.id }'
-              = render partial: 'places/like', locals: { place: place }
-
-            = link_to place do
-              i.far.fa-comment-dots
-              = place.comments.count
-
-            = link_to place do
-              i.far.fa-calendar
-              = place.schedules.where(user_id: current_user.id).count
+          = link_to place do
+            i.far.fa-calendar
+            = place.schedules.where(user_id: current_user.id).count
 

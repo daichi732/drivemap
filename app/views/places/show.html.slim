@@ -7,9 +7,9 @@
       .col-6.text-center
         h1.card-title
           - if(@place.genre == "food")
-            h2 = link_to @place.name, @place, class: "card-title marker-blue"
+            h2 = link_to @place.name, @place, class: "card-title marker-red"
           - elsif(@place.genre == "view")
-            h2 = link_to @place.name, @place, class: "card-title marker-green"
+            h2 = link_to @place.name, @place, class: "card-title marker-blue"
           - else
             h2 = link_to @place.name, @place, class: "card-title marker-yellow"
         card-img-top
@@ -54,7 +54,7 @@
           script{ async src=google_api }
 
         p.infobox.mt-5 訪れる予定日時を入力してマイページでスケジュールを管理しよう！
-        h2.marker-blue 予定日時
+        h3.border-bottom ☑️予定日時
         div id = 'schedules_area'
           = render partial: 'schedules/index', locals: { schedules: @schedules }
     
