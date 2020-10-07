@@ -1,17 +1,19 @@
 - comments.order(created_at: :desc).each do |comment|
-  table.table.table-hover.text-left
+  table.table.text-left
     tbody
-      tr  
-        th
+      tr
+        td
           a href='/users/#{comment.user.id}'
             - if comment.user.avatar.attached?
-              a= image_tag comment.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"50x50+0+0"}).processed
+              a= image_tag comment.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"50x50+0+0"}).processed, class: "profile_avatar"
             - else
-              a= image_tag 'default_user.png'
+              a= image_tag 'default_user.png', class: "profile_avatar"
         td
           = link_to comment.user.name, comment.place.user
           br
           = comment.content
+          br
+          span.small 約#{time_ago_in_words(comment.created_at)}前
 
         td
           - if current_user.own?(comment)

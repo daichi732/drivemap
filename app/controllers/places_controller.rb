@@ -14,6 +14,7 @@ class PlacesController < ApplicationController
     gon.place = @place
     @schedule = Schedule.new
     @schedules = @place.schedules.order(created_at: :desc) 
+    @my_schedule = current_user.schedules.where(place_id: @place.id)
   end
 
   def new
