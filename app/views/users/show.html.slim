@@ -21,12 +21,17 @@ p.infobox 行きたい場所に いいね！ を押して自分だけのドラ�
           tr
             td
               a href='/users/#{@user.id}/following'
-                p フォロー:#{@user.following.count}
+                span フォロー:
+                div id="following"
+                  span= @user.following.count
             td
               a href='/users/#{@user.id}/followers'
-                p フォロワー:#{@user.followers.count}
+                span フォロワー:
+                div id="followers"
+                  span= @user.followers.count
           tr
             td colspan="2"
+              / = render partial: 'follow_form', locals:{user: @user}
               = render 'follow_form'
 
       - if @user == current_user
