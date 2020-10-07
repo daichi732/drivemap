@@ -1,3 +1,4 @@
+h1.left-border.text-center #{@user.name}さんのページ
 p.infobox 行きたい場所に いいね！ を押して自分だけのドライブマップを作ろう！予定時間を入力してスケジュールを確認しよう！
 
 .container
@@ -11,7 +12,7 @@ p.infobox 行きたい場所に いいね！ を押して自分だけのドラ�
               - if @user.avatar.attached?
                 a= image_tag @user.avatar.variant(combine_options:{gravity: :center, resize:"100x100^",crop:"100x100+0+0"}).processed, class: 'profile_avatar'
               - else
-                a= image_tag 'default_user.png'
+                a= image_tag 'default_user.png', class: 'profile_avatar'
           tr
             td colspan="2"
               a href='/users/#{@user.id}'
@@ -35,7 +36,7 @@ p.infobox 行きたい場所に いいね！ を押して自分だけのドラ�
               = render 'follow_form'
 
       - if @user == current_user
-        = link_to '編集', edit_user_path, class: 'btn btn-primary mr-3'
+        = link_to 'ユーザー情報の編集', edit_user_path, class: 'btn btn-primary mr-3'
 
     .col-9
       .map-container

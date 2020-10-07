@@ -14,9 +14,9 @@
         .row
           .col-2
             - if place.user.avatar.attached?
-              a= image_tag place.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"50x50+0+0"}).processed
+              a= image_tag place.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"40x40+0+0"}).processed, class: 'profile_avatar'
             - else
-              a= image_tag 'default_user.png'
+              a= image_tag 'default_user.png', class: 'profile_avatar'
 
           .col-4
             = link_to place.user.name, place.user, class: "card-subtitle"
