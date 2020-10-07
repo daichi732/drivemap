@@ -13,13 +13,27 @@ h1.left-border.text-center 場所一覧
     .col-2
     = f.submit class: 'btn btn-outline-primary'
 
-#map_index style='height: 400px; width: 1100px;'
-- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
-script{ async src=google_api }
 
-.container
-  .row.m-3.justify-content
-    = render @places
+//タブ切り替えリスト
+ul.nav.nav-tabs id= "indexTab" role="tablist"
+  li.nav-item
+    a class="nav-link active" id="card-tab" data-toggle="tab" href="#card" role="tab" aria-controls="card" aria-selected="true" 一覧
+  li.nav-item
+    a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="false" 地図上で探す
 
-= paginate @places
-= page_entries_info @places
+.tab-content id= "indexTabContent"
+  //スケジュールタブ
+  div class="tab-pane fade show active" id="card" role="tabpanel" aria-labelledby="card-tab"
+    .container
+      .row.m-3.justify-content
+        = render @places
+
+    = paginate @places
+    = page_entries_info @places
+
+  div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab"
+    #map_index style='height: 400px; width: 1100px;'
+    - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
+    script{ async src=google_api }
+
+
