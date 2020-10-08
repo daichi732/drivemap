@@ -69,7 +69,7 @@ ul.nav.nav-tabs.nav-fill id= "myTab" role="tablist"
   div class="tab-pane fade show active" id="schedule" role="tabpanel" aria-labelledby="schedule-tab"
     p.infobox 訪れる場所に日時を入力して予定をカレンダーで管理しよう！
     = month_calendar(attribute: :date, events: @schedules) do |date, schedules|
-      = date
+      = date.day
       - schedules.each do |schedule|
         li
           = l schedule.date, format: :time
