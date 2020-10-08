@@ -78,24 +78,6 @@ function initMap(){
     }
   }
 }
-// リストに追加する
-function addPlace(name, lat, lng, number){
-  var li = $('<li>', {
-    text: name[number],
-    "class": "list-group-item"
-  });
-  li.attr("data-lat", lat[number]);
-  li.attr("data-lng", lng[number]);
-  $('#route-list').append(li);
-
-}
-// マーカーをクリックしたら吹き出しを表示
-function markerEvent(i) {
-  marker[i].addListener('click', function () {
-    infoWindow[i].open(map, marker[i]);
-  });
-}
-
 
 
 function codeAddress(){
@@ -115,6 +97,22 @@ function codeAddress(){
   });
 }
 
+// リストに追加する
+function addPlace(name, lat, lng, number){
+  var li = $('<li>', {
+    text: name[number],
+    "class": "list-group-item"
+  });
+  li.attr("data-lat", lat[number]);
+  li.attr("data-lng", lng[number]);
+  $('#route-list').append(li);
+}
+// マーカーをクリックしたら吹き出しを表示
+function markerEvent(i) {
+  marker[i].addListener('click', function () {
+    infoWindow[i].open(map, marker[i]);
+  });
+}
 // var rendererOptions = {
 //   map: map, // 描画先の地図
 //   suppressMarkers : true
@@ -156,7 +154,7 @@ function search() {
         if (status == google.maps.DirectionsStatus.OK) {
           new google.maps.DirectionsRenderer({
             map: map, // 描画先の地図
-            // suppressMarkers : true
+            suppressMarkers : true,
             polylineOptions: {
               strokeColor: '#00ffdd',
               strokeOpacity: 1,
@@ -182,6 +180,21 @@ function search() {
                 });
                 $('#display-list').append(li);
             }
+            const route = response.routes[0];
+            const summaryPanel = document.getElementById("directions-panel");
+            summaryPanel.innerHTML = "";
+
+            // For each route, display summary information.
+            for (let i = 0; i < route.legs.length; i++) {
+              const routeSegment = i + 1;
+              summaryPanel.innerHTML +=
+                "<b>Route Segment: " + routeSegment + "</b><br>";
+              summaryPanel.innerHTML += route.legs[i].start_address + "<br>" + " ↓ " + "<br>";
+              summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
+              summaryPanel.innerHTML += "<" + route.legs[i].distance.text + ",";
+              summaryPanel.innerHTML += route.legs[i].duration.text + ">" + "<br>";
+            }
+
             
         }
       });
