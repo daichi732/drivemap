@@ -38,16 +38,17 @@ p.infobox 行きたい場所に いいね！ を押して自分だけのドラ�
       - if @user == current_user
         = link_to 'ユーザー情報の編集', edit_user_path, class: 'btn btn-primary mr-3'
 
-    .col-9
+    .col-6
       .map-container
-        #map_likes style='height: 400px; width: 800px;'
+        #map_likes style='height: 400px; width: 500px;'
         - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
         script{ async src=google_api }
-
-        .map-route
-          ul id="route-list" class="list-group"
-        .map-search
-          = button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()"
+    .col-3
+      .map-route
+        p ルート検索リスト
+        ul id="route-list" class="list-group"
+      .map-search
+        = button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()"
 
 
 

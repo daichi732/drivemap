@@ -21,7 +21,12 @@
               td= simple_format(h(@place.description), {}, sanitize: false, wrapper_tag: "div")
             tr  
               th= "ユーザ名"
-              td= link_to @place.user.name, @place.user
+              td
+                - if @place.user.avatar.attached?
+                  a= image_tag @place.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"40x40+0+0"}).processed, class: 'profile_avatar'
+                - else
+                  a= image_tag 'default_user.png', class: 'profile_avatar'
+                = link_to @place.user.name, @place.user
             tr  
               th= Place.human_attribute_name(:genre)
               td= @place.genre
@@ -39,7 +44,8 @@
         div id = 'like_#{ @place.id }'
           =render 'like', place: @place
 
-        p.think.mt-5 みんなのコメント一覧
+        i.fas.fa-paper-plane.mt-5.text-left
+        span みんなのコメント一覧
         div id = 'comments_area'
           = render partial: 'comments/index', locals: { comments: @comments }
     

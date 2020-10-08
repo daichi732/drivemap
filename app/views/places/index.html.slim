@@ -1,17 +1,16 @@
 h1.left-border.text-center 場所一覧
 
-= search_form_for @q, class: 'mb-5' do |f|
-  .row
-    .col-3
-      = f.search_field :name_cont, class: 'form-control', placeholder: "名称"
-      = f.check_box :genre_eq_any, {multiple: true},checked_value = 0,unchecked_value = nil
-      = f.label :food, for: "q_genre_eq_any_0", class: 'marker-red'
-      = f.check_box :genre_eq_any, {multiple: true},checked_value = 1,unchecked_value = nil
-      = f.label :view, for: "q_genre_eq_any_1", class: 'marker-blue'
-      = f.check_box :genre_eq_any, {multiple: true},checked_value = 2,unchecked_value = nil
-      = f.label :amusement, for: "q_genre_eq_any_2", class: 'marker-yellow'
-    .col-2
-    = f.submit class: 'btn btn-outline-primary'
+= search_form_for @q, class: 'text-center mb-5' do |f|
+  = f.search_field :name_cont, placeholder: "名称"
+  = f.submit class: 'btn btn-outline-primary ml-3'
+  br
+  = f.check_box :genre_eq_any, {multiple: true},checked_value = 0,unchecked_value = nil
+  = f.label :food, for: "q_genre_eq_any_0", class: 'marker-red'
+  = f.check_box :genre_eq_any, {multiple: true},checked_value = 1,unchecked_value = nil
+  = f.label :view, for: "q_genre_eq_any_1", class: 'marker-blue'
+  = f.check_box :genre_eq_any, {multiple: true},checked_value = 2,unchecked_value = nil
+  = f.label :amusement, for: "q_genre_eq_any_2", class: 'marker-yellow'
+    
 
 
 //タブ切り替えリスト
@@ -32,6 +31,7 @@ ul.nav.nav-tabs id= "indexTab" role="tablist"
     = page_entries_info @places
 
   div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab"
+    p.infobox Google Map上で場所を確認することができます！気になる場所があったらクリックして詳細へ移動しましょう！
     #map_index style='height: 400px; width: 1100px;'
     - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
     script{ async src=google_api }
