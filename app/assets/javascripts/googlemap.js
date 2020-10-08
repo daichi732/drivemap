@@ -28,13 +28,50 @@ function initMap(){
       },
       map: map
     });
-  }else{
-    if(document.getElementById('map_index')){
-      element= 'map_index';
-    }else{
-      element= 'map_likes';
+  }else if(document.getElementById('map_index')){
+    map = new google.maps.Map(document.getElementById('map_index'), {
+      center: { lat: 35.6585, lng: 139.7486 }, // 東京タワーを中心
+      zoom: 9,
+    });
+
+    // 繰り返し処理でマーカーと吹き出しを複数表示させる
+    for (var i = 0; i < markerData.length; i++) {
+      // name = markerData[i]['name']
+      let id = markerData[i]['id']
+
+      // 各地点の緯度経度を算出
+      markerLatLng = new google.maps.LatLng({
+        lat: markerData[i]['latitude'],
+        lng: markerData[i]['longitude']
+      });
+      
+      if(markerData[i]['genre'] == "food"){
+        marker[i] = new google.maps.Marker({
+        position: markerLatLng,
+        map: map,
+        icon: 'http://maps.google.co.jp/mapfiles/ms/icons/pink-dot.png'
+      });
+      }else if(markerData[i]['genre'] == "view"){
+        marker[i] = new google.maps.Marker({
+        position: markerLatLng,
+        map: map,
+        icon: 'http://maps.google.co.jp/mapfiles/ms/icons/green-dot.png'
+      });
+      }else{
+        marker[i] = new google.maps.Marker({
+        position: markerLatLng,
+        map: map,
+        icon: 'http://maps.google.co.jp/mapfiles/ms/icons/yellow-dot.png'
+      });
+      }
+      
+      infoWindow[i] = new google.maps.InfoWindow({
+        content: `<a href='/places/${ id }'>${ markerData[i]['name'] }</a>`
+      });
+      markerEvent(i);
     }
-    map = new google.maps.Map(document.getElementById(element), {
+  }else if(document.getElementById('map_likes')){
+    map = new google.maps.Map(document.getElementById('map_likes'), {
       center: { lat: 35.6585, lng: 139.7486 }, // 東京タワーを中心
       zoom: 9,
     });
@@ -53,19 +90,19 @@ function initMap(){
         marker[i] = new google.maps.Marker({
         position: markerLatLng,
         map: map,
-        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon32.png'
+        icon: 'http://maps.google.co.jp/mapfiles/ms/icons/pink-dot.png'
       });
       }else if(markerData[i]['genre'] == "view"){
         marker[i] = new google.maps.Marker({
         position: markerLatLng,
         map: map,
-        icon: 'http://maps.google.com/mapfiles/kml/pal3/icon29.png'
+        icon: 'http://maps.google.co.jp/mapfiles/ms/icons/green-dot.png'
       });
       }else{
         marker[i] = new google.maps.Marker({
         position: markerLatLng,
         map: map,
-        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon49.png'
+        icon: 'http://maps.google.co.jp/mapfiles/ms/icons/yellow-dot.png'
       });
       }
       place_name[i]= markerData[i]['name'];
