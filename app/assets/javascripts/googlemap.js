@@ -3,9 +3,9 @@ var geocoder
 var marker = [];
 var infoWindow = [];
 var markerData = gon.places; // コントローラーで定義したインスタンス変数を変数に代入
-var place_name
-var place_lat
-var place_lng
+var place_name = [];
+var place_lat = [];
+var place_lng = [];
 function initMap(){
   geocoder = new google.maps.Geocoder()
   if(document.getElementById('map_form')){
@@ -68,30 +68,26 @@ function initMap(){
         icon: 'http://maps.google.com/mapfiles/kml/pal2/icon49.png'
       });
       }
-      place_name= markerData[i]['name'];
-      console.log(place_name)
-      place_lat= markerData[i]['latitude'];
-      place_lng= markerData[i]['longitude'];
+      place_name[i]= markerData[i]['name'];
+      place_lat[i]= markerData[i]['latitude'];
+      place_lng[i]= markerData[i]['longitude'];
       infoWindow[i] = new google.maps.InfoWindow({
-        content: `<input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng)">`
+        content: `<input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
       });
-      console.log(place_lat)
-
-      // マーカーにクリックイベントを追加
       markerEvent(i);
     }
   }
 }
 // リストに追加する
-function addPlace(name, lat, lng){
-  console.log(place_lng)
+function addPlace(name, lat, lng, number){
   var li = $('<li>', {
-      text: name,
-      "class": "list-group-item"
+    text: name[number],
+    "class": "list-group-item"
   });
-  li.attr("data-lat", lat);
-  li.attr("data-lng", lng);
+  li.attr("data-lat", lat[number]);
+  li.attr("data-lng", lng[number]);
   $('#route-list').append(li);
+
 }
 // マーカーをクリックしたら吹き出しを表示
 function markerEvent(i) {
@@ -99,6 +95,9 @@ function markerEvent(i) {
     infoWindow[i].open(map, marker[i]);
   });
 }
+
+
+
 function codeAddress(){
   var inputAddress = document.getElementById('address').value;
 
@@ -116,19 +115,17 @@ function codeAddress(){
   });
 }
 
-
-
-
-
-var rendererOptions = {
-  suppressMarkers : true
-}
-var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-var directionsService = new google.maps.DirectionsService();
+// var rendererOptions = {
+//   map: map, // 描画先の地図
+//   suppressMarkers : true
+// }
+// var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+// var directionsService = new google.maps.DirectionsService();
 
 // 複数地点のルートを検索する
 function search() {
   var points = $('#route-list li');
+  console.log("a")
 
   // 2地点以上のとき
   if (points.length >= 2){
@@ -155,11 +152,39 @@ function search() {
         travelMode:  google.maps.TravelMode.DRIVING
       };
       // ルートサービスのリクエスト
-      directionsService.route(request, function(response, status) {
+      new google.maps.DirectionsService().route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
-          // 結果を表示する
-          directionsDisplay.setDirections(response);
+          new google.maps.DirectionsRenderer({
+            map: map, // 描画先の地図
+            // suppressMarkers : true
+            polylineOptions: {
+              strokeColor: '#00ffdd',
+              strokeOpacity: 1,
+              strokeWeight: 5
+            }
+          }).setDirections(response);
+          //ライン描画部分
+      
+            //距離、時間を表示する
+            var data = response.routes[0].legs;
+            for (var i = 0; i < data.length; i++) {
+                console.log(data[i].distance.text);
+                console.log(data[i].duration.text);
+                var li = $('<li>', {
+                  text: data[i].distance.text,
+                  "class": "display-group-item"
+                });
+                $('#display-list').append(li);
+
+                var li = $('<li>', {
+                  text: data[i].duration.text,
+                  "class": "display-group-item"
+                });
+                $('#display-list').append(li);
+            }
+            
         }
       });
   }
 }
+
