@@ -1,4 +1,5 @@
-h1.left-border.text-center 場所一覧
+h1.text-center
+  span.left-border.text-center ALL SPOTS
 
 = search_form_for @q, class: 'text-center mb-5' do |f|
   = f.search_field :name_cont, placeholder: "名称"
@@ -30,7 +31,7 @@ ul.nav.nav-tabs id= "indexTab" role="tablist"
     = page_entries_info @places
 
   div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab"
-    p.infobox Google Map上で場所を確認することができます！気になる場所があったらクリックして詳細へ移動しましょう！
+    p.infobox Google Map上で場所を確認することができます！気になる場所を見つけたらクリックして詳細へ移動しましょう！
     #map_index style='height: 400px; width: 1100px;'
     - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
     script{ async src=google_api }

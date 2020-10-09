@@ -27,6 +27,10 @@ class User < ApplicationRecord
     self == comment.user
   end
 
+  def own?(schedule)
+    self == schedule.user
+  end
+
   def avatar_format
     if avatar.attached?
       errors.add(:avatar, 'にはjpegまたはgifまたはpngファイルを添付してください') unless avatar.content_type.in?(%('image/jpeg image/gif image/png'))

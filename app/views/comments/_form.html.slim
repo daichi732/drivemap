@@ -1,4 +1,3 @@
 = form_with( model: [place, comment], url: place_comments_path(@place), method: :post ) do |f|
-  = f.text_area :content, class: "input-mysize", placeholder: "コメントを入力"
-  br
-  = f.submit "コメントする", class: "btn btn-outline-success comment-submit"
+  = f.text_field :content
+  = f.submit "コメントする", class: "btn btn-success comment-submit ml-3"

@@ -44,26 +44,31 @@
         div id = 'like_#{ @place.id }'
           =render 'like', place: @place
 
-        i.fas.fa-paper-plane.mt-5.text-left
-        span みんなのコメント一覧
+        h5
+          span.marker-yellow みんなのコメント一覧
+          i.fas.fa-paper-plane.mt-5.text-left
+          
+        = render partial: 'comments/form', locals: { comment: @comment, place: @place }
         div id = 'comments_area'
           = render partial: 'comments/index', locals: { comments: @comments }
     
-        = render partial: 'comments/form', locals: { comment: @comment, place: @place }
+        
 
 
 
       .col-6
-        - if @place.address.present?
-          #map_show style='height: 400px; width: 400px;'
-          - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
-          script{ async src=google_api }
-
         p.infobox.mt-5 訪れる予定日時を入力してマイページでスケジュールを管理しよう！
         h3.border-bottom ☑️予定日時
         div id = 'schedules_area'
           = render partial: 'schedules/index', locals: { schedules: @schedules }
     
         = render partial: 'schedules/form', locals: { schedule: @schedule, place: @place } unless @my_schedule.present?
+
+        - if @place.address.present?
+          #map_show style='height: 400px; width: 400px;'
+          - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
+          script{ async src=google_api }
+
+        
 
         

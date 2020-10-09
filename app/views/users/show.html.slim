@@ -44,7 +44,8 @@ p.infobox 行きたい場所に いいね！ を押して自分だけのドラ�
       script{ async src=google_api }
     .col-3
       .map-route
-        p.marker-blue ルート検索リスト
+        p
+          span.marker-blue ルート検索リスト
         ul id="route-list" class="list-group"
       .map-search
         = button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()"
@@ -103,7 +104,8 @@ ul.nav.nav-tabs.nav-fill id= "myTab" role="tablist"
   //データ情報のタブ
   div class="tab-pane fade" id="graph_info" role="tabpanel" aria-labelledby="graph_info-tab"
     .card.card-body.my-3
-      h2.marker-red いいねした場所の種類
+      h2
+        span.marker-blue いいねした場所の種類
       .container
         .row
           .col-5
@@ -125,11 +127,13 @@ ul.nav.nav-tabs.nav-fill id= "myTab" role="tablist"
                 td= @like_places.where(genre: 2).count
 
     .card.card-body.my-3
-      h2.marker-red 今月訪れた(訪れる予定)場所の数
+      h2
+        span.marker-blue 今月訪れた(訪れる予定)場所の数
       .row
         = column_chart @schedules.group_by_day_of_month(:date).count, xtitle: "日付", ytitle: "個数", label: "個数"
     .card.card-body.my-3
-      h2.marker-red 今年訪れた(訪れる予定)場所の数
+      h2
+        span.marker-blue 今年訪れた(訪れる予定)場所の数
       .row
         = column_chart @schedules.group_by_month_of_year(:date).count, xtitle: "月", ytitle: "個数", label: "個数"
 
