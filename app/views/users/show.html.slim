@@ -1,5 +1,6 @@
-h3.left-border.text-center #{@user.name}さんのページ
-p.infobox 行きたい場所に いいね！ を押して自分だけのドライブマップを作ろう！予定時間を入力してスケジュールを確認しよう！
+h3.left-border.text-center.mb-5 #{@user.name}さんのページ
+p
+  span.infobox 行きたい場所に いいね！ を押して自分だけのドライブマップを作ろう！予定時間を入力してスケジュールを確認しよう！
 
 .container
   .row
@@ -39,7 +40,8 @@ ul.nav.nav-tabs.nav-fill id= "myTab" role="tablist"
 .tab-content id= "myTabContent"
   //スケジュールタブ
   div class="tab-pane fade show active" id="schedule" role="tabpanel" aria-labelledby="schedule-tab"
-    p.infobox 訪れる場所に日時を入力して予定をカレンダーで管理しよう！
+    p.text-right.mt-5
+      span.think.text-center 訪れる場所に日時を入力して予定をカレンダーで管理しよう！
     = month_calendar(attribute: :date, events: @schedules) do |date, schedules|
       = date.day
       - schedules.each do |schedule|

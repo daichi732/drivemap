@@ -31,7 +31,8 @@ ul.nav.nav-tabs id= "indexTab" role="tablist"
     = page_entries_info @places
 
   div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab"
-    p.infobox Google Map上で場所を確認することができます！気になる場所を見つけたらクリックして詳細へ移動しましょう！
+    p.my-4
+      span.infobox Google Map上で場所を確認することができます！気になる場所を見つけたらクリックして詳細へ移動しましょう！
     #map_index style='height: 400px; width: 1100px;'
     - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
     script{ async src=google_api }

@@ -20,6 +20,7 @@ class Place < ApplicationRecord
 
   def image_presence_or_format
     return errors.add(:image, 'ファイルを添付してください') unless image.attached?
+
     errors.add(:image, 'にはjpegまたはgifまたはpngファイルを添付してください') unless image.content_type.in?(%('image/jpeg image/gif image/png'))
   end
 end

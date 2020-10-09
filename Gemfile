@@ -70,9 +70,9 @@ gem 'bootstrap'
 gem 'ransack'
 
 gem 'active_storage_validations', '0.8.2'
-gem 'image_processing',           '1.9.3'
-gem 'mini_magick',                '4.9.5'
 gem "aws-sdk-s3", require: false
+gem 'image_processing', '1.9.3'
+gem 'mini_magick', '4.9.5'
 
 gem 'kaminari'
 

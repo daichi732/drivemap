@@ -10,12 +10,12 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :schedules, dependent: :destroy
 
-  has_many :active_relationships,  class_name:  "Relationship",
+  has_many :active_relationships,  class_name: "Relationship",
                                    foreign_key: "follower_id",
-                                   dependent:   :destroy
-  has_many :passive_relationships, class_name:  "Relationship",
+                                   dependent: :destroy
+  has_many :passive_relationships, class_name: "Relationship",
                                    foreign_key: "followed_id",
-                                   dependent:   :destroy
+                                   dependent: :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
@@ -32,9 +32,9 @@ class User < ApplicationRecord
   end
 
   def avatar_format
-    if avatar.attached?
-      errors.add(:avatar, 'にはjpegまたはgifまたはpngファイルを添付してください') unless avatar.content_type.in?(%('image/jpeg image/gif image/png'))
-    end
+    return true unless avatar.attached?
+
+    errors.add(:avatar, 'にはjpegまたはgifまたはpngファイルを添付してください') unless avatar.content_type.in?(%('image/jpeg image/gif image/png'))
   end
 
   def follow(other_user)
