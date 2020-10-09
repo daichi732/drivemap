@@ -2,5 +2,6 @@ h1.left-border.text-center #{@user.name}さんがフォロー中
 .container
   .row
     - @following_users.each do |user|
-      =render partial: 'follow_profile', locals: { user: user }
-      
+      .col-3.text-center
+        =render partial: 'user_profile', locals: { user: user }
+    

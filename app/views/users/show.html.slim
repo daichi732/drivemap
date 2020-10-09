@@ -3,38 +3,9 @@ p.infobox 行きたい場所に いいね！ を押して自分だけのドラ�
 
 .container
   .row
-    .col-3.text-center 
-      / =render partial: 'user_profile', locals: { user: @user }
-      table.table
-        tbody
-          tr
-            td colspan="2"
-              - if @user.avatar.attached?
-                a= image_tag @user.avatar.variant(combine_options:{gravity: :center, resize:"100x100^",crop:"100x100+0+0"}).processed, class: 'profile_avatar'
-              - else
-                a= image_tag 'default_user.png', class: 'profile_avatar'
-          tr
-            td colspan="2"
-              a href='/users/#{@user.id}'
-                span==> @user.name
-                i.fas.fa-book
-                span #{@user.places.count}件
-          tr
-            td
-              a href='/users/#{@user.id}/following'
-                span フォロー:
-                div id="following"
-                  span= @user.following.count
-            td
-              a href='/users/#{@user.id}/followers'
-                span フォロワー:
-                div id="followers"
-                  span= @user.followers.count
-          tr
-            td colspan="2"
-              / = render partial: 'follow_form', locals:{user: @user}
-              = render 'follow_form'
-
+    .col-3.text-center
+      =render partial: 'user_profile', locals: { user: @user }
+      = render 'follow_form'
       - if @user == current_user
         = link_to 'ユーザー情報の編集', edit_user_path, class: 'btn btn-primary mr-3'
 
