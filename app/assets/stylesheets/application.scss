@@ -123,7 +123,6 @@
   border-radius: 50%;
 }
 #directions-panel {
-  margin-top: 10px;
   background-color: #ffee77;
   padding: 10px;
   overflow: scroll;
@@ -134,6 +133,16 @@
 //   height: 500px;
 // }
 #comments_area{
+  overflow: scroll;
+  height: 200px;
+}
+#schedule_table{
+  overflow: scroll;
+  height: 200px;
+}
+.map-route{
+  background-color: #e6f4ff;
+  padding: 10px;
   overflow: scroll;
   height: 200px;
 }

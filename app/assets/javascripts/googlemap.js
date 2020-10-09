@@ -78,7 +78,7 @@ function initMap(){
 
     // 繰り返し処理でマーカーと吹き出しを複数表示させる
     for (var i = 0; i < markerData.length; i++) {
-      // name = markerData[i]['name']
+      let id = markerData[i]['id']
 
       // 各地点の緯度経度を算出
       markerLatLng = new google.maps.LatLng({
@@ -109,7 +109,7 @@ function initMap(){
       place_lat[i]= markerData[i]['latitude'];
       place_lng[i]= markerData[i]['longitude'];
       infoWindow[i] = new google.maps.InfoWindow({
-        content: `<input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
+        content: `<a href='/places/${ id }'>${ markerData[i]['name'] }</a><input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
       });
       markerEvent(i);
     }
@@ -150,14 +150,7 @@ function markerEvent(i) {
     infoWindow[i].open(map, marker[i]);
   });
 }
-// var rendererOptions = {
-//   map: map, // 描画先の地図
-//   suppressMarkers : true
-// }
-// var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-// var directionsService = new google.maps.DirectionsService();
-
-// 複数地点のルートを検索する
+// ルートを検索する
 function search() {
   var points = $('#route-list li');
   console.log("a")
@@ -197,9 +190,8 @@ function search() {
               strokeOpacity: 1,
               strokeWeight: 5
             }
-          }).setDirections(response);
-          //ライン描画部分
-      
+          }).setDirections(response);//ライン描画部分
+          
             //距離、時間を表示する
             var data = response.routes[0].legs;
             for (var i = 0; i < data.length; i++) {
@@ -221,7 +213,7 @@ function search() {
             const summaryPanel = document.getElementById("directions-panel");
             summaryPanel.innerHTML = "";
 
-            // For each route, display summary information.
+            // 各地点間の距離・時間を表示.
             for (let i = 0; i < route.legs.length; i++) {
               const routeSegment = i + 1;
               summaryPanel.innerHTML +=
@@ -231,8 +223,6 @@ function search() {
               summaryPanel.innerHTML += "<" + route.legs[i].distance.text + ",";
               summaryPanel.innerHTML += route.legs[i].duration.text + ">" + "<br>";
             }
-
-            
         }
       });
   }
