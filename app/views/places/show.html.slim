@@ -58,7 +58,8 @@
         div id = 'schedules_area'
           = render partial: 'schedules/index', locals: { schedules: @my_schedule }
     
-        = render partial: 'schedules/form', locals: { schedule: @schedule, place: @place } unless @my_schedule.present?
+        div id = 'schedule_form'
+          = render partial: 'schedules/form', locals: { schedule: @schedule, place: @place } unless @my_schedule.present?
 
         - if @place.address.present?
           #map_show
