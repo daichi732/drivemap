@@ -3,7 +3,11 @@ class SchedulesController < ApplicationController
   def create
     @place = Place.find(params[:place_id])
     @schedule = @place.schedules.new(schedule_params)
-    render :index if @schedule.save
+    if @schedule.save
+      render :index
+    else
+      render :error
+    end
   end
 
   def destroy

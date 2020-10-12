@@ -30,6 +30,8 @@ ja:
         updated_at: 更新日時
       comment: 
         content: コメント
+      schedule:
+        date: 日時
   date:
     abbr_day_names:
     - 日
