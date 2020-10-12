@@ -20,8 +20,6 @@
 
           .col-8
             = link_to place.user.name, place.user, class: "card-subtitle"
-        / .row
-        /   span.left-border.mx-auto=place.genre
         .row.ml-auto
           span id = 'like_#{ place.id }'
             = render partial: 'places/like', locals: { place: place }

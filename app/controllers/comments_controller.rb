@@ -4,7 +4,11 @@ class CommentsController < ApplicationController
     @place = Place.find(params[:place_id])
     # 投稿に紐づいたコメントを作成
     @comment = @place.comments.new(comment_params)
-    render :index if @comment.save
+    if @comment.save
+      render :index
+    else
+      render :error
+    end
   end
 
   def destroy

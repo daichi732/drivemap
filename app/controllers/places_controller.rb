@@ -25,7 +25,7 @@ class PlacesController < ApplicationController
     @place = current_user.places.new(place_params)
     @place.image.attach(params[:place][:image])
     if @place.save
-      redirect_to @place, notice: "場所「#{@place.name}」を登録しました。"
+      redirect_to @place, notice: "「#{@place.name}」を登録しました。"
     else
       render 'new'
     end
@@ -35,7 +35,7 @@ class PlacesController < ApplicationController
 
   def update
     if @place.update(place_params)
-      redirect_to @place, notice: "場所「#{@place.name}」を更新しました。"
+      redirect_to @place, notice: "「#{@place.name}」を更新しました。"
     else
       render 'edit'
     end
@@ -43,7 +43,7 @@ class PlacesController < ApplicationController
 
   def destroy
     @place.destroy
-    redirect_to places_url, notice: "場所「#{@place.name}」を削除しました。"
+    redirect_to places_url, notice: "「#{@place.name}」を削除しました。"
   end
 
   private
