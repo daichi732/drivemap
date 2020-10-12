@@ -19,16 +19,9 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
-  def own?(place)
-    self == place.user
-  end
-
-  def own?(comment)
-    self == comment.user
-  end
-
-  def own?(schedule)
-    self == schedule.user
+  def own?(object)
+  # object -> { place, comment, schedule }
+    self == object.user
   end
 
   def avatar_format
