@@ -2,7 +2,7 @@ h1.text-center
   span.left-border.text-center ALL SPOTS
 
 = search_form_for @q, class: 'text-center mb-5' do |f|
-  = f.search_field :name_cont, placeholder: "名称"
+  = f.search_field :name_or_address_cont, placeholder: "名称"
   = f.submit class: 'btn btn-outline-primary ml-3'
   br
   = f.check_box :genre_eq_any, {multiple: true},checked_value = 0,unchecked_value = nil
