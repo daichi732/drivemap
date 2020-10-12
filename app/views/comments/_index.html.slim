@@ -5,7 +5,7 @@
         td
           / a href='/users/#{comment.user.id}'
           - if comment.user.avatar.attached?
-            a= image_tag comment.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"50x50+0+0"}).processed, class: "profile_avatar"
+            a= image_tag comment.user.avatar.variant(combine_options:{gravity: :center, resize:"40x40^",crop:"40x40+0+0"}).processed, class: "profile_avatar"
           - else
             a= image_tag 'default_user.png', class: "profile_avatar"
         td

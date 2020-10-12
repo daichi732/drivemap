@@ -66,7 +66,7 @@ class UsersController < ApplicationController
   end
 
   def correct_user
-    redirect_to places_url unless @user == current_user
+    redirect_to places_url, notice: "権限がありません。" unless @user == current_user
   end
 
   def require_admin

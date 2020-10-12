@@ -1,5 +1,6 @@
 class PlacesController < ApplicationController
   before_action :set_place, only: %i[show edit update destroy]
+  before_action :login_required
   before_action :correct_user, only: %i[edit update]
 
   def index
@@ -57,6 +58,6 @@ class PlacesController < ApplicationController
   end
 
   def correct_user
-    redirect_to places_url unless current_user.own?(@place)
+    redirect_to places_url, notice: "権限がありません。"  unless current_user.own?(@place)
   end
 end
