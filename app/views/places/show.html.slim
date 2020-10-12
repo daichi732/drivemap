@@ -56,7 +56,7 @@
         p.infobox.mt-5 訪れる予定日時を入力してマイページでスケジュールを管理しよう！
         h3.border-bottom ☑️予定日時
         div id = 'schedules_area'
-          = render partial: 'schedules/index', locals: { schedules: @schedules }
+          = render partial: 'schedules/index', locals: { schedules: @my_schedule }
     
         = render partial: 'schedules/form', locals: { schedule: @schedule, place: @place } unless @my_schedule.present?
 
