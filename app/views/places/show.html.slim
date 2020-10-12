@@ -61,9 +61,12 @@
         = render partial: 'schedules/form', locals: { schedule: @schedule, place: @place } unless @my_schedule.present?
 
         - if @place.address.present?
-          #map_show style='height: 400px; width: 400px;'
+          #map_show
           - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
           script{ async src=google_api }
+
+          span 場所:
+          =@place.address
 
         
 

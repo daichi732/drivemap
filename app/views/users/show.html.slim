@@ -11,7 +11,7 @@ p
         = link_to 'ユーザー情報の編集', edit_user_path, class: 'btn btn-primary mr-3'
 
     .col-6
-      #map_likes style='height: 450px; width: 500px;'
+      #map_likes
       - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
       script{ async src=google_api }
     .col-3
