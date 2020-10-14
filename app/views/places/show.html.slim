@@ -6,12 +6,8 @@
     .row
       .col-6.text-center
         h1.card-title
-          - if(@place.genre == "food")
-            h2 = link_to @place.name, @place, class: "card-title marker-red"
-          - elsif(@place.genre == "view")
-            h2 = link_to @place.name, @place, class: "card-title marker-blue"
-          - else
-            h2 = link_to @place.name, @place, class: "card-title marker-yellow"
+          h2
+            = render partial: 'genre_marker', locals: { place: @place }
         card-img-top
           = image_tag @place.image.variant(resize:'300x300').processed if @place.image.attached?
         table.table.table-hover

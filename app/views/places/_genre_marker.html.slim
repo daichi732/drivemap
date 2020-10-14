@@ -1,0 +1,6 @@
+- if(place.genre == "food")
+  = link_to place.name, place, class: "card-title marker-red"
+- elsif(place.genre == "view")
+  = link_to place.name, place, class: "card-title marker-blue"
+- else
+  = link_to place.name, place, class: "card-title marker-yellow"
