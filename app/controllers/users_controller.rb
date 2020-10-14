@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   def show
     @places = @user.places.recent # ユーザが登録した場所一覧表示
-    @likes = Like.where(user_id: @user.id) # いいね一覧表示
+    @likes = @user.likes # いいね一覧表示
     place_ids = @likes.pluck(:place_id) # いいねしたLikeデータのplace_idカラムの集合
     @like_places = Place.where(id: place_ids)
     gon.places = @like_places
