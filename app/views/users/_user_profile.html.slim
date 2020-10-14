@@ -8,18 +8,18 @@ table.table
           a= image_tag 'default_user.png', class: 'profile_avatar'
     tr
       td colspan="2"
-        a href='/users/#{user.id}'
+        = link_to user do
           span==> user.name
           i.fas.fa-book
           span #{user.places.count}件
     tr
       td
-        a href='/users/#{user.id}/following'
+        = link_to following_user_path(user) do
           span フォロー:
           div id="following"
             span= user.following.count
       td
-        a href='/users/#{user.id}/followers'
+        = link_to followers_user_path(user) do
           span フォロワー:
           div id="followers"
             span= user.followers.count

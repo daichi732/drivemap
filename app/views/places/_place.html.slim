@@ -8,7 +8,7 @@
       h5 = link_to place.name, place, class: "card-title marker-yellow"
 
     .card-img-top
-      a href='/places/#{place.id}'
+      = link_to place do
         = image_tag place.image.variant(combine_options:{gravity: :center, resize:"200x200^",crop:"200x200+0+0"}).processed if place.image.attached?
       .card-body
         .row
