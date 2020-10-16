@@ -7,7 +7,7 @@
       .col-6.text-center
         h1.card-title
           h2
-            = render partial: 'genre_marker', locals: { place: @place }
+            = render partial: 'places/genre_marker', locals: { place: @place }
         card-img-top
           = image_tag @place.image.variant(resize:'300x300').processed if @place.image.attached?
         table.table.table-hover
