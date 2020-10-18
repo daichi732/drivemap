@@ -45,6 +45,19 @@ RSpec.describe User, type: :model do
     expect(user.errors[:password]).to include("を入力してください")
   end
 
+  it "プロフィール画像が登録できること" do
+    user = FactoryBot.build(:user)
+    user.avatar = fixture_file_upload("/files/test_image.png")
+    expect(user).to be_valid
+  end
+
+  it "プロフィール画像がjpeg/gif/pngでない場合無効であること" do
+    user = FactoryBot.build(:user)
+    user.avatar = fixture_file_upload("/files/invalid_file.txt")
+    user.valid?
+    expect(user.errors[:avatar]).to include("にはjpegまたはgifまたはpngファイルを添付してください")
+  end
+
   it "フォローとアンフォローが正常に動作すること" do
     user = FactoryBot.create(:user)
     other_user = FactoryBot.create(:user)
