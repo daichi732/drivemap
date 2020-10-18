@@ -36,4 +36,11 @@ RSpec.describe Place, type: :model do
     place.valid?
     expect(place.errors[:image]).to include("ファイルを添付してください")
   end
+
+  it "画像がjpeg/gif/pngでない場合無効であること" do
+    place = FactoryBot.build(:place)
+    place.image = fixture_file_upload("/files/invalid_file.txt")
+    place.valid?
+    expect(place.errors[:image]).to include("にはjpegまたはgifまたはpngファイルを添付してください")
+  end
 end
