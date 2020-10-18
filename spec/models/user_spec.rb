@@ -29,15 +29,14 @@ RSpec.describe User, type: :model do
 
   it "重複したメールアドレスなら無効な状態であること" do
     # User.create(name: "testUser", email: "testemail", password: "testPassword")
-    FactoryBot.create(:user)
-    # user = User.new(email: "testemail")
-    user = FactoryBot.build(:user)
-    user.valid?
-    expect(user.errors[:email]).to include("はすでに存在します")
+    user = FactoryBot.create(:user)
+    other_user = FactoryBot.build(:user, email: user.email)
+    other_user.valid?
+    expect(other_user.errors[:email]).to include("はすでに存在します")
   end
 
   it "メールアドレスは小文字で保存されること" do
-    email = "TestEmail"
+    email = "ExamPle@Example.coM"
     # user = User.create(name: "testUser", email: email, password: "testPassword")
     user = FactoryBot.create(:user, email: email)
     expect(user.email).to eq email.downcase
