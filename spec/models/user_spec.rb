@@ -104,6 +104,22 @@ RSpec.describe User, type: :model do
     expect(user1.own?(user2_comment)).to be_falsey
   end
 
+  it "Userモデルインスタンスが自分のscheduleであることの確認" do
+    user1 = FactoryBot.create(:user)
+    user2 = FactoryBot.create(:user)
+
+    common_place = FactoryBot.build(:place)
+    common_place.image = fixture_file_upload("/files/test_image.png")
+    common_place.save
+
+    user1_schedule = FactoryBot.create(:schedule, user_id: user1.id, place_id: common_place.id)
+
+    user2_schedule = FactoryBot.create(:schedule, user_id: user2.id, place_id: common_place.id)
+
+    expect(user1.own?(user1_schedule)).to be_truthy
+    expect(user1.own?(user2_schedule)).to be_falsey
+  end
+
 
 
   
