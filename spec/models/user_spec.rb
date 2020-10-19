@@ -177,6 +177,12 @@ RSpec.describe User, type: :model do
       it '結合モデルのクラスはUser' do
         expect(association.class_name).to eq 'User'
       end
+
+      it 'フォロワーが削除されると、フォローが解消されること' do
+        user.follow(other_user)
+        user.destroy
+        expect(user.following?(other_user)).to be_falsey
+      end
     end
     
     context 'フォロワーとの関連' do
@@ -188,9 +194,15 @@ RSpec.describe User, type: :model do
       it '結合モデルのクラスはUser' do
         expect(association.class_name).to eq 'User'
       end
+
+      it 'フォローしているユーザーが削除されると、フォローが解消されること' do
+        user.follow(other_user)
+        other_user.destroy
+        expect(user.following?(other_user)).to be_falsey
+      end
     end
   end
-  
+
   describe "ロジックのテスト" do
     context "フォロー機能" do
       it "フォローとアンフォローが正常に動作すること" do
