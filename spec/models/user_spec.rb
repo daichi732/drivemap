@@ -131,4 +131,87 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "アソシエーションのテスト" do
+    let(:association) do
+      # Userクラスと引数のクラスの関連を返す
+      described_class.reflect_on_association(target)
+    end
+
+    context 'Placeモデルとの関係' do
+      let(:target) { :places }
+
+      it '1対多である' do
+        expect(association.macro).to eq :has_many
+      end
+    end
+
+    context 'Likeモデルとの関係' do
+      let(:target) { :likes }
+
+      it '1対多である' do
+        expect(association.macro).to eq :has_many
+      end
+    end
+
+    context 'Commentモデルとの関係' do
+      let(:target) { :comments }
+
+      it '1対多である' do
+        expect(association.macro).to eq :has_many
+      end
+    end
+
+    context 'Scheduleモデルとの関係' do
+      let(:target) { :schedules }
+
+      it '1対多である' do
+        expect(association.macro).to eq :has_many
+      end
+    end
+
+    context 'Relationshipモデル(active_relationships)モデルとの関係' do
+      let(:target) { :active_relationships }
+
+      it '1対多である' do
+        expect(association.macro).to eq :has_many
+      end
+      it '結合モデルのクラスはRelationship' do
+        expect(association.class_name).to eq 'Relationship'
+      end
+    end
+
+    context 'Relationshipモデル(passive_relationships)モデルとの関係' do
+      let(:target) { :passive_relationships }
+
+      it '1対多である' do
+        expect(association.macro).to eq :has_many
+      end
+      it '結合モデルのクラスはRelationship' do
+        expect(association.class_name).to eq 'Relationship'
+      end
+    end
+
+    context 'フォローしているユーザーとの関係' do
+      let(:target) { :following }
+
+      it '1対多である' do
+        expect(association.macro).to eq :has_many
+      end
+      it '結合モデルのクラスはUser' do
+        expect(association.class_name).to eq 'User'
+      end
+    end
+
+    context 'フォロワーとの関係' do
+      let(:target) { :followers }
+
+      it '1対多である' do
+        expect(association.macro).to eq :has_many
+      end
+      it '結合モデルのクラスはUser' do
+        expect(association.class_name).to eq 'User'
+      end
+    end
+  end
 end
