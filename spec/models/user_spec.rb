@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:user) { FactoryBot.create(:user) }
+  let(:other_user) { FactoryBot.create(:user) }
   describe "バリデーションのテスト" do
-    let(:user) { FactoryBot.create(:user) }
-    let(:other_user) { FactoryBot.create(:user) }
-
+    # let(:user) { FactoryBot.create(:user) }
+    # let(:other_user) { FactoryBot.create(:user) }
     context "nameカラム" do
       it "名前、メールアドレス、パスワードがある場合有効であること" do
         expect(FactoryBot.build(:user)).to be_valid
@@ -144,6 +145,13 @@ RSpec.describe User, type: :model do
       it '1対多である' do
         expect(association.macro).to eq :has_many
       end
+
+      it "userを削除すると、placeも削除される" do
+        place = FactoryBot.build(:place, user_id: user.id)
+        place.image = fixture_file_upload("/files/test_image.png")
+        place.save
+        expect{ user.destroy }.to change{ Place.count }.by(-1)
+      end
     end
 
     context 'Likeモデルとの関連' do
@@ -151,6 +159,15 @@ RSpec.describe User, type: :model do
 
       it '1対多である' do
         expect(association.macro).to eq :has_many
+      end
+
+      it "userを削除すると、likeも削除される" do
+        place = FactoryBot.build(:place, user_id: user.id)
+        place.image = fixture_file_upload("/files/test_image.png")
+        place.save
+        
+        like = FactoryBot.create(:like, user_id: user.id, place_id: place.id)
+        expect{ user.destroy }.to change{ Like.count }.by(-1)
       end
     end
 
@@ -160,6 +177,15 @@ RSpec.describe User, type: :model do
       it '1対多である' do
         expect(association.macro).to eq :has_many
       end
+
+      it "userを削除すると、commentも削除される" do
+        place = FactoryBot.build(:place, user_id: user.id)
+        place.image = fixture_file_upload("/files/test_image.png")
+        place.save
+        
+        comment = FactoryBot.create(:comment, user_id: user.id, place_id: place.id)
+        expect{ user.destroy }.to change{ Comment.count }.by(-1)
+      end
     end
 
     context 'Scheduleモデルとの関連' do
@@ -167,6 +193,15 @@ RSpec.describe User, type: :model do
 
       it '1対多である' do
         expect(association.macro).to eq :has_many
+      end
+
+      it "userを削除すると、scheduleも削除される" do
+        place = FactoryBot.build(:place, user_id: user.id)
+        place.image = fixture_file_upload("/files/test_image.png")
+        place.save
+        
+        schedule = FactoryBot.create(:schedule, user_id: user.id, place_id: place.id)
+        expect{ user.destroy }.to change{ Schedule.count }.by(-1)
       end
     end
 
@@ -178,6 +213,11 @@ RSpec.describe User, type: :model do
       end
       it '結合モデルのクラスはRelationship' do
         expect(association.class_name).to eq 'Relationship'
+      end
+
+      it "userを削除すると、relationshipsも削除される" do
+        user.follow(other_user)
+        expect{ user.destroy }.to change{ Relationship.count }.by(-1)
       end
     end
 
@@ -213,5 +253,7 @@ RSpec.describe User, type: :model do
         expect(association.class_name).to eq 'User'
       end
     end
+
+    
   end
 end
