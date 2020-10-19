@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :comment do
-    association :user
     association :place
+    user { place.user }
     content { "コメントテスト" }
   end
 end

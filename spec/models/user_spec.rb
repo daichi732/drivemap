@@ -76,19 +76,33 @@ RSpec.describe User, type: :model do
     user2 = FactoryBot.create(:user)
 
     # アソシエーションでuserインスタンスも作成されることからcreateにしたいけどimageで引っかかってしまうから
-    place = FactoryBot.build(:place, user_id: user1.id)
-    place.image = fixture_file_upload("/files/test_image.png")
-    place.save
+    user1_place = FactoryBot.build(:place, user_id: user1.id)
+    user1_place.image = fixture_file_upload("/files/test_image.png")
+    user1_place.save
 
-    other_place = FactoryBot.build(:place, user_id: user2.id)
-    other_place.image = fixture_file_upload("/files/test_image.png")
-    other_place.save
+    user2_place = FactoryBot.build(:place, user_id: user2.id)
+    user2_place.image = fixture_file_upload("/files/test_image.png")
+    user2_place.save
 
-    expect(user1.own?(place)).to be_truthy
-    expect(user1.own?(other_place)).to be_falsey
+    expect(user1.own?(user1_place)).to be_truthy
+    expect(user1.own?(user2_place)).to be_falsey
   end
 
- 
+  it "Userモデルインスタンスが自分のcommentであることの確認" do
+    user1 = FactoryBot.create(:user)
+    user2 = FactoryBot.create(:user)
+
+    common_place = FactoryBot.build(:place)
+    common_place.image = fixture_file_upload("/files/test_image.png")
+    common_place.save
+
+    user1_comment = FactoryBot.create(:comment, user_id: user1.id, place_id: common_place.id)
+
+    user2_comment = FactoryBot.create(:comment, user_id: user2.id, place_id: common_place.id)
+
+    expect(user1.own?(user1_comment)).to be_truthy
+    expect(user1.own?(user2_comment)).to be_falsey
+  end
 
 
 
