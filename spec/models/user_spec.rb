@@ -28,6 +28,7 @@ RSpec.describe User, type: :model do
 
   it "重複したメールアドレスなら無効な状態であること" do
     user = FactoryBot.create(:user)
+    # シーケンスのおかげ
     other_user = FactoryBot.build(:user, email: user.email)
     other_user.valid?
     expect(other_user.errors[:email]).to include("はすでに存在します")
@@ -67,6 +68,27 @@ RSpec.describe User, type: :model do
     user.unfollow(other_user)
     expect(user.following?(other_user)).to be_falsey
   end
+
+  it "Userモデルインスタンスが自分のplaceであることの確認" do
+    # 本来 user = FactoryBot.create(:user)アソシエーションあるからいらない！！
+    
+    user1 = FactoryBot.create(:user)
+    user2 = FactoryBot.create(:user)
+
+    # アソシエーションでuserインスタンスも作成されることからcreateにしたいけどimageで引っかかってしまうから
+    place = FactoryBot.build(:place, user_id: user1.id)
+    place.image = fixture_file_upload("/files/test_image.png")
+    place.save
+
+    other_place = FactoryBot.build(:place, user_id: user2.id)
+    other_place.image = fixture_file_upload("/files/test_image.png")
+    other_place.save
+
+    expect(user1.own?(place)).to be_truthy
+    expect(user1.own?(other_place)).to be_falsey
+  end
+
+ 
 
 
 
