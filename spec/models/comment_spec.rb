@@ -22,4 +22,10 @@ RSpec.describe Comment, type: :model do
     comment.valid?
     expect(comment.errors[:content]).to include("を入力してください")
   end
+
+  it "contentが51文字の場合無効であること" do
+    comment = FactoryBot.build(:comment, content: "a" * 51)
+    comment.valid?
+    expect(comment.errors[:content]).to include("は50文字以内で入力してください")
+  end
 end
