@@ -138,7 +138,7 @@ RSpec.describe User, type: :model do
       described_class.reflect_on_association(target)
     end
 
-    context 'Placeモデルとの関係' do
+    context 'Placeモデルとの関連' do
       let(:target) { :places }
 
       it '1対多である' do
@@ -146,7 +146,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'Likeモデルとの関係' do
+    context 'Likeモデルとの関連' do
       let(:target) { :likes }
 
       it '1対多である' do
@@ -154,7 +154,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'Commentモデルとの関係' do
+    context 'Commentモデルとの関連' do
       let(:target) { :comments }
 
       it '1対多である' do
@@ -162,7 +162,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'Scheduleモデルとの関係' do
+    context 'Scheduleモデルとの関連' do
       let(:target) { :schedules }
 
       it '1対多である' do
@@ -170,7 +170,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'Relationshipモデル(active_relationships)モデルとの関係' do
+    context 'Relationshipモデル(active_relationships)モデルとの関連' do
       let(:target) { :active_relationships }
 
       it '1対多である' do
@@ -181,7 +181,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'Relationshipモデル(passive_relationships)モデルとの関係' do
+    context 'Relationshipモデル(passive_relationships)モデルとの関連' do
       let(:target) { :passive_relationships }
 
       it '1対多である' do
@@ -192,7 +192,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'フォローしているユーザーとの関係' do
+    context 'フォローしているユーザーとの関連' do
       let(:target) { :following }
 
       it '1対多である' do
@@ -203,7 +203,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'フォロワーとの関係' do
+    context 'フォロワーとの関連' do
       let(:target) { :followers }
 
       it '1対多である' do

@@ -74,7 +74,15 @@ RSpec.describe Place, type: :model do
       described_class.reflect_on_association(target)
     end
 
-    context 'Likeモデルとの関係' do
+    context 'Userモデルとの関連' do
+      let(:target) { :user }
+
+      it '多対1である' do
+        expect(association.macro).to eq :belongs_to
+      end
+    end
+
+    context 'Likeモデルとの関連' do
       let(:target) { :likes }
 
       it '1対多である' do
@@ -82,7 +90,7 @@ RSpec.describe Place, type: :model do
       end
     end
 
-    context 'Commentモデルとの関係' do
+    context 'Commentモデルとの関連' do
       let(:target) { :comments }
 
       it '1対多である' do
@@ -90,7 +98,7 @@ RSpec.describe Place, type: :model do
       end
     end
 
-    context 'Scheduleモデルとの関係' do
+    context 'Scheduleモデルとの関連' do
       let(:target) { :schedules }
 
       it '1対多である' do
