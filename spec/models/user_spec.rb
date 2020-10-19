@@ -69,7 +69,7 @@ RSpec.describe User, type: :model do
     expect(user.following?(other_user)).to be_falsey
   end
 
-  it "Userモデルインスタンスが自分のplaceであることの確認" do
+  it "Userモデルインスタンスが自分のplaceであるか確認すること" do
     # 本来 user = FactoryBot.create(:user)アソシエーションあるからいらない！！
     
     user1 = FactoryBot.create(:user)
@@ -88,7 +88,7 @@ RSpec.describe User, type: :model do
     expect(user1.own?(user2_place)).to be_falsey
   end
 
-  it "Userモデルインスタンスが自分のcommentであることの確認" do
+  it "Userモデルインスタンスが自分のcommentであるか確認すること" do
     user1 = FactoryBot.create(:user)
     user2 = FactoryBot.create(:user)
 
@@ -104,7 +104,7 @@ RSpec.describe User, type: :model do
     expect(user1.own?(user2_comment)).to be_falsey
   end
 
-  it "Userモデルインスタンスが自分のscheduleであることの確認" do
+  it "Userモデルインスタンスが自分のscheduleであるか確認すること" do
     user1 = FactoryBot.create(:user)
     user2 = FactoryBot.create(:user)
 

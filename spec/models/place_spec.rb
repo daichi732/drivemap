@@ -43,4 +43,18 @@ RSpec.describe Place, type: :model do
     place.valid?
     expect(place.errors[:image]).to include("にはjpegまたはgifまたはpngファイルを添付してください")
   end
+
+  it "該当するPlaceモデルインスタンスはuserがいいねがしているか確認すること" do
+    user = FactoryBot.create(:user)
+
+    place = FactoryBot.build(:place)
+    place.image = fixture_file_upload("/files/test_image.png")
+    place.save
+
+    expect(place.liked_by?(user)).to be_falsey
+
+    like = FactoryBot.create(:like, user_id: user.id, place_id: place.id)
+
+    expect(place.liked_by?(user)).to be_truthy
+  end
 end
