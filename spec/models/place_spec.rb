@@ -30,6 +30,11 @@ RSpec.describe Place, type: :model do
         place.valid?
         expect(place.errors[:genre]).to include("を入力してください")
       end
+
+      it "genreで1を選ぶとviewになること" do
+        # factoryでgenre { 1 }を定義 
+        expect(place.genre).to eq "view"
+      end
     end
 
     context "addressカラム" do
