@@ -4,8 +4,9 @@ RSpec.describe Comment, type: :model do
   let(:comment) { FactoryBot.build(:comment) }
 
   it "user_id, place_id, contentがある場合有効であること" do
+    # idに値を入れてbuildする
     expect(FactoryBot.build_stubbed(:comment)).to be_valid
-  endx
+  end
 
   it "user_idがない場合無効であること" do
     comment.user_id = nil
