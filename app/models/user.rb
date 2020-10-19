@@ -19,17 +19,18 @@ class User < ApplicationRecord
                                    dependent: :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
-
-  def own?(object)
-  # object -> { place, comment, schedule }
-    self == object.user
-  end
-
+  
   def avatar_format
     return true unless avatar.attached?
 
     errors.add(:avatar, 'にはjpegまたはgifまたはpngファイルを添付してください') unless avatar.content_type.in?(%('image/jpeg image/gif image/png'))
   end
+  
+  def own?(object)
+  # object -> { place, comment, schedule }
+    self == object.user
+  end
+
 
   def follow(other_user)
     following << other_user

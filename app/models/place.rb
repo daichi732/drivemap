@@ -14,13 +14,13 @@ class Place < ApplicationRecord
   after_validation :geocode
   enum genre: { food: 0, view: 1, amusement: 2 }
 
-  def liked_by?(user)
-    likes.where(user_id: user.id).exists?
-  end
-
   def image_presence_or_format
     return errors.add(:image, 'ファイルを添付してください') unless image.attached?
-
+    
     errors.add(:image, 'にはjpegまたはgifまたはpngファイルを添付してください') unless image.content_type.in?(%('image/jpeg image/gif image/png'))
+  end
+
+  def liked_by?(user)
+    likes.where(user_id: user.id).exists?
   end
 end
