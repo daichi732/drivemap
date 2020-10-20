@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
     if @user.save
       log_in(@user)
-      redirect_to places_url, notice: "ユーザ「#{@user.name}」を登録しました。"
+      redirect_to places_url, notice: "アカウント登録が完了しました。"
     else
       render 'new'
     end
