@@ -150,11 +150,6 @@ RSpec.describe User, type: :model do
       it '結合モデルのクラスはRelationship' do
         expect(association.class_name).to eq 'Relationship'
       end
-      
-      it "userを削除すると、relationshipsも削除される" do
-        user.follow(other_user)
-        expect{ user.destroy }.to change{ Relationship.count }.by(-1)
-      end
     end
     
     context 'Relationshipモデル(passive_relationships)モデルとの関連' do
