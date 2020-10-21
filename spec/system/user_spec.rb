@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :system do
-  # let!(:user_a) { FactoryBot.create(:user, email: 'test1@example.com') }
   let(:user) { FactoryBot.create(:user) }
+
   describe "ユーザー登録ページ" do
     before do
       visit new_user_path
@@ -21,7 +21,7 @@ RSpec.describe User, type: :system do
         fill_in "user[password]", with: "password"
         fill_in "user[password_confirmation]", with: "password"
         click_on "登録する"
-        expect(page).to have_content "アカウント登録が完了しました。"
+        expect(page).to have_content "ユーザ「name」を登録しました。"
         expect(current_path).to eq places_path
       end
     end
@@ -78,4 +78,28 @@ RSpec.describe User, type: :system do
       end
     end
   end
+
+  describe "ログインページ" do
+    before do
+      visit login_path
+    end
+
+    context "ページレイアウト" do
+      it "「ログイン」の文字列が存在することを確認" do
+        expect(page).to have_content 'ログイン'
+      end
+    end
+
+    context "フォームの入力が正しい時" do
+      it "ログインに成功し、フラッシュメッセージを表示する" do
+        fill_in "session[email]", with: "#{ user.email }"
+        fill_in "session[password]", with: "password"
+        click_button "ログインする"
+        expect(page).to have_content "ログインしました。"
+        expect(current_path).to eq places_path
+      end
+    end
+  end
+
+  
 end
