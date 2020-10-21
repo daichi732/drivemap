@@ -87,4 +87,39 @@ RSpec.describe Place, type: :system do
       end
     end
   end
+
+  describe "場所の一覧ページ" do
+    before do
+      visit places_path
+    end
+
+    context "ページレイアウト" do
+      it "「ALL SPOTS」の文字列が存在することを確認" do
+        expect(page).to have_content 'ALL SPOTS'
+        expect(page).to have_content 'testPlace'
+      end
+    end
+
+    context "場所をクリックすると" do
+      it "詳細ページに移動できること" do
+        click_on 'testPlace'
+        expect(current_path).to eq place_path( place.id )
+      end
+    end
+
+    context "「場所を登録」をクリックすると" do
+      it "登録ページに移動できること" do
+        click_on '場所を登録'
+        expect(current_path).to eq new_place_path
+      end
+    end
+
+    context "「ログアウト」をクリックすると" do
+      it "ログアウトし、フラッシュメッセージを表示する" do
+        click_on 'ログアウト'
+        expect(current_path).to eq root_path
+        expect(page).to have_content "ログアウトしました。"
+      end
+    end
+  end
 end
