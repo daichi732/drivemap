@@ -101,5 +101,36 @@ RSpec.describe User, type: :system do
     end
   end
 
-  
+  describe "ユーザー情報編集ページ" do
+    before do
+      visit login_path
+      fill_in "session[email]", with: "#{ user.email }"
+      fill_in "session[password]", with: "password"
+      click_on "ログインする"
+      visit edit_user_path(user)
+    end
+
+    context "ページレイアウト" do
+      it "「ユーザー編集」の文字列が存在することを確認" do
+        expect(page).to have_content 'ユーザー編集'
+      end
+    end
+
+    context "フォームの入力が正しい時" do
+      it "編集に成功し、フラッシュメッセージを表示する" do
+        fill_in "user[name]", with: "edit_name"
+        click_on "登録する"
+        expect(page).to have_content "ユーザ「edit_name」を更新しました"
+        expect(current_path).to eq user_path( user.id )
+      end
+    end
+
+    context "フォームの入力が誤っている時" do
+      it "登録に失敗し、エラーメッセージを表示する" do
+        fill_in "user[name]", with: ""
+        click_on "登録する"
+        expect(page).to have_content "名前を入力してください"
+      end
+    end
+  end
 end
