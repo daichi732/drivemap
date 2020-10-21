@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user) { FactoryBot.create(:user) }
   let(:other_user) { FactoryBot.create(:user) }
+  let(:place) { FactoryBot.create(:place) } #違うuserのplace
+
   describe "バリデーションのテスト" do
-    # let(:user) { FactoryBot.create(:user) }
-    # let(:other_user) { FactoryBot.create(:user) }
     context "nameカラム" do
       it "名前、メールアドレス、パスワードがある場合有効であること" do
         expect(FactoryBot.build(:user)).to be_valid
@@ -83,9 +83,7 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、placeも削除される" do
-        place = FactoryBot.build(:place, user_id: user.id)
-        place.image = fixture_file_upload("/files/test_image.png")
-        place.save
+        place = FactoryBot.create(:place, user_id: user.id) # userが作成したplace
         expect{ user.destroy }.to change{ Place.count }.by(-1)
       end
     end
@@ -98,10 +96,6 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、likeも削除される" do
-        place = FactoryBot.build(:place, user_id: user.id)
-        place.image = fixture_file_upload("/files/test_image.png")
-        place.save
-        
         like = FactoryBot.create(:like, user_id: user.id, place_id: place.id)
         expect{ user.destroy }.to change{ Like.count }.by(-1)
       end
@@ -115,10 +109,6 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、commentも削除される" do
-        place = FactoryBot.build(:place, user_id: user.id)
-        place.image = fixture_file_upload("/files/test_image.png")
-        place.save
-        
         comment = FactoryBot.create(:comment, user_id: user.id, place_id: place.id)
         expect{ user.destroy }.to change{ Comment.count }.by(-1)
       end
@@ -132,10 +122,6 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、scheduleも削除される" do
-        place = FactoryBot.build(:place, user_id: user.id)
-        place.image = fixture_file_upload("/files/test_image.png")
-        place.save
-        
         schedule = FactoryBot.create(:schedule, user_id: user.id, place_id: place.id)
         expect{ user.destroy }.to change{ Schedule.count }.by(-1)
       end
@@ -211,31 +197,15 @@ RSpec.describe User, type: :model do
   
     context "own?(object)メソッド" do
       it "Userモデルインスタンスが自分のplaceであるか確認すること" do
-        # 本来 user = FactoryBot.create(:user)アソシエーションあるからいらない！！
-        
-        # user = FactoryBot.create(:user)
-        # other_user = FactoryBot.create(:user)
-  
-        # アソシエーションでuserインスタンスも作成されることからcreateにしたいけどimageで引っかかってしまうから
-        user_place = FactoryBot.build(:place, user_id: user.id)
-        user_place.image = fixture_file_upload("/files/test_image.png")
-        user_place.save
-  
-        other_user_place = FactoryBot.build(:place, user_id: other_user.id)
-        other_user_place.image = fixture_file_upload("/files/test_image.png")
-        other_user_place.save
+        user_place = FactoryBot.create(:place, user_id: user.id)
+        other_user_place = FactoryBot.create(:place, user_id: other_user.id)
   
         expect(user.own?(user_place)).to be_truthy
         expect(user.own?(other_user_place)).to be_falsey
       end
   
       it "Userモデルインスタンスが自分のcommentであるか確認すること" do
-        # user = FactoryBot.create(:user)
-        # other_user = FactoryBot.create(:user)
-  
-        common_place = FactoryBot.build(:place)
-        common_place.image = fixture_file_upload("/files/test_image.png")
-        common_place.save
+        common_place = FactoryBot.create(:place)
   
         user_comment = FactoryBot.create(:comment, user_id: user.id, place_id: common_place.id)
   
@@ -246,12 +216,7 @@ RSpec.describe User, type: :model do
       end
   
       it "Userモデルインスタンスが自分のscheduleであるか確認すること" do
-        user = FactoryBot.create(:user)
-        other_user = FactoryBot.create(:user)
-  
-        common_place = FactoryBot.build(:place)
-        common_place.image = fixture_file_upload("/files/test_image.png")
-        common_place.save
+        common_place = FactoryBot.create(:place)
   
         user_schedule = FactoryBot.create(:schedule, user_id: user.id, place_id: common_place.id)
   

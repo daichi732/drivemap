@@ -1,13 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Place, type: :model do
-  let(:place) { FactoryBot.build(:place) }
+  let(:place) { FactoryBot.create(:place) }
   describe "バリデーションのテスト" do
-    # let(:place) { FactoryBot.build(:place) }
-
     context "nameカラム" do
       it "名称、種類、住所がある場合有効であること" do
-        place.image = fixture_file_upload("/files/test_image.png")
         expect(place).to be_valid
       end
   
@@ -46,9 +43,9 @@ RSpec.describe Place, type: :model do
     end
 
     context "image画像" do
-      it "画像がない場合無効であること" do
-        place.valid?
-        expect(place.errors[:image]).to include("ファイルを添付してください")
+      it "画像があった場合も有効であること" do
+        place.image = fixture_file_upload("/files/test_image.png")
+        expect(place).to be_valid
       end
   
       it "画像がjpeg/gif/pngでない場合無効であること" do
@@ -81,9 +78,6 @@ RSpec.describe Place, type: :model do
       end
 
       it "placeを削除すると、likeも削除される" do
-        place.image = fixture_file_upload("/files/test_image.png")
-        place.save
-        
         like = FactoryBot.create(:like, user_id: place.user.id, place_id: place.id)
         expect{ place.destroy }.to change{ Like.count }.by(-1)
       end
@@ -97,9 +91,6 @@ RSpec.describe Place, type: :model do
       end
 
       it "placeを削除すると、commentも削除される" do
-        place.image = fixture_file_upload("/files/test_image.png")
-        place.save
-        
         comment = FactoryBot.create(:comment, user_id: place.user.id, place_id: place.id)
         expect{ place.destroy }.to change{ Comment.count }.by(-1)
       end
@@ -113,9 +104,6 @@ RSpec.describe Place, type: :model do
       end
 
       it "placeを削除すると、scheduleも削除される" do
-        place.image = fixture_file_upload("/files/test_image.png")
-        place.save
-        
         schedule = FactoryBot.create(:schedule, user_id: place.user.id, place_id: place.id)
         expect{ place.destroy }.to change{ Schedule.count }.by(-1)
       end
@@ -126,10 +114,7 @@ RSpec.describe Place, type: :model do
     context "liked_by?(user)メソッド" do
       it "userがplaceをいいねしているか確認すること" do
         user = FactoryBot.create(:user)
-  
-        place.image = fixture_file_upload("/files/test_image.png")
-        place.save
-  
+        
         expect(place.liked_by?(user)).to be_falsey
   
         like = FactoryBot.create(:like, user_id: user.id, place_id: place.id)
