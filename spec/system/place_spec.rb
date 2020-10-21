@@ -149,10 +149,29 @@ RSpec.describe Place, type: :system do
       end
     end
 
-    context "「コメントする」をクリックすると" do
+    context "いいね" do
+      it "いいねの作成、解除が動作すること", js: true do
+        find('.far.fa-heart').click
+        expect(page).to have_selector '.fas.fa-heart'
+        expect(place.likes.count).to eq(1)
+
+        find('.fas.fa-heart').click
+        expect(page).to have_selector '.far.fa-heart'
+        expect(place.likes.count).to eq(0)
+      end 
+    end
+
+    context "コメント" do
       it "コメントに失敗し、エラーメッセージを表示する", js: true do
         click_on 'コメントする'
         expect(page).to have_content "コメントを入力してください"
+      end 
+    end
+
+    context "「登録する」をクリックすると" do
+      it "登録に失敗し、エラーメッセージを表示する", js: true do
+        click_on '登録する'
+        expect(page).to have_content "日時を入力してください"
       end 
     end
   end
