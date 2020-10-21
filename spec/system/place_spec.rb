@@ -122,4 +122,38 @@ RSpec.describe Place, type: :system do
       end
     end
   end
+
+  describe "場所の詳細ページ" do
+    before do
+      visit place_path(place)
+    end
+
+    context "ページレイアウト" do
+      it "「ALL SPOTS」の文字列が存在することを確認" do
+        expect(page).to have_content 'testPlace'
+      end
+    end
+
+    context "「編集」をクリックすると" do
+      it "場所の編集ページに移動できること" do
+        click_on '編集'
+        expect(current_path).to eq edit_place_path( place.id )
+      end
+    end
+    # 削除はダイアログ出てくる
+
+    context "「一覧」をクリックすると" do
+      it "一覧ページに移動できること" do
+        click_on '一覧'
+        expect(current_path).to eq places_path
+      end
+    end
+
+    context "「コメントする」をクリックすると" do
+      it "コメントに失敗し、エラーメッセージを表示する", js: true do
+        click_on 'コメントする'
+        expect(page).to have_content "コメントを入力してください"
+      end 
+    end
+  end
 end
