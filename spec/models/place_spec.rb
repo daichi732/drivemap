@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Place, type: :model do
+  let(:user) { create(:user) }
   let(:place) { create(:place) }
   describe "バリデーションのテスト" do
     context "nameカラム" do
@@ -111,15 +112,18 @@ RSpec.describe Place, type: :model do
   end
 
   describe "ロジックのテスト" do
-    context "liked_by?(user)メソッド" do
-      it "userがplaceをいいねしているか確認すること" do
-        user = create(:user)
-        
-        expect(place.liked_by?(user)).to be_falsey
-  
-        like = create(:like, user_id: user.id, place_id: place.id)
-  
-        expect(place.liked_by?(user)).to be_truthy
+    describe "#liked_by?(user)" do
+      context "userがいいねしていない場合" do
+        it "falseを返す" do
+          expect(place.liked_by?(user)).to be_falsey
+        end
+      end
+
+      context "userがいいねしている場合" do
+        it "trueを返す" do
+          like = create(:like, user_id: user.id, place_id: place.id)
+          expect(place.liked_by?(user)).to be_truthy
+        end
       end
     end
   end

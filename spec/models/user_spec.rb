@@ -185,45 +185,78 @@ RSpec.describe User, type: :model do
   end
 
   describe "ロジックのテスト" do
-    context "フォロー機能" do
-      it "フォローとアンフォローが正常に動作すること" do
-        expect(user.following?(other_user)).to be_falsey
-        user.follow(other_user)
-        expect(user.following?(other_user)).to be_truthy
-        user.unfollow(other_user)
-        expect(user.following?(other_user)).to be_falsey
+    describe "#following?(other_user)" do
+      context "フォローしていない場合" do
+        it "falseを返す" do
+          expect(user.following?(other_user)).to be_falsey
+        end
+      end
+      context "フォローした場合" do
+        it "trueを返す" , js: true do
+          user.follow(other_user)
+          expect(user.following?(other_user)).to be_truthy
+        end
+      end
+      context "フォローを外した場合" do
+        it "falseを返す" , js: true do
+          user.follow(other_user)
+          user.unfollow(other_user)
+          expect(user.following?(other_user)).to be_falsey
+        end
       end
     end
   
-    context "own?(object)メソッド" do
-      it "Userモデルインスタンスが自分のplaceであるか確認すること" do
-        user_place = create(:place, user_id: user.id)
-        other_user_place = create(:place, user_id: other_user.id)
-  
-        expect(user.own?(user_place)).to be_truthy
-        expect(user.own?(other_user_place)).to be_falsey
+    describe "#own?(object)" do
+      context "object == placeの場合" do
+        context "userのplaceの場合" do
+          it "trueを返す" do
+            place = create(:place, user_id: user.id)
+            expect(user.own?(place)).to be_truthy
+          end
+        end
+
+        context "userのplaceでない場合" do
+          it "falseを返す" do
+            place = create(:place, user_id: other_user.id)
+            expect(user.own?(place)).to be_falsey
+          end
+        end
       end
-  
-      it "Userモデルインスタンスが自分のcommentであるか確認すること" do
-        common_place = create(:place)
-  
-        user_comment = create(:comment, user_id: user.id, place_id: common_place.id)
-  
-        other_user_comment = create(:comment, user_id: other_user.id, place_id: common_place.id)
-  
-        expect(user.own?(user_comment)).to be_truthy
-        expect(user.own?(other_user_comment)).to be_falsey
+
+      context "object == commentの場合" do
+        context "userのcommentの場合" do
+          it "trueを返す" do
+            place = create(:place)
+            comment = create(:comment, user_id: user.id, place_id: place.id)
+            expect(user.own?(comment)).to be_truthy
+          end
+        end
+
+        context "userのcommentでない場合" do
+          it "falseを返す" do
+            place = create(:place)
+            comment = create(:comment, user_id: other_user.id, place_id: place.id)
+            expect(user.own?(comment)).to be_falsey
+          end
+        end
       end
-  
-      it "Userモデルインスタンスが自分のscheduleであるか確認すること" do
-        common_place = create(:place)
-  
-        user_schedule = create(:schedule, user_id: user.id, place_id: common_place.id)
-  
-        other_user_schedule = create(:schedule, user_id: other_user.id, place_id: common_place.id)
-  
-        expect(user.own?(user_schedule)).to be_truthy
-        expect(user.own?(other_user_schedule)).to be_falsey
+
+      context "object == scheduleの場合" do
+        context "userのscheduleの場合" do
+          it "trueを返す" do
+            place = create(:place)
+            schedule = create(:schedule, user_id: user.id, place_id: place.id)
+            expect(user.own?(schedule)).to be_truthy
+          end
+        end
+
+        context "userのscheduleでない場合" do
+          it "falseを返す" do
+            place = create(:place)
+            schedule = create(:schedule, user_id: other_user.id, place_id: place.id)
+            expect(user.own?(schedule)).to be_falsey
+          end
+        end
       end
     end
   end
