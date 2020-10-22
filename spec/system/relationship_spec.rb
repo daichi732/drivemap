@@ -3,6 +3,7 @@ RSpec.describe Relationship, type: :system do
   let(:user) { FactoryBot.create(:user) }
   let(:user2) { FactoryBot.create(:user) }
   let(:user3) { FactoryBot.create(:user) }
+  
   before do
     FactoryBot.create(:relationship, follower_id: user.id, followed_id: user2.id)
     FactoryBot.create(:relationship, follower_id: user.id, followed_id: user3.id)
@@ -37,8 +38,8 @@ RSpec.describe Relationship, type: :system do
       end
 
       it "フォロー中のユーザーが表示されていること" do
-        expect(page).to have_content user2.name, href: user_path(user2)
-        expect(page).to have_content user3.name, href: user_path(user3)
+        expect(page).to have_content user2.name
+        expect(page).to have_content user3.name
       end
     end
   end
@@ -54,7 +55,7 @@ RSpec.describe Relationship, type: :system do
       end
 
       it "フォロワーが表示されていること" do
-        expect(page).to have_content user2.name, href: user_path(user2)
+        expect(page).to have_content user2.name
       end
     end
   end

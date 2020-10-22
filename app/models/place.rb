@@ -15,7 +15,6 @@ class Place < ApplicationRecord
   enum genre: { food: 0, view: 1, amusement: 2 }
 
   def image_format
-    # return errors.add(:image, 'ファイルを添付してください') unless image.attached?
     if image.attached?
       errors.add(:image, 'にはjpegまたはgifまたはpngファイルを添付してください') unless image.content_type.in?(%('image/jpeg image/gif image/png'))
     end
