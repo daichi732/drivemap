@@ -128,10 +128,18 @@ RSpec.describe Place, type: :system do
     end
 
     context "「ログアウト」をクリックすると" do
-      it "ログアウトし、フラッシュメッセージを表示する" do
+      before do
         click_on 'ログアウト'
         expect(current_path).to eq root_path
+      end
+
+      it "ログアウトし、フラッシュメッセージを表示する" do
         expect(page).to have_content "ログアウトしました。"
+      end
+
+      it "ヘッダーが切り替わること" do
+        expect(page).to_not have_content "マイページ"
+        expect(page).to have_content "新規登録"
       end
     end
   end
