@@ -1,17 +1,16 @@
 require 'rails_helper'
 RSpec.describe Place, type: :system do
-  # let(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
+  # この2つで2人のユーザーとその人のplaceが作成、どっちでもいいときuserを使い、place絡めるときはplace.user, other_place.user
   let(:place) { FactoryBot.create(:place) }
-
-  before do
-    visit login_path
-    fill_in "session[email]", with: "#{ place.user.email }" # 作成されたplaceのuserでログインする
-    fill_in "session[password]", with: "password"
-    click_on "ログインする"
-  end
+  let(:other_place) { FactoryBot.create(:place) }
   
   describe "場所の登録ページ" do
     before do
+      visit login_path
+      fill_in "session[email]", with: user.email
+      fill_in "session[password]", with: user.password
+      click_on "ログインする"
       visit new_place_path
     end
 
@@ -28,7 +27,7 @@ RSpec.describe Place, type: :system do
         fill_in "place[address]", with: "箱根ガラスの森美術館"
         click_on "登録する"
         expect(page).to have_content "「箱根ガラスの森美術館」を登録しました。"
-        # expect(current_path).to eq place_path( place.id )
+        # expect(current_path).to eq place_path( place.id )これでは違うplace
       end
     end
 
@@ -65,6 +64,10 @@ RSpec.describe Place, type: :system do
 
   describe "場所の編集ページ" do
     before do
+      visit login_path
+      fill_in "session[email]", with: place.user.email # 作成されたplaceのuserでログインする
+      fill_in "session[password]", with: place.user.password
+      click_on "ログインする"
       visit edit_place_path(place)
     end
 
@@ -90,20 +93,30 @@ RSpec.describe Place, type: :system do
 
   describe "場所の一覧ページ" do
     before do
+      visit login_path
+      fill_in "session[email]", with: user.email # 作成されたplaceのuserでログインする
+      fill_in "session[password]", with: user.password
+      click_on "ログインする"
       visit places_path
     end
 
     context "ページレイアウト" do
       it "「ALL SPOTS」の文字列が存在することを確認" do
         expect(page).to have_content 'ALL SPOTS'
-        expect(page).to have_content 'testPlace'
       end
     end
 
-    context "場所をクリックすると" do
-      it "詳細ページに移動できること" do
-        click_on 'testPlace'
-        expect(current_path).to eq place_path( place.id )
+    # context "場所をクリックすると" do
+    #   it "詳細ページに移動できること" do
+    #     click_on place.name # testPlaceがない
+    #     expect(current_path).to eq place_path( place.id )
+    #   end
+    # end
+
+    context "「マイページ」をクリックすると" do
+      it "マイページに移動できること" do
+        click_on 'マイページ'
+        expect(current_path).to eq user_path( user.id )
       end
     end
 
@@ -125,12 +138,16 @@ RSpec.describe Place, type: :system do
 
   describe "場所の詳細ページ" do
     before do
+      visit login_path
+      fill_in "session[email]", with: place.user.email # 作成されたplaceのuserでログインする
+      fill_in "session[password]", with: place.user.password
+      click_on "ログインする"
       visit place_path(place)
     end
 
     context "ページレイアウト" do
-      it "「ALL SPOTS」の文字列が存在することを確認" do
-        expect(page).to have_content 'testPlace'
+      it "場所の名前の文字列が存在することを確認" do
+        expect(page).to have_content place.name
       end
     end
 
@@ -161,14 +178,14 @@ RSpec.describe Place, type: :system do
       end 
     end
 
-    context "コメント" do
+    context "空欄でコメントすると" do
       it "コメントに失敗し、エラーメッセージを表示する", js: true do
         click_on 'コメントする'
         expect(page).to have_content "コメントを入力してください"
       end 
     end
 
-    context "「登録する」をクリックすると" do
+    context "空欄で日時を登録すると" do
       it "登録に失敗し、エラーメッセージを表示する", js: true do
         click_on '登録する'
         expect(page).to have_content "日時を入力してください"

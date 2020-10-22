@@ -92,8 +92,8 @@ RSpec.describe User, type: :system do
 
     context "フォームの入力が正しい時" do
       it "ログインに成功し、フラッシュメッセージを表示する" do
-        fill_in "session[email]", with: "#{ user.email }"
-        fill_in "session[password]", with: "password"
+        fill_in "session[email]", with: user.email
+        fill_in "session[password]", with: user.password
         click_button "ログインする"
         expect(page).to have_content "ログインしました。"
         expect(current_path).to eq places_path
@@ -104,8 +104,8 @@ RSpec.describe User, type: :system do
   describe "ユーザー情報編集ページ" do
     before do
       visit login_path
-      fill_in "session[email]", with: "#{ user.email }"
-      fill_in "session[password]", with: "password"
+      fill_in "session[email]", with: user.email
+      fill_in "session[password]", with: user.password
       click_on "ログインする"
       visit edit_user_path(user)
     end
