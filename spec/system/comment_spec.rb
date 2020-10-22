@@ -19,6 +19,13 @@ RSpec.describe Comment, type: :system do
       end 
     end
 
-    
+    context "正しくコメントすると" do
+      it "コメント内容とそのユーザーがマイページで表示されること", js: true do
+        fill_in "comment[content]", with: "foobar"
+        click_on 'コメントする'
+        expect(page).to have_link user.name, href: user_path(user)
+        expect(page).to have_content "foobar"
+      end 
+    end
   end
 end
