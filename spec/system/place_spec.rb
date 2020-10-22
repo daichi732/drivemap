@@ -137,59 +137,87 @@ RSpec.describe Place, type: :system do
   end
 
   describe "場所の詳細ページ" do
-    before do
-      visit login_path
-      fill_in "session[email]", with: place.user.email # 作成されたplaceのuserでログインする
-      fill_in "session[password]", with: place.user.password
-      click_on "ログインする"
-      visit place_path(place)
-    end
+    context "ログインユーザーが自分の詳細ページを見る場合" do
+      before do
+        visit login_path
+        fill_in "session[email]", with: place.user.email # 作成されたplaceのuserでログインする
+        fill_in "session[password]", with: place.user.password
+        click_on "ログインする"
+        visit place_path(place)
+      end
+  
+      context "ページレイアウト" do
+        it "場所の名前の文字列が存在することを確認" do
+          expect(page).to have_content place.name
+        end
+      end
+  
+      context "「編集」をクリックすると" do
+        it "場所の編集ページに移動できること" do
+          click_on '編集'
+          expect(current_path).to eq edit_place_path( place.id )
+        end
+      end
 
-    context "ページレイアウト" do
-      it "場所の名前の文字列が存在することを確認" do
-        expect(page).to have_content place.name
+      context "「削除」をクリックすると" do
+        it "削除が正常に動作すること" do
+          expect(place.user.places.count).to eq(1)
+          click_on '削除'
+          expect(page).to have_content '「testPlace」を削除しました'
+          expect(place.user.places.count).to eq(0)
+          expect(current_path).to eq places_path
+        end
+      end
+  
+      context "「一覧」をクリックすると" do
+        it "一覧ページに移動できること" do
+          click_on '一覧'
+          expect(current_path).to eq places_path
+        end
+      end
+  
+      context "いいね" do
+        it "いいねの作成、解除が動作すること", js: true do
+          find('.far.fa-heart').click
+          expect(page).to have_selector '.fas.fa-heart'
+          expect(place.likes.count).to eq(1)
+  
+          find('.fas.fa-heart').click
+          expect(page).to have_selector '.far.fa-heart'
+          expect(place.likes.count).to eq(0)
+        end 
+      end
+  
+      context "空欄でコメントすると" do
+        it "コメントに失敗し、エラーメッセージを表示する", js: true do
+          click_on 'コメントする'
+          expect(page).to have_content "コメントを入力してください"
+        end 
+      end
+  
+      context "空欄で日時を登録すると" do
+        it "登録に失敗し、エラーメッセージを表示する", js: true do
+          click_on '登録する'
+          expect(page).to have_content "日時を入力してください"
+        end 
       end
     end
 
-    context "「編集」をクリックすると" do
-      it "場所の編集ページに移動できること" do
-        click_on '編集'
-        expect(current_path).to eq edit_place_path( place.id )
+    context "ログインユーザーが他のユーザーが登録した場所の詳細ページを見る場合" do
+      before do
+        visit login_path
+        fill_in "session[email]", with: place.user.email
+        fill_in "session[password]", with: place.user.password
+        click_on "ログインする"
+        visit place_path(other_place) # 他のユーザーのplace
       end
-    end
-    # 削除はダイアログ出てくる
 
-    context "「一覧」をクリックすると" do
-      it "一覧ページに移動できること" do
-        click_on '一覧'
-        expect(current_path).to eq places_path
+      context "ページレイアウト" do
+        it "編集、削除が存在しないことを確認" do
+          expect(page).to_not have_content '編集'
+          expect(page).to_not have_content '削除'
+        end
       end
-    end
-
-    context "いいね" do
-      it "いいねの作成、解除が動作すること", js: true do
-        find('.far.fa-heart').click
-        expect(page).to have_selector '.fas.fa-heart'
-        expect(place.likes.count).to eq(1)
-
-        find('.fas.fa-heart').click
-        expect(page).to have_selector '.far.fa-heart'
-        expect(place.likes.count).to eq(0)
-      end 
-    end
-
-    context "空欄でコメントすると" do
-      it "コメントに失敗し、エラーメッセージを表示する", js: true do
-        click_on 'コメントする'
-        expect(page).to have_content "コメントを入力してください"
-      end 
-    end
-
-    context "空欄で日時を登録すると" do
-      it "登録に失敗し、エラーメッセージを表示する", js: true do
-        click_on '登録する'
-        expect(page).to have_content "日時を入力してください"
-      end 
     end
   end
 end
