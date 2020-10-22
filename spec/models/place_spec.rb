@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Place, type: :model do
-  let(:place) { FactoryBot.create(:place) }
+  let(:place) { create(:place) }
   describe "バリデーションのテスト" do
     context "nameカラム" do
       it "名称、種類、住所がある場合有効であること" do
@@ -78,7 +78,7 @@ RSpec.describe Place, type: :model do
       end
 
       it "placeを削除すると、likeも削除される" do
-        like = FactoryBot.create(:like, user_id: place.user.id, place_id: place.id)
+        like = create(:like, user_id: place.user.id, place_id: place.id)
         expect{ place.destroy }.to change{ Like.count }.by(-1)
       end
     end
@@ -91,7 +91,7 @@ RSpec.describe Place, type: :model do
       end
 
       it "placeを削除すると、commentも削除される" do
-        comment = FactoryBot.create(:comment, user_id: place.user.id, place_id: place.id)
+        comment = create(:comment, user_id: place.user.id, place_id: place.id)
         expect{ place.destroy }.to change{ Comment.count }.by(-1)
       end
     end
@@ -104,7 +104,7 @@ RSpec.describe Place, type: :model do
       end
 
       it "placeを削除すると、scheduleも削除される" do
-        schedule = FactoryBot.create(:schedule, user_id: place.user.id, place_id: place.id)
+        schedule = create(:schedule, user_id: place.user.id, place_id: place.id)
         expect{ place.destroy }.to change{ Schedule.count }.by(-1)
       end
     end
@@ -113,11 +113,11 @@ RSpec.describe Place, type: :model do
   describe "ロジックのテスト" do
     context "liked_by?(user)メソッド" do
       it "userがplaceをいいねしているか確認すること" do
-        user = FactoryBot.create(:user)
+        user = create(:user)
         
         expect(place.liked_by?(user)).to be_falsey
   
-        like = FactoryBot.create(:like, user_id: user.id, place_id: place.id)
+        like = create(:like, user_id: user.id, place_id: place.id)
   
         expect(place.liked_by?(user)).to be_truthy
       end

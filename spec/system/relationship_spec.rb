@@ -1,13 +1,13 @@
 require 'rails_helper'
 RSpec.describe Relationship, type: :system do
-  let(:user) { FactoryBot.create(:user) }
-  let(:user2) { FactoryBot.create(:user) }
-  let(:user3) { FactoryBot.create(:user) }
-  
+  let(:user) { create(:user) }
+  let(:user2) { create(:user) }
+  let(:user3) { create(:user) }
+
   before do
-    FactoryBot.create(:relationship, follower_id: user.id, followed_id: user2.id)
-    FactoryBot.create(:relationship, follower_id: user.id, followed_id: user3.id)
-    FactoryBot.create(:relationship, follower_id: user2.id, followed_id: user.id)
+    create(:relationship, follower_id: user.id, followed_id: user2.id)
+    create(:relationship, follower_id: user.id, followed_id: user3.id)
+    create(:relationship, follower_id: user2.id, followed_id: user.id)
     visit login_path
     fill_in "session[email]", with: user.email
     fill_in "session[password]", with: user.password

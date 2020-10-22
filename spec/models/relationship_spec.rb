@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Relationship, type: :model do
   describe "バリデーションのテスト" do
-    let(:relationship) { FactoryBot.build(:relationship) }
+    let(:relationship) { build(:relationship) }
   
     it "follower_id, followed_idがある場合有効であること" do
-      expect(FactoryBot.build_stubbed(:relationship)).to be_valid
+      expect(build_stubbed(:relationship)).to be_valid
     end
   
     it "follower_idがない場合無効であること" do

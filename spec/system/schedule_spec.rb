@@ -1,8 +1,8 @@
 require 'rails_helper'
 RSpec.describe Schedule, type: :system do
-  let(:user) { FactoryBot.create(:user) }
-  let(:place) { FactoryBot.create(:place) }
-  let(:schedule) { FactoryBot.create(:schedule) }
+  let(:user) { create(:user) }
+  let(:place) { create(:place) }
+  let(:schedule) { create(:schedule) }
 
 
   describe "スケジュール機能" do

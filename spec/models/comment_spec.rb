@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
   describe "バリデーションのテスト" do
-    let(:comment) { FactoryBot.build(:comment) }
+    let(:comment) { build(:comment) }
 
     it "user_id, place_id, contentがある場合有効であること" do
       # idに値を入れてbuildする
-      expect(FactoryBot.build_stubbed(:comment)).to be_valid
+      expect(build_stubbed(:comment)).to be_valid
     end
 
     it "user_idがない場合無効であること" do

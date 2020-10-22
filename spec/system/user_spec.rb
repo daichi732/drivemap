@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :system do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
 
   describe "ユーザー登録ページ" do
     before do

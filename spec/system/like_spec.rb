@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe Like, type: :system do
-  let(:user) { FactoryBot.create(:user) }
-  let(:place) { FactoryBot.create(:place) }
+  let(:user) { create(:user) }
+  let(:place) { create(:place) }
 
   describe "いいね機能" do
     before do

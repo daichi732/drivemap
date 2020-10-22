@@ -31,6 +31,11 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+  # FactoryBotの省略の設定
+  RSpec.configure do |config|
+    config.include FactoryBot::Syntax::Methods
+  end
+
   # RSpecの実行前に一度、実行
   config.before(:suite) do
     # 手段を指定、トランザクションを張ってrollbackするように指定

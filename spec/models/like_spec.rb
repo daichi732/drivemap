@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Like, type: :model do
   describe "バリデーションのテスト" do
-    let(:like) { FactoryBot.build(:like) }
+    let(:like) { build(:like) }
 
     it "user_id, place_idがある場合有効であること" do
       # idに値を入れてbuildする
-      expect(FactoryBot.build_stubbed(:like)).to be_valid
+      expect(build_stubbed(:like)).to be_valid
     end
 
     it "user_idがない場合無効であること" do

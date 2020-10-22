@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Schedule, type: :model do
   describe "バリデーションのテスト" do
-    let(:schedule) { FactoryBot.build(:schedule) }
+    let(:schedule) { build(:schedule) }
 
     it "user_id, place_id, dateがある場合有効であること" do
-      expect(FactoryBot.build_stubbed(:schedule)).to be_valid
+      expect(build_stubbed(:schedule)).to be_valid
     end
 
     it "user_idがない場合無効であること" do

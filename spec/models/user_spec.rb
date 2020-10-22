@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryBot.create(:user) }
-  let(:other_user) { FactoryBot.create(:user) }
-  let(:place) { FactoryBot.create(:place) } #違うuserのplace
+  let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
+  let(:place) { create(:place) } #違うuserのplace
 
   describe "バリデーションのテスト" do
     context "nameカラム" do
       it "名前、メールアドレス、パスワードがある場合有効であること" do
-        expect(FactoryBot.build(:user)).to be_valid
+        expect(build(:user)).to be_valid
       end
       # to_not, validatesのコメントアウト
       it "名前がない場合無効であること" do 
@@ -83,7 +83,7 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、placeも削除される" do
-        place = FactoryBot.create(:place, user_id: user.id) # userが作成したplace
+        place = create(:place, user_id: user.id) # userが作成したplace
         expect{ user.destroy }.to change{ Place.count }.by(-1)
       end
     end
@@ -96,7 +96,7 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、likeも削除される" do
-        like = FactoryBot.create(:like, user_id: user.id, place_id: place.id)
+        like = create(:like, user_id: user.id, place_id: place.id)
         expect{ user.destroy }.to change{ Like.count }.by(-1)
       end
     end
@@ -109,7 +109,7 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、commentも削除される" do
-        comment = FactoryBot.create(:comment, user_id: user.id, place_id: place.id)
+        comment = create(:comment, user_id: user.id, place_id: place.id)
         expect{ user.destroy }.to change{ Comment.count }.by(-1)
       end
     end
@@ -122,7 +122,7 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、scheduleも削除される" do
-        schedule = FactoryBot.create(:schedule, user_id: user.id, place_id: place.id)
+        schedule = create(:schedule, user_id: user.id, place_id: place.id)
         expect{ user.destroy }.to change{ Schedule.count }.by(-1)
       end
     end
@@ -197,30 +197,30 @@ RSpec.describe User, type: :model do
   
     context "own?(object)メソッド" do
       it "Userモデルインスタンスが自分のplaceであるか確認すること" do
-        user_place = FactoryBot.create(:place, user_id: user.id)
-        other_user_place = FactoryBot.create(:place, user_id: other_user.id)
+        user_place = create(:place, user_id: user.id)
+        other_user_place = create(:place, user_id: other_user.id)
   
         expect(user.own?(user_place)).to be_truthy
         expect(user.own?(other_user_place)).to be_falsey
       end
   
       it "Userモデルインスタンスが自分のcommentであるか確認すること" do
-        common_place = FactoryBot.create(:place)
+        common_place = create(:place)
   
-        user_comment = FactoryBot.create(:comment, user_id: user.id, place_id: common_place.id)
+        user_comment = create(:comment, user_id: user.id, place_id: common_place.id)
   
-        other_user_comment = FactoryBot.create(:comment, user_id: other_user.id, place_id: common_place.id)
+        other_user_comment = create(:comment, user_id: other_user.id, place_id: common_place.id)
   
         expect(user.own?(user_comment)).to be_truthy
         expect(user.own?(other_user_comment)).to be_falsey
       end
   
       it "Userモデルインスタンスが自分のscheduleであるか確認すること" do
-        common_place = FactoryBot.create(:place)
+        common_place = create(:place)
   
-        user_schedule = FactoryBot.create(:schedule, user_id: user.id, place_id: common_place.id)
+        user_schedule = create(:schedule, user_id: user.id, place_id: common_place.id)
   
-        other_user_schedule = FactoryBot.create(:schedule, user_id: other_user.id, place_id: common_place.id)
+        other_user_schedule = create(:schedule, user_id: other_user.id, place_id: common_place.id)
   
         expect(user.own?(user_schedule)).to be_truthy
         expect(user.own?(other_user_schedule)).to be_falsey

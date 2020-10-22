@@ -1,9 +1,9 @@
 require 'rails_helper'
 RSpec.describe Place, type: :system do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
   # この2つで2人のユーザーとその人のplaceが作成、どっちでもいいときuserを使い、place絡めるときはplace.user, other_place.user
-  let(:place) { FactoryBot.create(:place) }
-  let(:other_place) { FactoryBot.create(:place) }
+  let(:place) { create(:place) }
+  let(:other_place) { create(:place) }
   
   describe "場所の登録ページ" do
     before do

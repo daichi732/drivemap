@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe Comment, type: :system do
-  let(:user) { FactoryBot.create(:user) }
-  let(:place) { FactoryBot.create(:place) }
+  let(:user) { create(:user) }
+  let(:place) { create(:place) }
 
   describe "コメント機能" do
     before do
