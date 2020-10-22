@@ -3,7 +3,7 @@ RSpec.describe Comment, type: :system do
   let(:user) { FactoryBot.create(:user) }
   let(:place) { FactoryBot.create(:place) }
 
-  describe "場所の登録ページ" do
+  describe "場所の詳細ページ" do
     before do
       visit login_path
       fill_in "session[email]", with: user.email # 作成されたplaceのuserでログインする
@@ -18,5 +18,7 @@ RSpec.describe Comment, type: :system do
         expect(page).to have_content "コメントを入力してください"
       end 
     end
+
+    
   end
 end

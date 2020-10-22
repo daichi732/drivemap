@@ -1,9 +1,9 @@
 require 'rails_helper'
-RSpec.describe Comment, type: :system do
+RSpec.describe Like, type: :system do
   let(:user) { FactoryBot.create(:user) }
   let(:place) { FactoryBot.create(:place) }
 
-  describe "場所の登録ページ" do
+  describe "場所の詳細ページ" do
     before do
       visit login_path
       fill_in "session[email]", with: user.email # 作成されたplaceのuserでログインする
@@ -21,6 +21,13 @@ RSpec.describe Comment, type: :system do
         find('.fas.fa-heart').click
         expect(page).to have_selector '.far.fa-heart'
         expect(place.likes.count).to eq(0)
+      end 
+
+      it "いいねした場所がマイページで表示されること", js: true do
+        find('.far.fa-heart').click
+        visit user_path(user)
+        click_on 'いいね一覧'
+        expect(page).to have_content place.name
       end 
     end
   end
