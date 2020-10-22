@@ -77,7 +77,6 @@ RSpec.describe Place, type: :system do
       end
     end
 
-    # 違うuserでログインして権限がありませんのテストも
     context "フォームの入力が正しい時" do
       it "編集に成功し、フラッシュメッセージを表示する" do
         fill_in "place[name]", with: "edit_place"
@@ -86,7 +85,7 @@ RSpec.describe Place, type: :system do
         click_on "更新する"
         expect(page).to have_content "「edit_place」を更新しました。"
         expect(page).to have_content "edit_place"
-        # expect(current_path).to eq place_path( place.id )
+        expect(current_path).to eq place_path( place.id )
       end
     end
   end
@@ -182,32 +181,6 @@ RSpec.describe Place, type: :system do
           click_on '一覧'
           expect(current_path).to eq places_path
         end
-      end
-  
-      context "いいね" do
-        it "いいねの作成、解除が動作すること", js: true do
-          find('.far.fa-heart').click
-          expect(page).to have_selector '.fas.fa-heart'
-          expect(place.likes.count).to eq(1)
-  
-          find('.fas.fa-heart').click
-          expect(page).to have_selector '.far.fa-heart'
-          expect(place.likes.count).to eq(0)
-        end 
-      end
-  
-      context "空欄でコメントすると" do
-        it "コメントに失敗し、エラーメッセージを表示する", js: true do
-          click_on 'コメントする'
-          expect(page).to have_content "コメントを入力してください"
-        end 
-      end
-  
-      context "空欄で日時を登録すると" do
-        it "登録に失敗し、エラーメッセージを表示する", js: true do
-          click_on '登録する'
-          expect(page).to have_content "日時を入力してください"
-        end 
       end
     end
 
