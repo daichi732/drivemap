@@ -3,7 +3,7 @@ RSpec.describe Like, type: :system do
   let(:user) { FactoryBot.create(:user) }
   let(:place) { FactoryBot.create(:place) }
 
-  describe "場所の詳細ページ" do
+  describe "いいね機能" do
     before do
       visit login_path
       fill_in "session[email]", with: user.email # 作成されたplaceのuserでログインする
@@ -12,7 +12,7 @@ RSpec.describe Like, type: :system do
       visit place_path(place)
     end
 
-    context "いいね" do
+    context "場所の詳細ページで" do
       it "いいねの作成、解除が動作すること", js: true do
         find('.far.fa-heart').click
         expect(page).to have_selector '.fas.fa-heart'

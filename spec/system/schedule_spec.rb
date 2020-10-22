@@ -5,7 +5,7 @@ RSpec.describe Schedule, type: :system do
   let(:schedule) { FactoryBot.create(:schedule) }
 
 
-  describe "場所の詳細ページ" do
+  describe "スケジュール機能" do
     before do
       visit login_path
       fill_in "session[email]", with: user.email # 作成されたplaceのuserでログインする
