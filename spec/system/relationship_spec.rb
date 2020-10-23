@@ -15,14 +15,14 @@ RSpec.describe Relationship, type: :system do
   end
 
   describe "プロフィールページ" do
+    before do
+      visit user_path(user)
+    end
+    
     context "ページレイアウト" do
-      before do
-        visit user_path(user)
-      end
-  
       it "フォローフォロワー数の表示" do
-        expect(page).to have_content 'フォロー:2'
-        expect(page).to have_content 'フォロワー:1'
+        expect(page).to have_content "フォロー:#{ user.following.count }"
+        expect(page).to have_content "フォロワー:#{ user.followers.count }"
       end
     end
   end
@@ -33,8 +33,8 @@ RSpec.describe Relationship, type: :system do
     end
 
     context "ページレイアウト" do
-      it "「testUserさんがフォロー中」の文字列が存在することを確認" do
-        expect(page).to have_content 'testUserさんがフォロー中'
+      it "フォローページに正しい文字列が存在することを確認" do
+        expect(page).to have_content "#{ user.name }さんがフォロー中"
       end
 
       it "フォロー中のユーザーが表示されていること" do
@@ -50,8 +50,8 @@ RSpec.describe Relationship, type: :system do
     end
 
     context "ページレイアウト" do
-      it "「testUserさんのフォロワー」の文字列が存在することを確認" do
-        expect(page).to have_content 'testUserさんのフォロワー'
+      it "フォロワーページに正しい文字列が存在することを確認" do
+        expect(page).to have_content "#{ user.name }さんのフォロワー"
       end
 
       it "フォロワーが表示されていること" do

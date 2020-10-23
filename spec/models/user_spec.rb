@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
       it "名前、メールアドレス、パスワードがある場合有効であること" do
         expect(build(:user)).to be_valid
       end
-      # to_not, validatesのコメントアウト
+      
       it "名前がない場合無効であること" do 
         user.name = nil
         user.valid?

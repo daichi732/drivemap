@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_to places_path, notice: 'ログインしました。'
     else
+      flash.now[:notice] = 'メールアドレスまたはパスワードが違います。'
       render 'new'
     end
   end
