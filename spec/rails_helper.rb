@@ -44,16 +44,10 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  # exampleが始まるごとに実行
-  config.before(:each) do
-    # strategyがtransactionなので、トランザクションを張る
-    DatabaseCleaner.start
-  end
-
-  # exampleが終わるごとに実行
-  config.after(:each) do
-    # strategyがtransactionなので、rollbackする
-    DatabaseCleaner.clean
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

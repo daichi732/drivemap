@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
-  let(:place) { create(:place) } #違うuserのplace
+  let(:place) { create(:place, user: user) }
+  let(:other_place) { create(:place, user: other_user) }
 
   describe "バリデーションのテスト" do
     context "nameカラム" do
@@ -83,7 +84,7 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、placeも削除される" do
-        place = create(:place, user_id: user.id) # userが作成したplace
+        create(:place, user: user)
         expect{ user.destroy }.to change{ Place.count }.by(-1)
       end
     end
@@ -96,7 +97,7 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、likeも削除される" do
-        like = create(:like, user_id: user.id, place_id: place.id)
+        create(:like, user: user, place: place)
         expect{ user.destroy }.to change{ Like.count }.by(-1)
       end
     end
@@ -109,7 +110,7 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、commentも削除される" do
-        comment = create(:comment, user_id: user.id, place_id: place.id)
+        create(:comment, user: user, place: place)
         expect{ user.destroy }.to change{ Comment.count }.by(-1)
       end
     end
@@ -122,7 +123,7 @@ RSpec.describe User, type: :model do
       end
       
       it "userを削除すると、scheduleも削除される" do
-        schedule = create(:schedule, user_id: user.id, place_id: place.id)
+        create(:schedule, user: user, place: place)
         expect{ user.destroy }.to change{ Schedule.count }.by(-1)
       end
     end
@@ -162,7 +163,7 @@ RSpec.describe User, type: :model do
       it 'フォロワーが削除されると、フォローが解消されること' do
         user.follow(other_user)
         user.destroy
-        expect(user.following?(other_user)).to be_falsey
+        expect(user.following?(other_user)).to be false
       end
     end
     
@@ -179,7 +180,7 @@ RSpec.describe User, type: :model do
       it 'フォローしているユーザーが削除されると、フォローが解消されること' do
         user.follow(other_user)
         other_user.destroy
-        expect(user.following?(other_user)).to be_falsey
+        expect(user.following?(other_user)).to be false
       end
     end
   end
@@ -188,7 +189,7 @@ RSpec.describe User, type: :model do
     describe "#following?(other_user)" do
       context "フォローしていない場合" do
         it "falseを返す" do
-          expect(user.following?(other_user)).to be_falsey
+          expect(user.following?(other_user)).to be false
         end
       end
       context "フォローした場合" do
@@ -201,7 +202,7 @@ RSpec.describe User, type: :model do
         it "falseを返す" , js: true do
           user.follow(other_user)
           user.unfollow(other_user)
-          expect(user.following?(other_user)).to be_falsey
+          expect(user.following?(other_user)).to be false
         end
       end
     end
@@ -210,15 +211,13 @@ RSpec.describe User, type: :model do
       context "object == placeの場合" do
         context "userのplaceの場合" do
           it "trueを返す" do
-            place = create(:place, user_id: user.id)
             expect(user.own?(place)).to be true
           end
         end
 
         context "userのplaceでない場合" do
           it "falseを返す" do
-            place = create(:place, user_id: other_user.id)
-            expect(user.own?(place)).to be_falsey
+            expect(user.own?(other_place)).to be false
           end
         end
       end
@@ -226,17 +225,15 @@ RSpec.describe User, type: :model do
       context "object == commentの場合" do
         context "userのcommentの場合" do
           it "trueを返す" do
-            place = create(:place)
-            comment = create(:comment, user_id: user.id, place_id: place.id)
+            comment = create(:comment, user: user, place: place)
             expect(user.own?(comment)).to be true
           end
         end
 
         context "userのcommentでない場合" do
           it "falseを返す" do
-            place = create(:place)
-            comment = create(:comment, user_id: other_user.id, place_id: place.id)
-            expect(user.own?(comment)).to be_falsey
+            comment = create(:comment, user: other_user, place: place)
+            expect(user.own?(comment)).to be false
           end
         end
       end
@@ -244,17 +241,15 @@ RSpec.describe User, type: :model do
       context "object == scheduleの場合" do
         context "userのscheduleの場合" do
           it "trueを返す" do
-            place = create(:place)
-            schedule = create(:schedule, user_id: user.id, place_id: place.id)
+            schedule = create(:schedule, user: user, place: place)
             expect(user.own?(schedule)).to be true
           end
         end
 
         context "userのscheduleでない場合" do
           it "falseを返す" do
-            place = create(:place)
-            schedule = create(:schedule, user_id: other_user.id, place_id: place.id)
-            expect(user.own?(schedule)).to be_falsey
+            schedule = create(:schedule, user: other_user, place: place)
+            expect(user.own?(schedule)).to be false
           end
         end
       end

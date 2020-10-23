@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Place, type: :model do
   let(:user) { create(:user) }
-  let(:place) { create(:place) }
+  let(:place) { create(:place, user: user) }
   describe "バリデーションのテスト" do
     context "nameカラム" do
       it "名称、種類、住所がある場合有効であること" do
@@ -79,7 +79,7 @@ RSpec.describe Place, type: :model do
       end
 
       it "placeを削除すると、likeも削除される" do
-        like = create(:like, user_id: place.user.id, place_id: place.id)
+        like = create(:like, user: user, place: place)
         expect{ place.destroy }.to change{ Like.count }.by(-1)
       end
     end
@@ -92,7 +92,7 @@ RSpec.describe Place, type: :model do
       end
 
       it "placeを削除すると、commentも削除される" do
-        comment = create(:comment, user_id: place.user.id, place_id: place.id)
+        comment = create(:comment, user: user, place: place)
         expect{ place.destroy }.to change{ Comment.count }.by(-1)
       end
     end
@@ -105,7 +105,7 @@ RSpec.describe Place, type: :model do
       end
 
       it "placeを削除すると、scheduleも削除される" do
-        schedule = create(:schedule, user_id: place.user.id, place_id: place.id)
+        schedule = create(:schedule, user: user, place: place)
         expect{ place.destroy }.to change{ Schedule.count }.by(-1)
       end
     end
@@ -115,13 +115,13 @@ RSpec.describe Place, type: :model do
     describe "#liked_by?(user)" do
       context "userがいいねしていない場合" do
         it "falseを返す" do
-          expect(place.liked_by?(user)).to be_falsey
+          expect(place.liked_by?(user)).to be false
         end
       end
 
       context "userがいいねしている場合" do
         it "trueを返す" do
-          like = create(:like, user_id: user.id, place_id: place.id)
+          like = create(:like, user: user, place: place)
           expect(place.liked_by?(user)).to be true
         end
       end
