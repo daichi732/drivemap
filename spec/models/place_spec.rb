@@ -122,7 +122,7 @@ RSpec.describe Place, type: :model do
       context "userがいいねしている場合" do
         it "trueを返す" do
           like = create(:like, user_id: user.id, place_id: place.id)
-          expect(place.liked_by?(user)).to be_truthy
+          expect(place.liked_by?(user)).to be true
         end
       end
     end

@@ -194,7 +194,7 @@ RSpec.describe User, type: :model do
       context "フォローした場合" do
         it "trueを返す" , js: true do
           user.follow(other_user)
-          expect(user.following?(other_user)).to be_truthy
+          expect(user.following?(other_user)).to be true
         end
       end
       context "フォローを外した場合" do
@@ -211,7 +211,7 @@ RSpec.describe User, type: :model do
         context "userのplaceの場合" do
           it "trueを返す" do
             place = create(:place, user_id: user.id)
-            expect(user.own?(place)).to be_truthy
+            expect(user.own?(place)).to be true
           end
         end
 
@@ -228,7 +228,7 @@ RSpec.describe User, type: :model do
           it "trueを返す" do
             place = create(:place)
             comment = create(:comment, user_id: user.id, place_id: place.id)
-            expect(user.own?(comment)).to be_truthy
+            expect(user.own?(comment)).to be true
           end
         end
 
@@ -246,7 +246,7 @@ RSpec.describe User, type: :model do
           it "trueを返す" do
             place = create(:place)
             schedule = create(:schedule, user_id: user.id, place_id: place.id)
-            expect(user.own?(schedule)).to be_truthy
+            expect(user.own?(schedule)).to be true
           end
         end
 
