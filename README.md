@@ -1,25 +1,33 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 概要
+DriveMapは自分だけのMapを作成し、ドライブルートを簡単に決めることができるドライブ企画者向けサービスです。
 
-Things you may want to cover:
+## URL
 
-* Ruby version
+## 作成の背景
 
-* System dependencies
+## 主な利用方法
+1. いいねする
+2. ルートリストに追加
+## 機能一覧
+- ユーザーのCRUD機能
+- 場所のCRUD機能
+- 画像アップロード機能(ActiveStorage)
+- 検索機能(場所の名称・住所、ジャンルの指定が可能)
+- ページネーション機能(kaminari)
+- フォロー機能(Ajax処理)
+- いいね機能(Ajax処理)
+- コメント機能(Ajax処理)
+- スケジュール入力機能(Ajax処理)
+- スケジュールデータからカレンダー作成機能
+- データからグラフ作成機能
+- 
+- 
+- 
+- 
+- 
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# drivemap
+## 使用技術・環境
+**フロントエンド**
+__開発環境__
+## 概要
