@@ -1,25 +1,74 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 概要
+DriveMapは自分だけのMapを作成し、ドライブルートを簡単に決めることができるドライブ企画者向けサービスです。
+![スクリーンショット 2020-10-25 16 43 11](https://user-images.githubusercontent.com/56623611/97101504-5be32e80-16e1-11eb-8b40-25a2945ae971.png)
 
-Things you may want to cover:
+## URL
+ワンタッチでゲストユーザーでログイン可能です。 ご確認される際はぜひご利用ください。
 
-* Ruby version
+## 作成の背景
+大学生は免許の取りたてというのもあり、ドライブする機会が多いです。その際に「ドライブプランを作成することが難しい」という声をよく聞きました。
 
-* System dependencies
+その原因は、
+1. そもそもどこが人気で探すのも難しい
+2. 行きたい場所を見つけてもそれぞれの地点がどのくらい離れており、どのくらい時間がかかるのか調べることが面倒臭い
+だと考えました。
+そこで私は、
+1.を解決するためにユーザーがおすすめの場所を共有できるサービスであること、
+2.を解決するためにGoogleMap上で自分だけのマップを作成し、それぞれの場所をマップ上で可視化することでドライブプランを立てやすいサービスであること、
+が必要だと感じ、このサービスを作成しました。
 
-* Configuration
+## 主な利用方法
+1. 行きたい場所をいいねする
+2. ルートリストに追加
+3. ルート検索
 
-* Database creation
+## 機能一覧
+- ユーザーのCRUD機能
+- 場所のCRUD機能
+- 画像アップロード機能(ActiveStorage)
+- ジャンル分け機能
+- 検索機能(場所の名称・住所、ジャンルの指定が可能)
+- ページネーション機能(kaminari)
+- フォロー機能(Ajax処理)
+- いいね機能(Ajax処理)
+- コメント機能(Ajax処理)
+- スケジュール入力機能(Ajax処理)
+- スケジュールデータからカレンダー作成機能
+- データからグラフ作成機能
+- GoogleMapsAPIによる位置情報表示機能
+  - 住所から緯度経度の取得(Geocoding API)
+  - 位置情報表示(Maps Javascript API)
+  - 複数地点間のルート検索、距離・時間の表示(Directions API)
 
-* Database initialization
+## 使用技術・環境
+### フロントエンド
+- HTML/CSS
+- SCSS
+- JavaScript
+- jQuery
+- Slim
 
-* How to run the test suite
+### バックエンド
+- Ruby2.5.1
+- Rails5.2.1
 
-* Services (job queues, cache servers, search engines, etc.)
+### 開発環境
+- PostgreSQL
 
-* Deployment instructions
+### 本番環境
+- PostgreSQL
 
-* ...
-# drivemap
+### その他技術
+- Git,GitHub
+- Git チーム開発を意識したプルリクエストの活用
+- Rubocopを導入しリンター機能の活用
+- Rspecを導入しテスト記述( 単体/統合 )
+
+## インフラ構成図
+
+## 特に力を入れた点
+
+## About me
+現在、横浜国立大学・情報工学EPに所属しています。
+Web系エンジニアを目指すため、現在就職活動中です。
