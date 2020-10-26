@@ -1,7 +1,36 @@
-.container.text-center
-  h1 DriveMap
-  h2 〜 just for me 〜
+.text-center.bg-image
+  .home-area
+    h1 DriveMap
+    h2  〜 just for you 〜
 
-  p = link_to '新規登録', new_user_path, class: 'btn btn-success'
-  p = link_to 'ログイン', login_path, class: 'btn btn-primary'
-  p = link_to 'ゲストユーザーでログイン', guest_path, method: :post, class: 'btn btn-primary'
+    p = link_to '新規登録', new_user_path, class: 'btn btn-success'
+    p = link_to 'ログイン', login_path, class: 'btn btn-primary'
+    p = link_to 'ゲストユーザーでログイン', guest_path, method: :post, class: 'btn btn-primary'
+
+.col-12
+  h2.y-border.text-center DriveMapの使い方
+  .about-area
+    .about-box-image.about-left.about-order1
+    .about-box-text.about-order2
+      .side-text 
+        p マップには自分がいいねした場所が表示されます
+        span マーカーの色はジャンルによって変わっています！
+        
+    .about-box-text.about-left.about-order4
+      .side-text 
+        p 吹き出しから検索リストに追加してあなたが考えたルートを検索しよう！
+        span それぞれの地点間の距離・時間も表示されます。
+    .about-box-image.about-order3
+
+    .about-box-image.about-left.about-order5
+    .about-box-text.about-order6
+      .side-text 
+        p それぞれの場所に行く日時を入力しましょう！
+        span 下のように、マイページでカレンダーに表示されます。
+
+    .about-box-text.about-left.about-order7
+      .side-text 
+        p 入力した日時がカレンダーに反映され、予定が管理できます。
+        span 時間順で表示されるのでその日の予定が見やすい！
+    .about-box-image.about-order8
+    

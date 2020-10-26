@@ -25,11 +25,17 @@ html
           li.nav-item= link_to '新規登録', new_user_path, class: 'nav-link'
           li.nav-item= link_to 'ログイン', login_path, class: 'nav-link'
           li.nav-item= link_to 'ゲストユーザーでログイン', guest_path, method: :post, class: 'nav-link'
-    .container
+
+    - if current_page?(root_path)
       - if flash.notice.present?
-        .alert.alert-success= flash.notice
-      .mt-5
-        = yield
+          .alert.alert-success= flash.notice
+      = yield
+    - else
+      .container
+        - if flash.notice.present?
+          .alert.alert-success= flash.notice
+        .mt-5
+          = yield
 
     .footer.mt-5
       p.text-muted.text-center COPYRIGHT © DrivaMap. ALL RIGHTS RESERVED.

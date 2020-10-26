@@ -129,7 +129,6 @@ RSpec.describe Place, type: :system do
       end
 
       it "ヘッダーが切り替わること" do
-        expect(page).to_not have_content "マイページ"
         expect(page).to have_content "新規登録"
       end
     end

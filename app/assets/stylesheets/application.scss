@@ -18,6 +18,71 @@
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import "simple_calendar";
+.bg-image{
+  background-image: image-url('from_car.jpg');
+  // width: 1500px;
+  // height: 700px;
+  // background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.home-area{
+  height: 700px;
+  padding-top: 180px;
+}
+.about-area{
+  display: flex;
+  flex-wrap: wrap;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.about-box-image{
+  width: 550px;
+  height: 400px;
+  margin-top: 80px;
+  border: solid 2px #9b9898;
+  border-radius: 5px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.about-box-image:nth-of-type(1){
+  background-image: image-url('like.png');
+  margin-top: 20px;
+}
+
+.about-box-image:nth-of-type(4){
+  background-image: image-url('route.png');
+}
+
+.about-box-image:nth-of-type(5){
+  background-image: image-url('schedule.png');
+}
+
+.about-box-image:nth-of-type(8){
+  background-image: image-url('date.png');
+}
+
+.about-box-text{
+  width: 350px;
+  height: 400px;
+  margin-top: 80px;
+  font-size: 20px;
+  padding-top: 100px;
+}
+
+.side-text{
+  background-color: #c7ebf7;
+  border-radius: 10px;
+  display: inline-block;
+  padding: 20px;
+}
+
+.about-left{
+  margin-right: 100px;
+}
+
 
 .marker-red{
   background:linear-gradient(transparent 70%, #c466a0 0%);
