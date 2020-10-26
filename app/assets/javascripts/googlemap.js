@@ -78,7 +78,7 @@ function initMap(){
 
     // 繰り返し処理でマーカーと吹き出しを複数表示させる
     for (var i = 0; i < markerData.length; i++) {
-      let id = markerData[i]['id']
+      // let id = markerData[i]['id']
 
       // 各地点の緯度経度を算出
       markerLatLng = new google.maps.LatLng({
@@ -109,7 +109,7 @@ function initMap(){
       place_lat[i]= markerData[i]['latitude'];
       place_lng[i]= markerData[i]['longitude'];
       infoWindow[i] = new google.maps.InfoWindow({
-        content: `<a href='/places/${ id }'>${ markerData[i]['name'] }</a><input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
+        content: `<a href='/places/${ markerData[i]['id'] }'>${ markerData[i]['name'] }</a><input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
       });
       markerEvent(i);
     }
