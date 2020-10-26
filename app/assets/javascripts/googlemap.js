@@ -78,7 +78,7 @@ function initMap(){
 
     // 繰り返し処理でマーカーと吹き出しを複数表示させる
     for (var i = 0; i < markerData.length; i++) {
-      // let id = markerData[i]['id']
+
 
       // 各地点の緯度経度を算出
       markerLatLng = new google.maps.LatLng({
