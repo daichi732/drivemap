@@ -64,7 +64,7 @@ DriveMapは自分だけのMapを作成し、ドライブルートを簡単に決
 - PostgreSQL
 
 ### 本番環境
-- PostgreSQL
+- MySQL
 - S3
 
 ### その他技術
