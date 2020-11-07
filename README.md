@@ -4,7 +4,7 @@ DriveMapは自分だけのMapを作成し、ドライブルートを簡単に決
 ![スクリーンショット 2020-10-25 16 43 11](https://user-images.githubusercontent.com/56623611/97101504-5be32e80-16e1-11eb-8b40-25a2945ae971.png)
 
 ## URL
-サイトURL：https://drivemap-app.herokuapp.com
+サイトURL：https://www.drivemap-app.com/
 <br>
 ワンタッチでゲストユーザーでログイン可能です。 ご確認される際はぜひご利用ください。
 
