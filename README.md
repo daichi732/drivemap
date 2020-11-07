@@ -82,6 +82,8 @@ DriveMapは自分だけのMapを作成し、ドライブルートを簡単に決
 
 ## インフラ構成図
 
+![インフラデフォルト](https://user-images.githubusercontent.com/56623611/98434518-c51c6600-2113-11eb-9db1-6d946906de04.jpg)
+
 ## 特に力を入れた点
 - GoogleMap周りの実装
   - いいねした場所だけGoogleMapに表示させる<br>→Rubyのpluckよるモデルの変換、GoogleMapsAPIを用いてJavaScriptでの実装
