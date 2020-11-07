@@ -52,8 +52,8 @@ DriveMapは自分だけのMapを作成し、ドライブルートを簡単に決
 ### フロントエンド
 - HTML/CSS
 - SCSS
-- JavaScript
-- jQuery
+- Bootstrap4.5.2
+- JavaScript、jQuery、Ajax
 - Slim
 
 ### バックエンド
@@ -64,14 +64,21 @@ DriveMapは自分だけのMapを作成し、ドライブルートを簡単に決
 - PostgreSQL
 
 ### 本番環境
-- MySQL
-- S3
+- MySQL2
+- AWS (EC2, RDS for MySQL, S3, VPC, Route53, ALB, ACM)
+- Nginx、Unicorn
+
 
 ### その他技術
 - Git,GitHub
 - Git チーム開発を意識したプルリクエストの活用
 - Rubocopを導入しリンター機能の活用
 - Rspecを導入しテスト記述( 単体/統合 )
+- AWS ACMにてSSL証明書を発行しSSL化
+- ドメインを取得し、分かりやすいURLの実装
+- dotenv-rails gem を使用し環境変数を設定
+
+## ER図
 
 ## インフラ構成図
 
