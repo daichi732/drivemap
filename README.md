@@ -23,19 +23,19 @@ DriveMapはユーザー独自のMapを作成し、ドライブルートを簡単
 1. を解決するために「ユーザー同士がおすすめの場所を共有できること」
 <br>
 2. を解決するために「各場所の関係性が一目でわかること」
-<br><br>
+<br>
 が必要だと感じ、それを実現するDriveMapを開発しました。
 
 ## 主な利用方法
 1. いいね！を押してユーザ独自のマップを作成(名称やジャンルによる検索、地図上から探すことも可能)
 2. 行きたい場所をルートリストに追加
 3. ドライブルートを検索
-<img src="https://user-images.githubusercontent.com/56623611/98489647-3bcf7580-2272-11eb-9d8e-acad2409123b.png" width="600"  height="300">
+<img src="https://user-images.githubusercontent.com/56623611/98489647-3bcf7580-2272-11eb-9d8e-acad2409123b.png" width="600"  height="350">
 
 ☑️日時を指定して予定を管理することも可能！
 <br>
-<img src="https://user-images.githubusercontent.com/56623611/98490753-d8dfdd80-2275-11eb-9057-03f309f8b576.png" width="350"  height="200">
-<img src="https://user-images.githubusercontent.com/56623611/98490760-e2694580-2275-11eb-8d92-dca19445e660.png" width="350"  height="200">
+<img src="https://user-images.githubusercontent.com/56623611/98490753-d8dfdd80-2275-11eb-9057-03f309f8b576.png" width="300"  height="180">
+<img src="https://user-images.githubusercontent.com/56623611/98490760-e2694580-2275-11eb-8d92-dca19445e660.png" width="300"  height="180">
 
 
 ## 機能一覧
@@ -89,7 +89,7 @@ DriveMapはユーザー独自のMapを作成し、ドライブルートを簡単
 ## ER図
 
 ## インフラ構成図
-![インフラデフォルト](https://user-images.githubusercontent.com/56623611/98434518-c51c6600-2113-11eb-9db1-6d946906de04.jpg)
+<img src="https://user-images.githubusercontent.com/56623611/98434518-c51c6600-2113-11eb-9db1-6d946906de04.jpg" width="800"  height="450">
 
 ## 特に力を入れた点
 - GoogleMap周りの実装
