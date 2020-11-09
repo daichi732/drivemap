@@ -30,12 +30,12 @@ DriveMapはユーザー独自のMapを作成し、ドライブルートを簡単
 1. いいね！を押してユーザ独自のマップを作成(名称やジャンルによる検索、地図上から探すことも可能)
 2. 行きたい場所をルートリストに追加
 3. ドライブルートを検索
-<img src="https://user-images.githubusercontent.com/56623611/98489647-3bcf7580-2272-11eb-9d8e-acad2409123b.png" width="600"  height="350">
+<img src="https://user-images.githubusercontent.com/56623611/98489647-3bcf7580-2272-11eb-9d8e-acad2409123b.png" width="800"  height="450">
 
 ☑️日時を指定して予定を管理することも可能！
 <br>
-<img src="https://user-images.githubusercontent.com/56623611/98490753-d8dfdd80-2275-11eb-9057-03f309f8b576.png" width="300"  height="180">
-<img src="https://user-images.githubusercontent.com/56623611/98490760-e2694580-2275-11eb-8d92-dca19445e660.png" width="300"  height="180">
+<img src="https://user-images.githubusercontent.com/56623611/98490753-d8dfdd80-2275-11eb-9057-03f309f8b576.png" width="400"  height="250">
+<img src="https://user-images.githubusercontent.com/56623611/98490760-e2694580-2275-11eb-8d92-dca19445e660.png" width="400"  height="250">
 
 
 ## 機能一覧
