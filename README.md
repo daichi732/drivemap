@@ -26,9 +26,16 @@ DriveMapは自分だけのMapを作成し、ドライブルートを簡単に決
 が必要だと感じ、このDriveMapを開発しました。
 
 ## 主な利用方法
-1. 行きたい場所にいいね
-2. ルートリストに追加
-3. ルート検索
+1. いいね！を押してユーザ独自のマップを作成(名称やジャンルによる検索、地図上から探すことも可能)
+2. 行きたい場所をルートリストに追加
+3. ドライブルートを検索
+<img src="https://user-images.githubusercontent.com/56623611/98489647-3bcf7580-2272-11eb-9d8e-acad2409123b.png" width="600"  height="300">
+
+☑️日時を指定して予定を管理することも可能！
+<br>
+<img src="https://user-images.githubusercontent.com/56623611/98490753-d8dfdd80-2275-11eb-9057-03f309f8b576.png" width="350"  height="200">
+<img src="https://user-images.githubusercontent.com/56623611/98490760-e2694580-2275-11eb-8d92-dca19445e660.png" width="350"  height="200">
+
 
 ## 機能一覧
 - ユーザーのCRUD機能
@@ -81,7 +88,6 @@ DriveMapは自分だけのMapを作成し、ドライブルートを簡単に決
 ## ER図
 
 ## インフラ構成図
-
 ![インフラデフォルト](https://user-images.githubusercontent.com/56623611/98434518-c51c6600-2113-11eb-9db1-6d946906de04.jpg)
 
 ## 特に力を入れた点
@@ -91,4 +97,4 @@ DriveMapは自分だけのMapを作成し、ドライブルートを簡単に決
   - 非同期処理でルートリストからルート検索<br>→Google Maps Platformのドキュメントを参考に自由にカスタマイズすることができました。
 
 ## About me
-現在、横浜国立大学・情報工学EPに所属しています。現在就職活動中です。
+横浜国立大学3年・情報工学EPに所属しています。現在就職活動中です。
