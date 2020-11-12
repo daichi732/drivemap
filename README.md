@@ -92,7 +92,6 @@
 <img src="https://user-images.githubusercontent.com/56623611/98434518-c51c6600-2113-11eb-9db1-6d946906de04.jpg" width="800"  height="450">
 
 ## 今後
-- SQLインジェクション対策
 - 開発環境でDocker, docker-composeを導入
 - Circle CIでCI/CDパイブラインの構築
 
