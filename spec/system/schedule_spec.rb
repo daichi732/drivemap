@@ -4,7 +4,6 @@ RSpec.describe Schedule, type: :system do
   let(:place) { create(:place) }
   let(:schedule) { create(:schedule) }
 
-
   describe "スケジュール機能" do
     before do
       visit login_path
@@ -18,7 +17,7 @@ RSpec.describe Schedule, type: :system do
       it "登録に失敗し、エラーメッセージを表示する", js: true do
         click_on '登録する'
         expect(page).to have_content "日時を入力してください"
-      end 
+      end
     end
   end
 end

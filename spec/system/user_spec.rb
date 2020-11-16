@@ -121,7 +121,7 @@ RSpec.describe User, type: :system do
         fill_in "user[name]", with: "edit_name"
         click_on "登録する"
         expect(page).to have_content "ユーザ「edit_name」を更新しました"
-        expect(current_path).to eq user_path( user.id )
+        expect(current_path).to eq user_path(user.id)
       end
     end
 

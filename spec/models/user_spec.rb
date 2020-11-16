@@ -11,8 +11,8 @@ RSpec.describe User, type: :model do
       it "名前、メールアドレス、パスワードがある場合有効であること" do
         expect(build(:user)).to be_valid
       end
-      
-      it "名前がない場合無効であること" do 
+
+      it "名前がない場合無効であること" do
         user.name = nil
         user.valid?
         expect(user.errors[:name]).to include("を入力してください")
@@ -31,14 +31,14 @@ RSpec.describe User, type: :model do
         user.valid?
         expect(user.errors[:email]).to include("を入力してください")
       end
-  
+
       it "重複したメールアドレスなら無効な状態であること" do
         # シーケンスのおかげ
         other_user.email = user.email
         other_user.valid?
         expect(other_user.errors[:email]).to include("はすでに存在します")
       end
-  
+
       it "メールアドレスは小文字で保存されること" do
         email = "ExamPle@Example.coM"
         user.email = email
@@ -60,7 +60,7 @@ RSpec.describe User, type: :model do
         user.avatar = fixture_file_upload("/files/test_image.png")
         expect(user).to be_valid
       end
-  
+
       it "プロフィール画像がjpeg/gif/pngでない場合無効であること" do
         user.avatar = fixture_file_upload("/files/invalid_file.txt")
         user.valid?
@@ -68,69 +68,68 @@ RSpec.describe User, type: :model do
       end
     end
   end
-  
-  
+
   describe "アソシエーションのテスト" do
     let(:association) do
       # Userクラスと引数のクラスの関連を返す
       described_class.reflect_on_association(target)
     end
-    
+
     context 'Placeモデルとの関連' do
       let(:target) { :places }
-      
+
       it '1対多である' do
         expect(association.macro).to eq :has_many
       end
-      
+
       it "userを削除すると、placeも削除される" do
         create(:place, user: user)
-        expect{ user.destroy }.to change{ Place.count }.by(-1)
+        expect { user.destroy }.to change { Place.count }.by(-1)
       end
     end
-    
+
     context 'Likeモデルとの関連' do
       let(:target) { :likes }
-      
+
       it '1対多である' do
         expect(association.macro).to eq :has_many
       end
-      
+
       it "userを削除すると、likeも削除される" do
         create(:like, user: user, place: place)
-        expect{ user.destroy }.to change{ Like.count }.by(-1)
+        expect { user.destroy }.to change { Like.count }.by(-1)
       end
     end
-    
+
     context 'Commentモデルとの関連' do
       let(:target) { :comments }
-      
+
       it '1対多である' do
         expect(association.macro).to eq :has_many
       end
-      
+
       it "userを削除すると、commentも削除される" do
         create(:comment, user: user, place: place)
-        expect{ user.destroy }.to change{ Comment.count }.by(-1)
+        expect { user.destroy }.to change { Comment.count }.by(-1)
       end
     end
-    
+
     context 'Scheduleモデルとの関連' do
       let(:target) { :schedules }
-      
+
       it '1対多である' do
         expect(association.macro).to eq :has_many
       end
-      
+
       it "userを削除すると、scheduleも削除される" do
         create(:schedule, user: user, place: place)
-        expect{ user.destroy }.to change{ Schedule.count }.by(-1)
+        expect { user.destroy }.to change { Schedule.count }.by(-1)
       end
     end
-    
+
     context 'Relationshipモデル(active_relationships)モデルとの関連' do
       let(:target) { :active_relationships }
-      
+
       it '1対多である' do
         expect(association.macro).to eq :has_many
       end
@@ -138,10 +137,10 @@ RSpec.describe User, type: :model do
         expect(association.class_name).to eq 'Relationship'
       end
     end
-    
+
     context 'Relationshipモデル(passive_relationships)モデルとの関連' do
       let(:target) { :passive_relationships }
-      
+
       it '1対多である' do
         expect(association.macro).to eq :has_many
       end
@@ -149,10 +148,10 @@ RSpec.describe User, type: :model do
         expect(association.class_name).to eq 'Relationship'
       end
     end
-    
+
     context 'フォローしているユーザーとの関連' do
       let(:target) { :following }
-      
+
       it '1対多である' do
         expect(association.macro).to eq :has_many
       end
@@ -166,10 +165,10 @@ RSpec.describe User, type: :model do
         expect(user.following?(other_user)).to be false
       end
     end
-    
+
     context 'フォロワーとの関連' do
       let(:target) { :followers }
-      
+
       it '1対多である' do
         expect(association.macro).to eq :has_many
       end
@@ -193,20 +192,20 @@ RSpec.describe User, type: :model do
         end
       end
       context "フォローした場合" do
-        it "trueを返す" , js: true do
+        it "trueを返す", js: true do
           user.follow(other_user)
           expect(user.following?(other_user)).to be true
         end
       end
       context "フォローを外した場合" do
-        it "falseを返す" , js: true do
+        it "falseを返す", js: true do
           user.follow(other_user)
           user.unfollow(other_user)
           expect(user.following?(other_user)).to be false
         end
       end
     end
-  
+
     describe "#own?(object)" do
       context "object == placeの場合" do
         context "userのplaceの場合" do

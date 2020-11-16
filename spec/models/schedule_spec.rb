@@ -49,5 +49,4 @@ RSpec.describe Schedule, type: :model do
       end
     end
   end
-  
 end

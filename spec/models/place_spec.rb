@@ -8,14 +8,14 @@ RSpec.describe Place, type: :model do
       it "名称、種類、住所がある場合有効であること" do
         expect(place).to be_valid
       end
-  
+
       it "名称がない場合無効であること" do
         place.name = nil
         place.valid?
         expect(place.errors[:name]).to include("を入力してください")
       end
-  
-      it "名称が21文字の場合無効であること" do 
+
+      it "名称が21文字の場合無効であること" do
         place.name = "a" * 21
         place.valid?
         expect(place.errors[:name]).to include("は20文字以内で入力してください")
@@ -30,7 +30,7 @@ RSpec.describe Place, type: :model do
       end
 
       it "genreで1を選ぶとviewになること" do
-        # factoryでgenre { 1 }を定義 
+        # factoryでgenre { 1 }を定義
         expect(place.genre).to eq "view"
       end
     end
@@ -48,7 +48,7 @@ RSpec.describe Place, type: :model do
         place.image = fixture_file_upload("/files/test_image.png")
         expect(place).to be_valid
       end
-  
+
       it "画像がjpeg/gif/pngでない場合無効であること" do
         place.image = fixture_file_upload("/files/invalid_file.txt")
         place.valid?
@@ -56,7 +56,7 @@ RSpec.describe Place, type: :model do
       end
     end
   end
-  
+
   describe "アソシエーションのテスト" do
     let(:association) do
       # Placeクラスと引数のクラスの関連を返す
@@ -80,7 +80,7 @@ RSpec.describe Place, type: :model do
 
       it "placeを削除すると、likeも削除される" do
         like = create(:like, user: user, place: place)
-        expect{ place.destroy }.to change{ Like.count }.by(-1)
+        expect { place.destroy }.to change { Like.count }.by(-1)
       end
     end
 
@@ -93,7 +93,7 @@ RSpec.describe Place, type: :model do
 
       it "placeを削除すると、commentも削除される" do
         comment = create(:comment, user: user, place: place)
-        expect{ place.destroy }.to change{ Comment.count }.by(-1)
+        expect { place.destroy }.to change { Comment.count }.by(-1)
       end
     end
 
@@ -106,7 +106,7 @@ RSpec.describe Place, type: :model do
 
       it "placeを削除すると、scheduleも削除される" do
         schedule = create(:schedule, user: user, place: place)
-        expect{ place.destroy }.to change{ Schedule.count }.by(-1)
+        expect { place.destroy }.to change { Schedule.count }.by(-1)
       end
     end
   end

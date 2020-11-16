@@ -21,14 +21,14 @@ RSpec.describe Like, type: :system do
         find('.fas.fa-heart').click
         expect(page).to have_selector '.far.fa-heart'
         expect(place.likes.count).to eq(0)
-      end 
+      end
 
       it "いいねした場所がマイページで表示されること", js: true do
         find('.far.fa-heart').click
         visit user_path(user)
         click_on 'いいね一覧'
         expect(page).to have_content place.name
-      end 
+      end
     end
   end
 end

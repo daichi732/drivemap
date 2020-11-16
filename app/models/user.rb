@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }
   before_save { self.email = email.downcase }
-  validates :email, {presence: true, uniqueness: { case_sensitive: false }}
+  validates :email, { presence: true, uniqueness: { case_sensitive: false } }
   validate :avatar_format
   has_secure_password
   has_one_attached :avatar
@@ -19,18 +19,17 @@ class User < ApplicationRecord
                                    dependent: :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
-  
+
   def avatar_format
     return true unless avatar.attached?
 
     errors.add(:avatar, 'にはjpegまたはgifまたはpngファイルを添付してください') unless avatar.content_type.in?(%('image/jpeg image/gif image/png'))
   end
-  
+
   def own?(object)
-  # object -> { place, comment, schedule }
+    # object -> { place, comment, schedule }
     self == object.user
   end
-
 
   def follow(other_user)
     following << other_user

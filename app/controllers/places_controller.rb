@@ -57,6 +57,6 @@ class PlacesController < ApplicationController
   end
 
   def correct_user
-    redirect_to places_url, notice: "権限がありません。"  unless current_user.own?(@place)
+    redirect_to places_url, notice: "権限がありません。" unless current_user.own?(@place)
   end
 end

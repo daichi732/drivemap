@@ -16,7 +16,7 @@ RSpec.describe Comment, type: :system do
       it "失敗し、エラーメッセージを表示する", js: true do
         click_on 'コメントする'
         expect(page).to have_content "コメントを入力してください"
-      end 
+      end
     end
 
     context "正しくコメントした場合" do
@@ -26,7 +26,7 @@ RSpec.describe Comment, type: :system do
         expect(page).to have_link user.name, href: user_path(user)
         expect(page).to have_content "foobar"
         expect(page).to have_selector ".fas.fa-trash"
-      end 
+      end
     end
   end
 end

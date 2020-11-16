@@ -4,7 +4,7 @@ RSpec.describe Place, type: :system do
   let(:other_user) { create(:user) }
   let(:place) { create(:place, user: user) }
   let(:other_place) { create(:place, user: other_user) }
-  
+
   describe "場所の登録ページ" do
     before do
       visit login_path
@@ -23,18 +23,18 @@ RSpec.describe Place, type: :system do
     context "フォームの入力が正しい時" do
       it "登録に成功し、フラッシュメッセージを表示する" do
         fill_in "place[name]", with: "熱海"
-        find('label[for=place_genre_food]').click 
+        find('label[for=place_genre_food]').click
         fill_in "place[address]", with: "熱海"
         click_on "登録する"
         expect(page).to have_content "「熱海」を登録しました。"
-        expect(current_path).to eq place_path( Place.last.id )
+        expect(current_path).to eq place_path(Place.last.id)
       end
     end
 
     context "フォームでnameが空欄の場合" do
       it "登録に失敗し、エラーメッセージを表示する" do
         fill_in "place[name]", with: ""
-        find('label[for=place_genre_food]').click 
+        find('label[for=place_genre_food]').click
         fill_in "place[address]", with: "熱海"
         click_on "登録する"
         expect(page).to have_content "名称を入力してください"
@@ -53,7 +53,7 @@ RSpec.describe Place, type: :system do
     context "フォームでpasswordが空欄の場合" do
       example "登録に失敗し、エラーメッセージを表示する" do
         fill_in "place[name]", with: "熱海"
-        find('label[for=place_genre_food]').click 
+        find('label[for=place_genre_food]').click
         fill_in "place[address]", with: ""
         click_on "登録する"
         expect(page).to have_content "住所を入力してください"
@@ -79,12 +79,12 @@ RSpec.describe Place, type: :system do
     context "フォームの入力が正しい時" do
       it "編集に成功し、フラッシュメッセージを表示する" do
         fill_in "place[name]", with: "edit_place"
-        find('label[for=place_genre_food]').click 
+        find('label[for=place_genre_food]').click
         fill_in "place[address]", with: "熱海"
         click_on "更新する"
         expect(page).to have_content "「edit_place」を更新しました。"
         expect(page).to have_content "edit_place"
-        expect(current_path).to eq place_path( place.id )
+        expect(current_path).to eq place_path(place.id)
       end
     end
   end
@@ -107,7 +107,7 @@ RSpec.describe Place, type: :system do
     context "「マイページ」をクリックすると" do
       it "マイページに移動できること" do
         click_on 'マイページ'
-        expect(current_path).to eq user_path( user.id )
+        expect(current_path).to eq user_path(user.id)
       end
     end
 
@@ -143,17 +143,17 @@ RSpec.describe Place, type: :system do
         click_on "ログインする"
         visit place_path(place)
       end
-  
+
       context "ページレイアウト" do
         it "場所の名前の文字列が存在することを確認" do
           expect(page).to have_content place.name
         end
       end
-  
+
       context "「編集」をクリックすると" do
         it "場所の編集ページに移動できること" do
           click_on '編集'
-          expect(current_path).to eq edit_place_path( place.id )
+          expect(current_path).to eq edit_place_path(place.id)
         end
       end
 
@@ -166,7 +166,7 @@ RSpec.describe Place, type: :system do
           expect(current_path).to eq places_path
         end
       end
-  
+
       context "「一覧」をクリックすると" do
         it "一覧ページに移動できること" do
           click_on '一覧'
