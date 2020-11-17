@@ -93,8 +93,8 @@
 
 ## 今後行いたいこと
 - レスポンシブ対応
-- 開発環境でDocker, docker-composeを導入(現在学習中)
-- Circle CIでCI/CDパイブラインの構築
+- ローカル環境でDocker, docker-composeを導入(現在学習中)
+- CircleCIの自動ビルド＆テスト機能の実装
 
 ## About me
 横浜国立大学3年・理工学部・情報工学EPに所属。22卒で現在就職活動中。
