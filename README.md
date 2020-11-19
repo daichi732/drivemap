@@ -34,7 +34,7 @@
 3. ドライブルートを検索
 <img src="https://user-images.githubusercontent.com/56623611/98489647-3bcf7580-2272-11eb-9d8e-acad2409123b.png" width="800"  height="450">
 
-☑️日時を指定して予定を管理することも可能！
+✔️日時を指定して予定を管理することも可能！
 <br>
 <img src="https://user-images.githubusercontent.com/56623611/98490753-d8dfdd80-2275-11eb-9057-03f309f8b576.png" width="400"  height="250">
 <img src="https://user-images.githubusercontent.com/56623611/98490760-e2694580-2275-11eb-8d92-dca19445e660.png" width="400"  height="250">
@@ -97,4 +97,4 @@
 - CircleCIの自動ビルド＆テスト機能の実装
 
 ## About me
-横浜国立大学3年・理工学部・情報工学EPに所属。22卒で現在就職活動中。
+横浜国立大学3年・理工学部・情報工学EPに所属。22卒で現在就職活動中です。また、長期インターンも探しています。
