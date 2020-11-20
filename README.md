@@ -2,7 +2,7 @@
 <img src="https://user-images.githubusercontent.com/56623611/97101504-5be32e80-16e1-11eb-8b40-25a2945ae971.png" width="800"  height="400">
 
 ## 概要
-「DriveMap」はユーザー独自のMapを作成し、ドライブルートを簡単に決めることができるドライブ企画者向けサービスとなっております。
+DriveMapはユーザー独自のMapを作成し、ドライブルートを"簡単に"決めることができる「ドライブ企画者向け」サービスとなっております。
 <br>
 サイトURL：https://www.drivemap-app.com/
 <br>
