@@ -5,16 +5,16 @@ class PlacesController < ApplicationController
 
   def index
     @q = Place.ransack(params[:q])
-    @places = @q.result(distinct: true).page(params[:page]).recent
-    gon.places = @q.result(distinct: true) # 検索結果の全ページマップ表示用、検索なければ全表示で検索あればそれが出る
+    @places = @q.result.page(params[:page]).recent
+    gon.places = @places # 検索結果のマップ表示用
   end
 
   def show
-    @comment = Comment.new # render: 'form'で渡す
-    @comments = @place.comments.order(created_at: :desc) # render: 'index'で渡す
+    @comment = Comment.new # 'comments/form'レンダリングで渡す
+    @comments = @place.comments.order(created_at: :desc) # 'comments/index'レンダリングで渡す
     gon.place = @place
     @schedule = Schedule.new
-    @my_schedule = current_user.schedules.where(place_id: @place.id)
+    @my_schedule = current_user.schedules.where(place_id: @place.id) # current_userしか見れない設定
   end
 
   def new

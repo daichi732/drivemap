@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: session_params[:email])
-
+    # find_by(nilを返す), &.(userがnilでない時authenticate実行)
     if user&.authenticate(session_params[:password])
       log_in(user)
       redirect_to places_path, notice: 'ログインしました。'
@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
       guest_user.password = SecureRandom.urlsafe_base64
     end
     log_in(user)
-    redirect_to places_url, notice: "ゲストユーザーとしてログインしました"
+    redirect_to places_url, notice: "ゲストユーザーとしてログインしました。"
   end
 
   private

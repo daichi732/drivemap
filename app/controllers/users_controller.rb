@@ -9,12 +9,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    @places = @user.places.recent # ユーザが登録した場所一覧表示
-    @likes = @user.likes # いいね一覧表示
-    place_ids = @likes.pluck(:place_id) # いいねしたLikeデータのplace_idカラムの集合
-    @like_places = Place.where(id: place_ids)
-    gon.places = @like_places
-    @schedules = @user.schedules
+    @places = @user.places.recent # ユーザの登録場所一覧表示用
+    @likes = @user.likes # いいね一覧表示用
+    place_ids = @likes.pluck(:place_id) # place_idカラムの集合
+    @like_places = Place.where(id: place_ids) # データ表示用
+    gon.places = @like_places # いいねmap表示用
+    @schedules = @user.schedules # カレンダー表示用
   end
 
   def new
@@ -47,6 +47,7 @@ class UsersController < ApplicationController
     redirect_to users_url, notice: "ユーザ「#{@user.name}」を削除しました。"
   end
 
+  # フォローフォロワー一覧表示画面
   def following
     @following_users = @user.following
   end

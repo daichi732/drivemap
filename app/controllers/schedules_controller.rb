@@ -15,10 +15,10 @@ class SchedulesController < ApplicationController
     render :index if @schedule.destroy
   end
 
-  # formにてplace_idパラメータを送信,mergeでuser_idを格納
   private
 
   def schedule_params
+    # formにてplace_idパラメータを送信,mergeでuser_idを格納
     params.require(:schedule).permit(:date, :place_id).merge(user_id: current_user.id)
   end
 end

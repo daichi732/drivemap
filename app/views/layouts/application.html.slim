@@ -3,9 +3,12 @@ html
   head
     title
       | DriveMap
+    / Ajaxセキュリティトークン出力
+    / サーバ->ブラウザにCSP含めて攻撃軽減
     = csrf_meta_tags
     = csp_meta_tag
     = include_gon
+    / application.scss, application.jsの読み込み
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
   body
@@ -15,8 +18,7 @@ html
 
       ul.navbar-nav.ml-auto
         - if current_user
-          - if current_user.admin?
-            li.nav-item= link_to 'ユーザー一覧', users_path, class: 'nav-link'
+          li.nav-item= link_to 'ユーザー一覧', users_path, class: 'nav-link' if current_user.admin?
           li.nav-item= link_to 'マイページ', current_user, class: 'nav-link'
           li.nav-item= link_to '場所を登録', new_place_path, class: 'nav-link'
           li.nav-item= link_to '場所一覧', places_path, class: 'nav-link'

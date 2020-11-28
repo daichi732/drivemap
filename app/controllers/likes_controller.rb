@@ -3,7 +3,7 @@ class LikesController < ApplicationController
   before_action :login_required
 
   def create
-    like = current_user.likes.build(place_id: params[:place_id])
+    like = current_user.likes.new(place_id: params[:place_id])
     like.save
   end
 
