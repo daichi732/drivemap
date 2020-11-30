@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @places = @user.places.recent # ユーザの登録場所一覧表示用
+    @places = @user.places.with_attached_image # ユーザの登録場所一覧表示用
     @likes = @user.likes # いいね一覧表示用
     place_ids = @likes.pluck(:place_id) # place_idカラムの集合
     @like_places = Place.where(id: place_ids) # データ表示用
