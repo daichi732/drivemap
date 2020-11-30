@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     place_ids = @likes.pluck(:place_id) # place_idカラムの集合
     @like_places = Place.where(id: place_ids) # データ表示用
     gon.places = @like_places # いいねmap表示用
-    @schedules = @user.schedules # カレンダー表示用
+    @schedules = @user.schedules.includes([:place]) # カレンダー表示用
   end
 
   def new
