@@ -5,7 +5,7 @@ class PlacesController < ApplicationController
 
   def index
     @q = Place.ransack(params[:q])
-    @places = @q.result.page(params[:page]).recent
+    @places = @q.result.includes(user: { avatar_attachment: :blob }, image_attachment: :blob).page(params[:page]).recent
     gon.places = @places # 検索結果のマップ表示用
   end
 
